@@ -1,0 +1,120 @@
+{
+  "languageName": "Polski",
+  "homeHeader": [
+    "Convocation to",
+    "darmowe narzędzie do organizacji spotkań",
+    "dla grup."
+  ],
+  "action": {
+    "select": "Wybierz jako dzień spotkania",
+    "confirm": "Potwierdź",
+    "copy": "Kopiuj",
+    "createEvent": "Stwórz spotkanie",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "update": "Zaktualizuj",
+    "deleteEvent": "Usuń wydarzenie",
+    "deleteAccount": "Usuń konto",
+    "signIn": "Zaloguj się",
+    "signUp": "Stwórz konto",
+    "signOut": "Wyloguj"
+  },
+  "userMenu": {
+    "owned": "Twoje",
+    "attending": "Inne",
+    "settings": "Ustawienia",
+    "labelAttending": "Uczestnicy",
+    "labelTitle": "Nazwa wydarzenia",
+    "labelDescription": "Opis",
+    "labelUrl": "URL",
+    "labelWebhook": "Webhook",
+    "labelNotificationSelection": "Powiadomienia mailowe o aktualizacjach",
+    "labelNotificationLanguage": "Język powiadomień",
+    "confirmEventDeletion": "Czy na pewno usunąć wydarzenie?",
+    "confirmAccountDeletion": "Na pewno? Usunięcie konta usunie Twoje wydarzenia.",
+    "webhookTooltip": "Możesz dodać URL na który będą wysyłane powiadomienia o zmianach w Twoim wydarzeniu - na przykład na serwer Discorda czy kanał na Slacku."
+  },
+  "signIn": {
+    "passwordRestoreTitle": "Nie martw się, wszystkim nam się to zdarza.",
+    "passwordRestoreAction": "Wyślij mi email z tymczasowym hasłem",
+    "or": "lub",
+    "forgotPassword": "Zapomniałem hasła",
+    "labelEmail": "E-mail",
+    "labelConfirmPassword": "Potwierdź hasło",
+    "labelPassword": "Hasło",
+    "labelPasswordNew": "Nowe hasło",
+    "labelUsername": "Login",
+    "labelUsernameOrEmail": "Login lub e-mail"
+  },
+  "validations": {
+    "usernameMin": "- 3+ znaki",
+    "passwordMin": "- 5+ znaków, w tym duża litera i liczba",
+    "passwordMismatch": "- hasła nie są identyczne",
+    "emailInvalid": "- niepoprawny e-mail",
+    "urlInvalid": "- niepoprawny URL"
+  },
+  "nav": {
+    "createEvent": "Stwórz wydarzenie",
+    "home": "Strona główna",
+    "yourEvents": "Twoje wydarzenia"
+  },
+  "homeInfo": [
+    "Do stworzenia wydarzenia potrzebujesz jedynie założonego konta. Wtedy wystarczy nazwa jego i właściciela, z opcjonalnym opisem, i gotowe.",
+    "Ukończywszy tworzenie wydarzenia otrzymasz link, którym możesz podzielić się z innymi aby wybrać dni i godziny, które odpowiadają wszystkim najbardziej. Możesz wtedy wybierać ostateczne daty spotkań w ramach wydarzenia, a także czy otrzymywać powiadomienia e-mailowe lub w formie webhooka o aktualizacjach ze strony uczestników."
+  ],
+  "homeCTA": "Stwórz konto aby brać udział i zakładać wydarzenia!",
+  "homeSuccess": "Wydarzenie utworzone!",
+  "homeNull": "Musisz najpierw utworzyć wydarzenie",
+  "homeLinkInfo": "Oto link do Twojego wydarzenia. Wyślij go członkom swojej grupy aby dobrać najlepszy dzień na Wasze spotkanie, i oznaczyć swoją własną dostępność.",
+  "attendees": "Uczestnicy",
+  "linkCopyingFailed": "Spróbuj skopiować link ręcznie",
+  "defaultAvailability": "Dowolna pora",
+  "owner": "Twórca",
+  "name": "Twoje imię",
+  "noEvent": "To wydarzenie nie istnieje.",
+  "labelEventDescription": "Opis (opcjonalny)",
+  "labelYourName": "Twoje imię",
+  "cookieTitle": "Nasze ciasteczka nie są groźne.",
+  "cookieInfo": "Ale potrzebujemy Twojej akceptacji aby móc ich użyć - będą wykorzystane wyłącznie dla podstawowej funkcjonalności strony w zakresie logowania.",
+  "popupInfo": {
+    "accountDeleted": "Konto usunięte",
+    "accountUpdated": "Konto zaktualizowane",
+    "eventCreated": "Wydarzenie stworzone pomyślnie!",
+    "eventUpdated": "Wydarzenie zaktualizowane!",
+    "eventDeleted": "Wydarzenie usunięte",
+    "passwordRestore": "Sprawdź swój email",
+    "signedIn": "Zalogowano pomyślnie",
+    "signedOut": "Wylogowano pomyślnie",
+    "urlCopied": "URL skopiowany do schowka!",
+    "errorGeneric": "Coś poszło nie tak - spróbuj ponownie później.",
+    "errorNoEventUpdate": "Nie wykryto żadnych zmian.",
+    "errorNoMatch": "Zły login lub hasło",
+    "errorUsernameTaken": "Login zajęty, proszę wybrać inny",
+    "errorEmailTaken": "Podany email jest już wykorzystywany",
+    "errorNotSignedIn": "Udział w wydarzeniu wymaga konta",
+    "errorNoCookieConsent": "Aby się zalogować musisz zaakceptować ciasteczka"
+  },
+  "days": {
+    "0": "Pon",
+    "1": "Wt",
+    "2": "Śr",
+    "3": "Czw",
+    "4": "Pt",
+    "5": "Sb",
+    "6": "Nd"
+  },
+  "months": {
+    "0": "Styczeń",
+    "1": "Luty",
+    "2": "Marzec",
+    "3": "Kwiecień",
+    "4": "Maj",
+    "5": "Czerwiec",
+    "6": "Lipiec",
+    "7": "Sierpień",
+    "8": "Wrzesień",
+    "9": "Październik",
+    "10": "Listopad",
+    "11": "Grudzień"
+  }
+}

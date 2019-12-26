@@ -1,0 +1,91 @@
+{
+  "12345": {
+    "name": "Mortal Empires conquest",
+    "description": "Conquering this rat infested jungle",
+    "owner": "ObjectId",
+    "dates": {
+      "2020": {
+        "0": {
+          "1": {
+            "selected": true,
+            "attendees": [
+              {
+                "userId": "5e28cf83a52dce510ce84619",
+                "time": "12:00-17:00"
+              },
+              {
+                "userId": "5e2c33d1b82f3b4e9c7bfd27",
+                "time": ""
+              }
+            ]
+          },
+          "4": {
+            "attendees": [
+              {
+                "userId": "5e2c33d1b82f3b4e9c7bfd27",
+                "time": ""
+              }
+            ]
+          },
+          "14": {
+            "attendees": [
+              {
+                "userId": "5e28cf83a52dce510ce84619",
+                "time": "12:00-17:00"
+              },
+              {
+                "userId": "5e2c33d1b82f3b4e9c7bfd27",
+                "time": ""
+              }
+            ]
+          }
+        },
+        "1": {
+          "5": {
+            "selected": true,
+            "attendees": [
+              {
+                "userId": "5e28cf83a52dce510ce84619",
+                "time": "12:00-17:00"
+              },
+              {
+                "userId": "5e2c33d1b82f3b4e9c7bfd27",
+                "time": ""
+              }
+            ]
+          },
+          "15": {
+            "attendees": [
+              {
+                "userId": "5e2c33d1b82f3b4e9c7bfd27",
+                "time": ""
+              }
+            ]
+          },
+          "21": {
+            "attendees": [
+              {
+                "userId": "5e28cf83a52dce510ce84619",
+                "time": "12:00-17:00"
+              },
+              {
+                "userId": "5e2c33d1b82f3b4e9c7bfd27",
+                "time": ""
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attendees": [
+      {
+        "userId": "5e28cf83a52dce510ce84619",
+        "name": "Teclis"
+      },
+      {
+        "userId": "5e2c33d1b82f3b4e9c7bfd27",
+        "name": "Tyrion"
+      }
+    ]
+  }
+}

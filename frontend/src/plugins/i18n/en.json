@@ -1,0 +1,120 @@
+{
+  "languageName": "English",
+  "homeHeader": [
+    "Convocation is a",
+    "free meeting scheduling tool",
+    "for groups."
+  ],
+  "action": {
+    "select": "Select as meeting day",
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "createEvent": "Create event",
+    "cancel": "Cancel",
+    "save": "Save",
+    "update": "Update",
+    "deleteEvent": "Delete event",
+    "deleteAccount": "Delete account",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
+  "userMenu": {
+    "owned": "Owned",
+    "attending": "Attending",
+    "settings": "Setting",
+    "labelAttending": "Attending",
+    "labelTitle": "Event title",
+    "labelDescription": "Description",
+    "labelUrl": "URL",
+    "labelWebhook": "Webhook",
+    "labelNotificationSelection": "Email notification on user updates",
+    "labelNotificationLanguage": "Notification language",
+    "confirmEventDeletion": "Are you sure you want to delete this event?",
+    "confirmAccountDeletion": "Are you certain? This will also delete any existing owned events.",
+    "webhookTooltip": "You can provide a URL where updates about your event will be sent to as a short message - for example to a discord server or a slack channel."
+  },
+  "signIn": {
+    "passwordRestoreTitle": "Don't worry, it happens to all of us.",
+    "passwordRestoreAction": "Send me an email with temporary password",
+    "or": "or",
+    "forgotPassword": "Forgot your password?",
+    "labelEmail": "E-mail",
+    "labelConfirmPassword": "Confirm password",
+    "labelPassword": "Password",
+    "labelPasswordNew": "New password",
+    "labelUsername": "Username",
+    "labelUsernameOrEmail": "Username or e-mail"
+  },
+  "validations": {
+    "usernameMin": "- 3+ characters",
+    "passwordMin": "- 5+ characters, uppercase letter, number",
+    "passwordMismatch": "- passwords do not match",
+    "emailInvalid": "- invalid email",
+    "urlInvalid": "- must be a valid URL"
+  },
+  "nav": {
+    "createEvent": "Create event",
+    "home": "Home",
+    "yourEvents": "Your events"
+  },
+  "homeInfo": [
+    "All you need is an account to create an event. You can start with a title and your name, with optional description, and you're good to go.",
+    "With your event created, you will be able to share a link with your friends to choose days and see which one suits you all the most, describe the time you have available, and easily keep track of when others could join you. As an owner you can also choose whether to receive email or webhook notifications when attendees update their data, and select the final date when your group will meet."
+  ],
+  "homeCTA": "Sign up to create and participate in events!",
+  "homeSuccess": "Event created!",
+  "homeNull": "You need to create an event first",
+  "homeLinkInfo": "This is a link to your event. Send it to your group members to determine the best date for a meeting. That's where you can specify your own potential attendance, and where you can choose final event date(s).",
+  "attendees": "Attendees",
+  "linkCopyingFailed": "Please copy the link manually!",
+  "defaultAvailability": "Anytime",
+  "owner": "Owner",
+  "name": "Your name",
+  "noEvent": "This event doesn't exist.",
+  "labelEventDescription": "Description (optional)",
+  "labelYourName": "Your name",
+  "cookieTitle": "Our cookies aren't scary.",
+  "cookieInfo": "But you'll nevertheless need to confirm that you accept them for this to work out. They will only ever be used to keep you logged in.",
+  "popupInfo": {
+    "accountDeleted": "Account deleted",
+    "accountUpdated": "Account updated",
+    "eventCreated": "Event created successfully!",
+    "eventUpdated": "Event updated successfully!",
+    "eventDeleted": "Event deleted",
+    "passwordRestore": "Check your email for more information",
+    "signedIn": "Signed in!",
+    "signedOut": "Signed out",
+    "urlCopied": "URL copied to clipboard!",
+    "errorGeneric": "Something went wrong - please try again later.",
+    "errorNoEventUpdate": "No change in your event detected.",
+    "errorNoMatch": "Wrong login | password combination",
+    "errorUsernameTaken": "Username already taken, please choose another",
+    "errorEmailTaken": "Account with this email already exists",
+    "errorNotSignedIn": "You need to be signed in to participate",
+    "errorNoCookieConsent": "You need to accept cookie use first"
+  },
+  "days": {
+    "0": "Mon",
+    "1": "Tu",
+    "2": "Wed",
+    "3": "Thu",
+    "4": "Fr",
+    "5": "Sat",
+    "6": "Sun"
+  },
+  "months": {
+    "0": "January",
+    "1": "February",
+    "2": "March",
+    "3": "April",
+    "4": "May",
+    "5": "June",
+    "6": "July",
+    "7": "August",
+    "8": "September",
+    "9": "October",
+    "10": "November",
+    "11": "December"
+  }
+}

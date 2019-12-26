@@ -1,0 +1,39 @@
+{
+  "name": "convocation-backend",
+  "version": "1.0.0",
+  "description": "Convocation meeting scheduling app by Andrzej Walczak (artaiel)",
+  "main": "index.js",
+  "engines": {
+    "node": "13.5.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artaiel/convocation.git"
+  },
+  "author": "artaiel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artaiel/convocation/issues"
+  },
+  "homepage": "https://github.com/artaiel/convocation#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.4",
+    "crypto-random-string": "^3.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.3.1",
+    "helmet": "^3.21.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.1",
+    "nodemailer": "^6.4.2",
+    "set-value": "^3.0.1"
+  }
+}
