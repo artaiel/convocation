@@ -1,0 +1,75 @@
+// Sizes
+$spacer: 10px;
+$grid-width: 60%;
+
+// Breakpoints
+$size-xs: 480px !default;
+$size-sm: 600px !default;
+$size-md: 840px !default;
+$size-lg: 960px !default;
+$size-xl: 1120px !default;
+
+// Font Sizes
+$font-size-sm: 12px;
+$font-size: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-xxl: 24px;
+
+// Colors
+$c-dark: rgb(51, 51, 51);
+
+// Global rules
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  color: $c-dark;
+}
+
+input, textarea {
+  background: none;
+  border: none;
+  border: 1px solid #4D4D4D;
+  outline: none;
+  font-family: inherit;
+  padding-bottom: .3rem;
+  font-size: $font-size-xxl;
+  font-weight: 300;
+  transition: all .2s ease-in-out;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+@mixin blend () {
+  mix-blend-mode: hard-light;
+}
+
+@mixin btn-reset () {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+@mixin transition-basic () {
+  transition: all .21s ease-in-out;
+}

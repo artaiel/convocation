@@ -1,0 +1,12 @@
+{
+  "languageName": "Polski",
+  "homeHeader": [
+    "Convocation to",
+    "free meeting scheduling tool",
+    "for groups."
+  ],
+  "homeInfo": [
+    "With as few steps as setting up basic information for your event you’ll be able to share a link with your friends to choose available days and see which one suits you all the most.",
+    "Your friends may take part in the survey without registering, but you can create an account to easily keep track of multiple polls and choose whether to receive email or webhook notifications when your poll is updated."
+  ]
+}
