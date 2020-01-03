@@ -71,7 +71,7 @@ export default {
 .nav {
   display: flex;
   justify-content: space-between;
-  width: $grid-width;
+  width: $nav-width;
   margin: 0 auto;
   margin-bottom: $spacer * 10;
 
@@ -87,7 +87,7 @@ export default {
     & > img {
       width: 100%;
       height: 100%;
-      @include blend;
+      @include blend-hard-light;
       -webkit-backface-visibility: hidden;
       transition: all .21s ease-in-out;
     }

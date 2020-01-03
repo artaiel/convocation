@@ -2,6 +2,7 @@
   <div class="app">
     <Navigation/>
     <router-view/>
+    <img class="hero" :src="heroImage"/>
   </div>
 </template>
 
@@ -11,6 +12,11 @@ import Navigation from '@/components/Navigation'
 export default {
   components: {
     Navigation
+  },
+  computed: {
+    heroImage () {
+      return require('@/assets/images/raven.png')
+    }
   }
 }
 </script>
@@ -29,5 +35,17 @@ export default {
   background-size: 105%;
   background-position: center;
   padding-top: $spacer * 3;
+}
+
+.hero {
+  @supports (mix-blend-mode: darken) {
+    height: 50vh;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    @include blend-darken;
+    display: block;
+  }
+  display: none;
 }
 </style>
