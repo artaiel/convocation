@@ -1,21 +1,39 @@
 <template>
   <div class="app">
-    <Navigation/>
+    <Navigation @clickSignIn="toggleSignIn"/>
     <router-view/>
     <img class="hero" :src="heroImage"/>
+    <transition name="fade">
+      <SignIn v-if="signInModalVisible" @close="closeSignIn"/>
+    </transition>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation'
+import SignIn from '@/components/SignIn'
 
 export default {
   components: {
-    Navigation
+    Navigation,
+    SignIn
+  },
+  data () {
+    return {
+      signInModalVisible: true
+    }
   },
   computed: {
     heroImage () {
       return require('@/assets/images/raven.png')
+    }
+  },
+  methods: {
+    toggleSignIn () {
+      this.signInModalVisible = !this.signInModalVisible
+    },
+    closeSignIn () {
+      this.signInModalVisible = false
     }
   }
 }

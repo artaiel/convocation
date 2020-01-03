@@ -17,12 +17,13 @@ export default {
   data () {
     return {
       eventData: null,
-      eventCreatedSuccessfully: true
+      eventCreatedSuccessfully: false
     }
   },
   methods: {
-    handleSubmittedData (dat) {
-      this.eventData = dat
+    handleSubmittedData (eventData) {
+      this.eventData = eventData
+      this.eventCreatedSuccessfully = true
     }
   }
 }

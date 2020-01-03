@@ -36,7 +36,7 @@
         </transition>
       </div>
       <router-link to="/donate" class="nav__links-item">Donate</router-link>
-      <button v-if="!loggedIn" class="nav__links-item">Sign in</button>
+      <button v-if="!loggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
       <button v-if="loggedIn" class="nav__links-item">Log out</button>
     </div>
   </div>
@@ -49,7 +49,7 @@ export default {
   data () {
     return {
       languageHovered: false,
-      loggedIn: true,
+      loggedIn: false,
       languages
     }
   },
@@ -128,23 +128,6 @@ export default {
 
     & > * {
       text-align: left;
-    }
-  }
-}
-
-
-.slide-down {
-  @media screen and (min-width: $size-sm) {
-    &-enter-active {
-      transition: all 0.21s ease-in-out;
-    }
-    &-leave-active {
-      transition: all 0.21s ease-in-out;
-    }
-    &-enter,
-    &-leave-to {
-      transform: translateY(-10px);
-      opacity: 0;
     }
   }
 }

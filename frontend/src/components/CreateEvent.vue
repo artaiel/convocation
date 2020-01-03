@@ -102,7 +102,7 @@
           </span>
         </label>
       </div>
-      <button class="create-event-btn" @click="handleEventCreation">
+      <button class="main-btn" @click="handleEventCreation">
         <span>
           Create event
         </span>
@@ -250,7 +250,7 @@ export default {
   }
 }
 
-.create-event-btn {
+.main-btn {
   @include btn-reset;
   display: block;
   color: white;
@@ -296,24 +296,6 @@ export default {
     transition: linear;
     animation: shake .4s;
     border: 1px solid rgb(202, 6, 6);
-  }
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX($spacer * .5);
-  }
-
-  75% {
-    transform: translateX(-$spacer * .5);
-  }
-
-  100% {
-    transform: translateX(0);
   }
 }
 </style>

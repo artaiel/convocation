@@ -23,9 +23,20 @@
         {{ $t('copy') }}
       </button>
     </div>
-    <div v-if="popupVisible" class="popup">
-      {{ $t('linkCopied') }}
-    </div>
+    <transition name="slide-down">
+      <div v-if="popupSuccessVisible" class="home__popup">
+        <p class="bold">
+          {{ $t('linkCopied') }}
+        </p>
+      </div>
+    </transition>
+    <transition name="slide-down">
+      <div v-if="popupFailureVisible" class="home__popup">
+        <p class="bold">
+          {{ $t('linkCopyingFailed') }}
+        </p>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -35,14 +46,22 @@ export default {
   data () {
     return {
       url: 'https://www.convocation.herokuapp.com/id/aiganstmdffycvs',
+      popupSuccessVisible: false,
+      popupFailureVisible: false
     }
   },
   methods: {
     handleCopySuccess () {
-      console.log('ok')
+      this.popupSuccessVisible = true
+      window.setTimeout(() => {
+        this.popupSuccessVisible = false
+      }, 1700)
     },
     handleCopyFailure () {
-      console.log('not ok')
+      this.popupFailureVisible = true
+      window.setTimeout(() => {
+        this.popupFailureVisible = false
+      }, 1700)
     }
   }
 }
@@ -82,6 +101,18 @@ export default {
     &:hover {
       background-color: $c-brown;
       color: white;
+    }
+  }
+
+  &__popup {
+    margin: 0 auto;
+    margin-top: $spacer * 2;
+    text-align: center;
+
+    & > p {
+      margin: 0 auto;
+      display: inline-block;
+      font-size: $font-size-lg;
     }
   }
 }
