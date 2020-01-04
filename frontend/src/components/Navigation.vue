@@ -36,6 +36,7 @@
         </transition>
       </div>
       <router-link to="/donate" class="nav__links-item">Donate</router-link>
+      <router-link to="/event" class="nav__links-item">exevent</router-link>
       <button v-if="!loggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
       <button v-if="loggedIn" class="nav__links-item">Log out</button>
     </div>

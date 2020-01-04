@@ -20,7 +20,7 @@ export default {
   },
   data () {
     return {
-      signInModalVisible: true
+      signInModalVisible: false
     }
   },
   computed: {

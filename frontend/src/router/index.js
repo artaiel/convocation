@@ -18,9 +18,9 @@ const routes = [
     component: () => import('../views/EventsPanel.vue')
   },
   {
-    path: '/new-event',
-    name: 'newEvent',
-    component: () => import('../views/NewEvent.vue')
+    path: '/event',
+    name: 'eventView',
+    component: () => import('../views/EventView.vue')
   }
 ]
 

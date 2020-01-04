@@ -1,0 +1,81 @@
+{
+  "name": "Mortal Empires conquest",
+  "description": "Conquering this rat infested jungle",
+  "owner": "ObjectId",
+  "dates": {
+    "2020": {
+      "0": {
+        "1": [
+          {
+            "name": "Teclis",
+            "time": "12:00-17:00"
+          },
+          {
+            "name": "Tyrion",
+            "time": ""
+          }
+        ],
+        "4": [
+          {
+            "name": "Teclis",
+            "time": ""
+          }
+        ],
+        "14": [
+          {
+            "name": "Teclis",
+            "time": ""
+          },
+          {
+            "name": "Tyrion",
+            "time": "15:00-22:00"
+          }
+        ]
+      },
+      "1": {
+        "5": [
+          {
+            "name": "Teclis",
+            "time": "12:00-17:00"
+          },
+          {
+            "name": "Tyrion",
+            "time": ""
+          },
+          {
+            "name": "Malekith",
+            "time": ""
+          }
+        ],
+        "15": [
+          {
+            "name": "Teclis",
+            "time": ""
+          }
+        ],
+        "21": [
+          {
+            "name": "Teclis",
+            "time": ""
+          },
+          {
+            "name": "Tyrion",
+            "time": "15:00-22:00"
+          }
+        ]
+      }
+    }
+  },
+  "attendees": [
+    {
+      "id": "asgfsd34634ga",
+      "name": "Teclis",
+      "user": "?ref to actual user if exists user?"
+    },
+    {
+      "id": "6w3434634ga",
+      "name": "Tyrion",
+      "user": "?ref to actual user if exists user?"
+    }
+  ]
+}

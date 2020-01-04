@@ -112,15 +112,15 @@
             </span>
           </label>
         </div>
-        <button class="main-btn" @click="handleLoginAction">
-          <span v-if="modeSignIn">
-            Sign in
-          </span>
-          <span v-else>
-            Sign up
-          </span>
-        </button>
       </div>
+      <button class="main-btn" @click="handleLoginAction">
+        <span v-if="modeSignIn">
+          Sign in
+        </span>
+        <span v-else>
+          Sign up
+        </span>
+      </button>
     </div>
   </div>
 </template>
@@ -224,6 +224,13 @@ export default {
     align-items: flex-start;
     padding-top: $spacer * 7.5;
     padding-left: $spacer * 5;
+
+    & > button {
+      margin: 0;
+      margin-top: auto;
+      margin-left: 25%;
+      margin-bottom: 20%;
+    }
   }
 
   &__form {
