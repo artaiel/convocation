@@ -175,7 +175,6 @@ export default {
   margin: 0 auto;
 
   &__info {
-    width: $body-width;
     margin: 0 auto;
     text-align: justify;
   }
@@ -201,7 +200,6 @@ export default {
 }
 
 .event-input {
-  width: 60%;
   margin: 0 auto;
   position: relative;
 

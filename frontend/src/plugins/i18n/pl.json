@@ -13,5 +13,7 @@
   "homeLinkInfo": "This is a link to your event. Send it to your group members in order to allow them to select days that fit them best. You can find this link later in the your events section of your account.",
   "copy": "Kopiuj",
   "linkCopied": "URL copied to clipboard",
-  "linkCopyingFailed": "Please copy the link manually!"
+  "linkCopyingFailed": "Please copy the link manually!",
+  "defaultAvailability": "Dowolne godziny",
+  "name": "Imię"
 }

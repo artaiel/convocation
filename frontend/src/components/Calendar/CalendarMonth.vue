@@ -42,8 +42,8 @@
         :dayPassed="dayPassed(n)"
         :eventData="eventData"
         :currentlySelectedDates="currentlySelectedDates"
-        @viewAttendees="viewAttendees"
         @selectDay="selectDay"
+        @viewDay="viewDate"
       />
     </div>
 
@@ -63,6 +63,10 @@ export default {
     eventData: {
       type: Object,
       default: () => {}
+    },
+    currentlySelectedDates: {
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -70,8 +74,7 @@ export default {
       selectedMonth: '',
       selectedYear: '',
       selectedMonthLength: '',
-      days,
-      currentlySelectedDates: {}
+      days
     }
   },
   computed: {
@@ -104,43 +107,12 @@ export default {
       this.selectedMonth = this.selectedMonth + 1
       this.selectedMonthLength = new Date(this.dateNow.getFullYear(), this.selectedMonth + 1, 0).getDate()
     },
-    viewAttendees (day) {
-      console.log(day)
-    },
-    // selectDay (day) {
-    //   console.log('fire 1')
-    //   if (!this.currentlySelectedDates[this.selectedYear]) {
-    //     this.currentlySelectedDates[this.selectedYear] = {}
-    //     console.log('fire 2')
-    //   }
-    //   if (!this.currentlySelectedDates[this.selectedYear][this.selectedMonth]) {
-    //     this.currentlySelectedDates[this.selectedYear][this.selectedMonth] = {}
-    //     console.log('fire 3')
-    //   }
-    //   if (!this.currentlySelectedDates[this.selectedYear][this.selectedMonth][day]) {
-    //     this.currentlySelectedDates[this.selectedYear][this.selectedMonth][day] = {}
-    //     console.log('fire 4')
-    //   }
-    //   if (!this.currentlySelectedDates[this.selectedYear][this.selectedMonth][day].selected) {
-    //     this.currentlySelectedDates[this.selectedYear][this.selectedMonth][day].selected = true
-    //     console.log('fire 5')
-    //   } else {
-    //     this.currentlySelectedDates[this.selectedYear][this.selectedMonth][day].selected = false
-    //     console.log('fire 6')
-    //   }
-    //   console.log(this.currentlySelectedDates)
-    // },
     selectDay (day) {
       const id = `${day}-${this.selectedMonth}-${this.selectedYear}`
-      if (this.currentlySelectedDates[id]) {
-        this.$set(this.currentlySelectedDates, id)
-      } else {
-        this.$set(this.currentlySelectedDates, id, { selected: true })
-        // this.currentlySelectedDates[id] = {
-        //   selected: true
-        // }
-      }
-      console.log(this.currentlySelectedDates)
+      this.$emit('selectDay', id)
+    },
+    viewDate (day) {
+      this.$emit('viewDate', `${day}-${this.selectedMonth}-${this.selectedYear}`)
     }
   },
   created () {
@@ -153,7 +125,7 @@ export default {
 
 <style lang="scss" scoped>
 .calendar {
-  width: 50%;
+  max-width: $body-width;
   margin: 0 auto;
 
   &__controls {

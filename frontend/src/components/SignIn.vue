@@ -172,6 +172,7 @@ export default {
     },
     selectMode (mode) {
       this.mode = mode
+      this.$v.$reset()
     },
     handleLoginAction () {
       if (this.validateLoginData()) {
@@ -260,7 +261,7 @@ export default {
 
   &__mode {
     @include btn-reset;
-    font-size: $font-size-xxl;
+    font-size: $font-size-xl;
     border-bottom: 1px solid transparent;
     @include transition-basic;
 

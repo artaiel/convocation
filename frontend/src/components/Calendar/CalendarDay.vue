@@ -13,7 +13,7 @@
           <img v-if="userAvailable" :src="require(`@/assets/images/corner.png`)" alt="" class="day__user-available">
         </transition>
       </button>
-      <div class="day__attendees" @click="$emit('viewAttendees', day)">
+      <div class="day__attendees" @click="$emit('viewDay', day)">
         <div
           v-for="person in attendeesSum"
           :key="person"

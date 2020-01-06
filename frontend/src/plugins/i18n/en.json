@@ -13,5 +13,7 @@
   "homeLinkInfo": "This is a link to your event. Send it to your group members in order to allow them to select days that fit them best. That's where you can specify your own potential attendance, and where you can choose final event date(s).",
   "copy": "Copy",
   "linkCopied": "URL copied to clipboard!",
-  "linkCopyingFailed": "Please copy the link manually!"
+  "linkCopyingFailed": "Please copy the link manually!",
+  "defaultAvailability": "Anytime",
+  "name": "Name"
 }
