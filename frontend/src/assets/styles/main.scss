@@ -2,6 +2,9 @@
 $spacer: 10px;
 $nav-width: 60%;
 $body-width: 40%;
+$body-width-sm: 96%;
+$body-width-lg: 60%;
+$body-width-xl: 40%;
 
 // Breakpoints
 $size-xs: 480px !default;
@@ -9,6 +12,7 @@ $size-sm: 600px !default;
 $size-md: 840px !default;
 $size-lg: 960px !default;
 $size-xl: 1120px !default;
+$size-xxl: 1600px !default;
 
 // Font Sizes
 $font-size-sm: 12px;
@@ -20,6 +24,8 @@ $font-size-xxl: 28px;
 // Colors
 $c-dark: rgb(51, 51, 51);
 $c-blue: #1672DD;
+$c-blue-dark: rgb(4, 71, 148);
+$c-blue-light: rgb(28, 116, 20);
 $c-brown: rgb(88, 67, 46);
 
 // Global rules
@@ -83,6 +89,10 @@ input, textarea {
 
 @mixin transition-basic () {
   transition: all .21s ease-in-out;
+}
+
+@mixin transition-long () {
+  transition: all .31s ease-in-out;
 }
 
 .slide-down {

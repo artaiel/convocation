@@ -3,6 +3,7 @@
     <CalendarMonth
       :currentlySelectedDates="currentlySelectedDates"
       :eventData="placeholderData"
+      :viewedDate="viewedDate"
       @selectDay="selectDay"
       @viewDate="viewDate"
     />
@@ -32,7 +33,7 @@ export default {
     return {
       placeholderData,
       currentlySelectedDates: {},
-      viewedDate: null
+      viewedDate: ''
     }
   },
   methods: {
@@ -45,7 +46,11 @@ export default {
       console.log(this.currentlySelectedDates)
     },
     viewDate (date) {
-      this.viewedDate = date
+      if (this.viewedDate === date) {
+        this.viewedDate = ''
+      } else {
+        this.viewedDate = date
+      }
     },
     setAvailability (availability) {
       this.currentlySelectedDates[availability.date].hours = availability.hours

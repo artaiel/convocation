@@ -197,7 +197,7 @@ export default {
 .sign-in {
   width: 1000px;
   height: 665px;
-  background-image: url('~@/assets/images/booksm.png');
+  background-image: url('~@/assets/images/book.png');
   position: fixed;
   background-size: cover;
   top: 50%;

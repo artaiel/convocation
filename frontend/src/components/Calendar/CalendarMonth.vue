@@ -42,6 +42,7 @@
         :dayPassed="dayPassed(n)"
         :eventData="eventData"
         :currentlySelectedDates="currentlySelectedDates"
+        :viewedDate="viewedDate"
         @selectDay="selectDay"
         @viewDay="viewDate"
       />
@@ -67,6 +68,9 @@ export default {
     currentlySelectedDates: {
       type: Object,
       default: () => {}
+    },
+    viewedDate: {
+      type: String
     }
   },
   data () {
@@ -79,7 +83,7 @@ export default {
   },
   computed: {
     dateNow () {
-      return new Date()
+      return new Date(new Date().setHours(0,0,0,0))
     },
     monthName () {
       return months[this.selectedMonth]
@@ -100,11 +104,21 @@ export default {
       return new Date(this.selectedYear, this.selectedMonth, day) < this.dateNow
     },
     previousMonth () {
-      this.selectedMonth = this.selectedMonth - 1
+      if (this.selectedMonth === 0) {
+        this.selectedYear = this.selectedYear - 1
+        this.selectedMonth = 11
+      } else {
+        this.selectedMonth = this.selectedMonth - 1
+      }
       this.selectedMonthLength = new Date(this.dateNow.getFullYear(), this.selectedMonth + 1, 0).getDate()
     },
     nextMonth () {
-      this.selectedMonth = this.selectedMonth + 1
+      if (this.selectedMonth === 11) {
+        this.selectedYear = this.selectedYear + 1
+        this.selectedMonth = 0
+      } else {
+        this.selectedMonth = this.selectedMonth + 1
+      }
       this.selectedMonthLength = new Date(this.dateNow.getFullYear(), this.selectedMonth + 1, 0).getDate()
     },
     selectDay (day) {
@@ -125,8 +139,20 @@ export default {
 
 <style lang="scss" scoped>
 .calendar {
-  max-width: $body-width;
+  max-width: $body-width-sm;
   margin: 0 auto;
+
+  @media screen and (min-width: $size-sm) {
+    max-width: $body-width-sm;
+  }
+
+  @media screen and (min-width: $size-lg) {
+    max-width: $body-width-lg;
+  }
+
+  @media screen and (min-width: $size-xxl) {
+    max-width: $body-width-xl;
+  }
 
   &__controls {
     display: flex;
