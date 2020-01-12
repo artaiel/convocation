@@ -29,6 +29,7 @@
           required
           spellcheck="false"
           autocomplete="off"
+          maxlength="30"
         >
         <label
           for="eventName"
@@ -50,6 +51,7 @@
           required
           spellcheck="false"
           autocomplete="off"
+          maxlength="250"
         />
           <label
             for="eventDescription"
@@ -69,6 +71,7 @@
           required
           spellcheck="false"
           autocomplete="off"
+          maxlength="25"
         >
         <label
           for="eventOwner"
@@ -274,7 +277,7 @@ export default {
     position: absolute;
     display: block;
     width: 100%;
-    height: 50px;
+    height: 100%;
     background-color: rgb(0, 0, 0);
     left: 0;
     top: 0;

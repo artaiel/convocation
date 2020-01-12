@@ -5,64 +5,78 @@
   "dates": {
     "2020": {
       "0": {
-        "1": [
-          {
-            "name": "Teclis",
-            "time": "12:00-17:00"
-          },
-          {
-            "name": "Tyrion",
-            "time": ""
-          }
-        ],
-        "4": [
-          {
-            "name": "Teclis",
-            "time": ""
-          }
-        ],
-        "14": [
-          {
-            "name": "Teclis",
-            "time": ""
-          },
-          {
-            "name": "Tyrion",
-            "time": "15:00-22:00"
-          }
-        ]
+        "1": {
+          "selected": true,
+          "attendees": [
+            {
+              "name": "Teclis",
+              "time": "12:00-17:00"
+            },
+            {
+              "name": "Tyrion",
+              "time": ""
+            }
+          ]
+        },
+        "4": {
+          "attendees": [
+            {
+              "name": "Tyrion",
+              "time": ""
+            }
+          ]
+        },
+        "14": {
+          "attendees": [
+            {
+              "name": "Teclis",
+              "time": "12:00-17:00"
+            },
+            {
+              "name": "Tyrion",
+              "time": ""
+            }
+          ]
+        }
       },
       "1": {
-        "5": [
-          {
-            "name": "Teclis",
-            "time": "12:00-17:00"
-          },
-          {
-            "name": "Tyrion",
-            "time": ""
-          },
-          {
-            "name": "Malekith",
-            "time": ""
-          }
-        ],
-        "15": [
-          {
-            "name": "Teclis",
-            "time": ""
-          }
-        ],
-        "21": [
-          {
-            "name": "Teclis",
-            "time": ""
-          },
-          {
-            "name": "Tyrion",
-            "time": "15:00-22:00"
-          }
-        ]
+        "5": {
+          "selected": true,
+          "attendees": [
+            {
+              "name": "Teclis",
+              "time": "12:00-17:00"
+            },
+            {
+              "name": "Tyrion",
+              "time": ""
+            },
+            {
+              "name": "Malekith",
+              "time": ""
+            }
+          ]
+        },
+        "15": {
+          "attendees": [
+            {
+              "name": "Tyrion",
+              "time": ""
+            }
+          ]
+        },
+        "21": {
+          "attendees": [
+            {
+              "name": "Teclis",
+              "time": "12:00-17:00"
+            },
+            {
+              "name": "Tyrion",
+              "time": ""
+            }
+          ]
+        }
       }
     }
   },

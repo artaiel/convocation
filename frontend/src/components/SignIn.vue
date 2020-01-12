@@ -290,7 +290,7 @@ export default {
     }
 
     & > .event-input-label {
-      top: 50%;
+      top: 60%;
     }
 
     & > input, textarea {

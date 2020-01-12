@@ -44,10 +44,6 @@ export default {
     dayPassed: {
       type: Boolean
     },
-    daySelected: {
-      type: Boolean,
-      default: false
-    },
     eventData: {
       type: Object,
       default: () => {}
@@ -66,6 +62,9 @@ export default {
     }
   },
   computed: {
+    daySelected () {
+      return this?.eventData?.dates[this.year]?.[this.month]?.[this.day]?.selected
+    },
     digitFirst () {
       return String(this.day)[0]
     },
@@ -73,7 +72,7 @@ export default {
       return String(this.day)[1]
     },
     attendees () {
-      return this?.eventData?.dates[this.year]?.[this.month]?.[this.day]?.length || 0
+      return this?.eventData?.dates[this.year]?.[this.month]?.[this.day]?.attendees.length || 0
     },
     attendeesSum () {
       return this.userAvailable ? this.attendees + 1 : this.attendees
@@ -119,12 +118,23 @@ export default {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 5px;
+    left: 5px;
 
     & > img {
-      height: 20px;
+      height: 10px;
       mix-blend-mode: hard-light;
+    }
+
+    @media screen and (min-width: $size-sm) {
+      & > img {
+        height: 15px;
+      }
+    }
+
+    @media screen and (min-width: $size-xxl) {
+      top: 8px;
+      left: 8px;
     }
   }
 
@@ -133,7 +143,6 @@ export default {
     justify-content: center;
     align-items: center;
     height: 60%;
-    transition: all .3s ease-in-out;
     @include btn-reset;
 
     & > input {
@@ -159,8 +168,18 @@ export default {
     top: 0;
     right: 0;
     transform: rotate(90deg);
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
+
+    @media screen and (min-width: $size-sm) {
+      width: 25px;
+      height: 25px;
+    }
+
+    @media screen and (min-width: $size-xxl) {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   &__attendees {

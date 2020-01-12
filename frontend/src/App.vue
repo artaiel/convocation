@@ -50,19 +50,21 @@ export default {
   min-height: 100vh;
   background-image: url('~@/assets/images/background.jpg');
   background-repeat: no-repeat;
-  background-size: 105%;
+  background-size: 120%;
   background-position: center;
   padding-top: $spacer * 3;
 }
 
 .hero {
+  @media screen and (min-width: $size-xxl) {
+    display: block;
+  }
   @supports (mix-blend-mode: darken) {
     height: 50vh;
     position: fixed;
     right: 0;
     bottom: 0;
     @include blend-darken;
-    display: block;
   }
   display: none;
 }

@@ -1,16 +1,23 @@
 <template>
   <div class="event-controls">
     <div class="event-controls__info">
-      <div class="event-controls__event-name">
-        {{ eventData.name }}
+      <div class="event-controls__header">
+        <div class="event-controls__event-name">
+          {{ eventData.name }}
+        </div>
       </div>
-      <h4 class="event-controls__date">
-        {{ date }}
-      </h4>
+      <div class="event-controls__event-description">
+        {{ eventData.description }}
+      </div>
     </div>
     <div class="event-controls__attendees">
       <div v-if="viewedDate" class="event-controls__table-info">
-        Attendees and their availability
+        <div class="event-controls__table-title">
+          Attendees
+        </div>
+        <div class="event-controls__table-date">
+          {{ date }}
+        </div>
       </div>
       <div v-if="isUserAttending" class="event-controls__user">
         <input
@@ -19,7 +26,7 @@
           @input="$emit('setName', $event.target.value)"
           :value="translatedNickname"
           spellcheck="false"
-          maxlength="15"
+          maxlength="25"
         >
         <input
           type="text"
@@ -27,7 +34,7 @@
           :value="translatedUserHours"
           @input="updateHours"
           spellcheck="false"
-          maxlength="20"
+          maxlength="50"
         >
       </div>
       <div class="event-controls__others">
@@ -95,7 +102,7 @@ export default {
     attendees () {
       let date
       if (this.viewedDate) date = this.viewedDate.split('-')
-      return date ? this.eventData?.dates[date[2]]?.[date[1]]?.[date[0]] : null
+      return date ? this.eventData?.dates[date[2]]?.[date[1]]?.[date[0]]?.attendees : null
     }
   },
   methods: {
@@ -128,22 +135,40 @@ export default {
 
 <style lang="scss" scoped>
 .event-controls {
-  width: $body-width;
+  width: $body-width-sm;
   margin: 0 auto;
   padding-bottom: 2rem;
 
+  @media screen and (min-width: $size-lg) {
+    max-width: $body-width-lg;
+  }
+
+  @media screen and (min-width: $size-xxl) {
+    max-width: $body-width-xl;
+  }
+
   &__info {
-    display: flex;
-    justify-content: space-between;
     margin: $spacer * 3 0;
     align-items: center;
   }
 
-  &__table-info {
-    // text-align: center;
+  &__header {
+    // display: flex;
+    // flex-flow: column;
+    // justify-content: space-between;
+  }
+
+  &__attendees {
     font-size: $font-size-xl;
-    font-weight: 400;
+  }
+
+  &__table-info {
+    text-align: center;
+    font-size: inherit;
+    font-weight: 600;
     margin-bottom: $spacer * .5;
+    display: flex;
+    justify-content: space-between;
   }
 
   &__user {
@@ -168,7 +193,7 @@ export default {
   &__user-hours {
     width: 45%;
     border: none;
-    font-size: $font-size-xl;
+    font-size: inherit;
     color: $c-blue;
     padding: 0;
 
@@ -188,12 +213,7 @@ export default {
     font-weight: 700;
   }
 
-  &__date {
-    font-size: $font-size-xxl;
-  }
-
   &__person {
-    font-size: $font-size-xl;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;

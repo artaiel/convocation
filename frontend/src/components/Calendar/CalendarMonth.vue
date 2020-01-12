@@ -141,10 +141,8 @@ export default {
 .calendar {
   max-width: $body-width-sm;
   margin: 0 auto;
-
-  @media screen and (min-width: $size-sm) {
-    max-width: $body-width-sm;
-  }
+  display: relative;
+  z-index: 1;
 
   @media screen and (min-width: $size-lg) {
     max-width: $body-width-lg;
@@ -191,6 +189,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     margin: 1rem 0;
+    text-align: center;
   }
 
   &__day-name {
