@@ -174,8 +174,16 @@ export default {
 
 <style lang="scss">
 .home {
-  width: $body-width;
+  width: $body-width-sm;
   margin: 0 auto;
+
+  @media screen and (min-width: $size-lg) {
+    width: $body-width-lg;
+  }
+
+  @media screen and (min-width: $size-xxl) {
+    width: $body-width-xl;
+  }
 
   &__info {
     margin: 0 auto;

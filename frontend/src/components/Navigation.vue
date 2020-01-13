@@ -8,37 +8,74 @@
         Convocation
       </div>
     </a>
-    <div class="nav__links">
-      <router-link to="/" class="nav__links-item">Create event</router-link>
-      <router-link v-if="loggedIn" to="/my-events" class="nav__links-item">Your events</router-link>
-      <div
-        class="nav__languages"
-        @mouseleave="languageHovered = false"
-      >
-        <button
-          class="nav__links-item"
-          @mouseover="languageHovered = true"
-          @click="languageHovered = !languageHovered"
-        >
-          {{ $t('languageName') }}
-        </button>
-        <transition name="slide-down">
-          <div v-if="languageHovered" class="nav__languages-dropdown">
-            <button
-              v-for="languageCode in languageSelection"
-              :key="`lang-${languageCode}`"
-              class="nav__links-item"
-              @click="changeLocale(languageCode)"
-            >
-              {{ $t('languageName', languageCode) }}
-            </button>
-          </div>
-        </transition>
+    <transition name="sidebar-transition">
+      <div v-if="sidebarDisplayed" class="sidebar">
+        <ul class="sidebar__list">
+          <li @click="toggleSidebar" class="sidebar__item">
+            <router-link to="/">Create event</router-link>
+          </li>
+          <li @click="toggleSidebar" v-if="loggedIn" class="sidebar__item">
+            <router-link to="/my-events">Your events</router-link>
+          </li>
+          <li @click="toggleSidebar" class="sidebar__item">
+            <router-link to="/donate">Donate</router-link>
+          </li>
+          <li @click="toggleSidebar" class="sidebar__item">
+            <router-link to="/event">ex event</router-link>
+          </li>
+          <li @click="toggleSidebar" class="sidebar__item">
+            <button v-if="!loggedIn" class="sidebar__button" @click="$emit('clickSignIn')">Sign in</button>
+          </li>
+          <li @click="toggleSidebar" class="sidebar__item">
+            <button v-if="loggedIn" class="sidebar__button">Log out</button>
+          </li>
+        </ul>
+        <ul class="sidebar__list sidebar__languages">
+          <li v-for="languageCode in languageSelection" :key="`${languageCode}-mobile`" @click="chooseLanguageMobile(languageCode)">
+            {{ $t('languageName', languageCode) }}
+          </li>
+        </ul>
       </div>
-      <router-link to="/donate" class="nav__links-item">Donate</router-link>
-      <router-link to="/event" class="nav__links-item">exevent</router-link>
-      <button v-if="!loggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
-      <button v-if="loggedIn" class="nav__links-item">Log out</button>
+    </transition>
+    <div class="nav__desktop">
+      <div class="nav__links">
+        <router-link to="/" class="nav__links-item">Create event</router-link>
+        <router-link v-if="loggedIn" to="/my-events" class="nav__links-item">Your events</router-link>
+        <div
+          class="nav__languages"
+          @mouseleave="languageHovered = false"
+        >
+          <button
+            class="nav__links-item"
+            @mouseover="languageHovered = true"
+            @click="languageHovered = !languageHovered"
+          >
+            {{ $t('languageName') }}
+          </button>
+          <transition name="slide-down">
+            <div v-if="languageHovered" class="nav__languages-dropdown">
+              <button
+                v-for="languageCode in languageSelection"
+                :key="`lang-${languageCode}`"
+                class="nav__links-item"
+                @click="changeLocale(languageCode)"
+              >
+                {{ $t('languageName', languageCode) }}
+              </button>
+            </div>
+          </transition>
+        </div>
+        <router-link to="/donate" class="nav__links-item">Donate</router-link>
+        <router-link to="/event" class="nav__links-item">exevent</router-link>
+        <button v-if="!loggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
+        <button v-if="loggedIn" class="nav__links-item">Log out</button>
+      </div>
+    </div>
+    <div class="nav__mobile" @click="toggleSidebar">
+      <img
+        class="nav__mobile-icon"
+        :class="{'nav__mobile-icon--active': sidebarDisplayed }"
+        :src="require('@/assets/images/pen.png')" alt="">
     </div>
   </div>
 </template>
@@ -51,7 +88,8 @@ export default {
     return {
       languageHovered: false,
       loggedIn: false,
-      languages
+      languages,
+      sidebarDisplayed: false
     }
   },
   computed: {
@@ -63,6 +101,13 @@ export default {
     changeLocale (locale) {
       this.$i18n.locale = locale
       this.languageHovered = false
+    },
+    toggleSidebar () {
+      this.sidebarDisplayed = !this.sidebarDisplayed
+    },
+    chooseLanguageMobile (languageCode) {
+      this.changeLocale(languageCode)
+      this.toggleSidebar()
     }
   }
 }
@@ -70,14 +115,50 @@ export default {
 
 <style lang="scss" scoped>
 .nav {
+  width: $body-width-sm;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  width: $nav-width;
-  margin: 0 auto;
   margin-bottom: $spacer * 10;
+
+  @media screen and (min-width: $size-lg) {
+    width: $body-width-lg;
+  }
+
+  &__desktop {
+    display: none;
+
+    @media screen and (min-width: $size-md) {
+      display: flex;
+    }
+  }
+
+  &__mobile {
+    display: flex;
+    align-items: center;
+
+    @media screen and (min-width: $size-md) {
+      display: none;
+    }
+  }
+
+  &__mobile-icon {
+    width: $spacer * 5;
+    height: $spacer * 5;
+    mix-blend-mode: hard-light;
+    filter: drop-shadow(2px 2px 5px black);
+    cursor: pointer;
+
+    &--active {
+      mix-blend-mode: initial;
+      z-index: 4;
+    }
+  }
+
 
   &__logo {
     display: flex;
+    align-items: center;
   }
 
   &__logo-icon {
@@ -113,7 +194,7 @@ export default {
 
     &:hover {
       color: black;
-       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -130,6 +211,77 @@ export default {
     & > * {
       text-align: left;
     }
+  }
+}
+
+.sidebar {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: $c-brown;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  padding-top: $spacer * 5;
+
+  @media screen and (min-width: $size-md) {
+    display: none;
+  }
+
+  &__list {
+    list-style: none;
+    color: $c-light;
+    font-size: $font-size-lg;
+    padding: 2rem 0;
+  }
+
+  &__item {
+    & > a {
+      padding: $spacer $spacer * 3;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  &__button {
+    @include btn-reset;
+    font-size: inherit;
+    padding: $spacer $spacer * 3;
+    width: 100%;
+    text-align: left;
+  }
+
+  &__languages {
+    position: relative;
+
+    &::before {
+      content: "";
+      width: 15%;
+      left: $spacer * 3;
+      top: 0;
+      height: 1px;
+      background-color: wheat;
+      position: absolute;
+    }
+
+    & > li {
+      padding: $spacer $spacer * 3;
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.sidebar-transition {
+  &-enter-active {
+    transition: all 0.3s ease-in-out;
+  }
+  &-leave-active {
+    transition: all 0.3s ease-in-out;
+  }
+  &-enter,
+  &-leave-to {
+    transform: translateX(100%);
   }
 }
 </style>

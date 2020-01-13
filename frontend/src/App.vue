@@ -49,9 +49,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   background-image: url('~@/assets/images/background.jpg');
-  background-repeat: no-repeat;
-  background-size: 120%;
-  background-position: center;
+  background-position: top left;
   padding-top: $spacer * 3;
 }
 
