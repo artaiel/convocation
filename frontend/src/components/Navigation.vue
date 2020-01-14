@@ -10,6 +10,7 @@
     </a>
     <transition name="sidebar-transition">
       <div v-if="sidebarDisplayed" class="sidebar">
+        <img class="sidebar__icon" :src="require('@/assets/images/pen.png')"  @click="toggleSidebar" alt="Button toggling navigation menu">
         <ul class="sidebar__list">
           <li @click="toggleSidebar" class="sidebar__item">
             <router-link to="/">Create event</router-link>
@@ -74,7 +75,6 @@
     <div class="nav__mobile" @click="toggleSidebar">
       <img
         class="nav__mobile-icon"
-        :class="{'nav__mobile-icon--active': sidebarDisplayed }"
         :src="require('@/assets/images/pen.png')" alt="">
     </div>
   </div>
@@ -148,11 +148,6 @@ export default {
     mix-blend-mode: hard-light;
     filter: drop-shadow(2px 2px 5px black);
     cursor: pointer;
-
-    &--active {
-      mix-blend-mode: initial;
-      z-index: 4;
-    }
   }
 
 
@@ -228,6 +223,15 @@ export default {
     display: none;
   }
 
+  &__icon {
+    position: fixed;
+    width: $spacer * 5;
+    height: $spacer * 5;
+    cursor: pointer;
+    right: 2%;
+    top: $spacer * 3;
+  }
+
   &__list {
     list-style: none;
     color: $c-light;
@@ -281,7 +285,7 @@ export default {
   }
   &-enter,
   &-leave-to {
-    transform: translateX(100%);
+    opacity: 0;
   }
 }
 </style>

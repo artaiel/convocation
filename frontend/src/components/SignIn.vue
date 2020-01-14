@@ -222,14 +222,12 @@ export default {
   &__right {
     flex-flow: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     padding-top: $spacer * 7.5;
-    padding-left: $spacer * 5;
+    padding-right: $spacer * 5;
 
     & > button {
-      margin: 0;
       margin-top: auto;
-      margin-left: 25%;
       margin-bottom: 20%;
     }
   }

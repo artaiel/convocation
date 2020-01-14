@@ -191,8 +191,12 @@ export default {
   }
 
   &__header {
-    font-size: $font-size-xxl;
+    font-size: $font-size-xl;
     margin-bottom: $spacer * 2;
+
+    @media screen and (min-width: $size-md) {
+      font-size: $font-size-xxl;
+    }
   }
 
   &__details {
@@ -215,12 +219,16 @@ export default {
   position: relative;
 
   & > label {
-    font-size: $font-size-xl;
+    font-size: $font-size-lg;
     position: absolute;
     left: $spacer * 1;
     transform: translateY(-50%);
     @include transition-basic;
     cursor: text;
+
+    @media screen and (min-width: $size-md) {
+      font-size: $font-size-xl;
+    }
   }
 
   & > .event-input-label {
@@ -233,6 +241,11 @@ export default {
   & > input, textarea {
     width: 100%;
     padding: $spacer * .3 $spacer;
+    font-size: $font-size-lg;
+
+    @media screen and (min-width: $size-md) {
+      font-size: $font-size-xl;
+    }
 
     &:focus {
       border: 1px solid $c-blue;
@@ -259,46 +272,46 @@ export default {
   }
 }
 
-.main-btn {
-  @include btn-reset;
-  display: block;
-  color: white;
-  background: linear-gradient(180deg, #554834 0%, rgba(164, 105, 1, 0) 493.48%, #503F23 493.48%, rgba(255, 255, 255, 0) 493.48%);
-  border: 2px solid $c-brown;
-  margin: 0 auto;
-  padding: $spacer $spacer * 4;
-  color: #FFEDCA;
-  font-size: $font-size-xxl;
-  @include transition-basic;
-  position: relative;
+// .main-btn {
+//   @include btn-reset;
+//   display: block;
+//   color: white;
+//   background: linear-gradient(180deg, #554834 0%, rgba(164, 105, 1, 0) 493.48%, #503F23 493.48%, rgba(255, 255, 255, 0) 493.48%);
+//   border: 2px solid $c-brown;
+//   margin: 0 auto;
+//   padding: $spacer $spacer * 4;
+//   color: #FFEDCA;
+//   font-size: $font-size-xxl;
+//   @include transition-basic;
+//   position: relative;
 
-  &:hover {
-    color: white;
-  };
+//   &:hover {
+//     color: white;
+//   };
 
-  &:hover::after {
-    opacity: .15;
-  };
+//   &:hover::after {
+//     opacity: .15;
+//   };
 
-  &::after {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0, 0, 0);
-    left: 0;
-    top: 0;
-    opacity: 0;
-    @include transition-basic;
-    z-index: 1;
-  }
+//   &::after {
+//     content: "";
+//     position: absolute;
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     background-color: rgb(0, 0, 0);
+//     left: 0;
+//     top: 0;
+//     opacity: 0;
+//     @include transition-basic;
+//     z-index: 1;
+//   }
 
-  & > span {
-    position: relative;
-    z-index: 2;
-  }
-}
+//   & > span {
+//     position: relative;
+//     z-index: 2;
+//   }
+// }
 
 .form-alert {
   & > input, textarea {
