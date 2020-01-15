@@ -43,7 +43,6 @@ export default {
       } else {
         this.$set(this.currentlySelectedDates, id, { selected: true })
       }
-      console.log(this.currentlySelectedDates)
     },
     viewDate (date) {
       if (this.viewedDate === date) {
