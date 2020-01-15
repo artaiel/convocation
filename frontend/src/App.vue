@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" :class="{ 'app--darken-background': signInModalVisible }">
     <Navigation @clickSignIn="toggleSignIn"/>
     <router-view/>
     <img class="hero" :src="heroImage"/>
@@ -50,7 +50,17 @@ export default {
   min-height: 100vh;
   background-image: url('~@/assets/images/background.jpg');
   background-position: top left;
-  padding-top: $spacer * 3;
+  padding: $spacer * 3 0;
+
+  &--darken-background::after {
+    content: "";
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($c-brown, 0.95);
+    top: 0;
+    left: 0;
+  }
 }
 
 .hero {

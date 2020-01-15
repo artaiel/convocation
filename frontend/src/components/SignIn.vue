@@ -195,9 +195,7 @@ export default {
 
 <style lang="scss" scoped>
 .sign-in {
-  width: 1000px;
-  height: 665px;
-  background-image: url('~@/assets/images/book.png');
+  background-image: url('~@/assets/images/background.jpg');
   position: fixed;
   background-size: cover;
   top: 50%;
@@ -205,13 +203,36 @@ export default {
   transform: translate(-50%, -50%);
   z-index: 2;
   display: flex;
+  width: 80vw;
+  height: 80vh;
+
+  &__left {
+    display: none;
+
+    @media screen and (min-width: $size-md) {
+      display: flex;
+    }
+  }
+
+  &__right {
+    display: flex;
+  }
+
+  @media screen and (min-width: $size-md) {
+    width: 1000px;
+    height: 665px;
+    background-image: url('~@/assets/images/book.png');
+  }
 
   &__left, &__right {
-    width: 50%;
+    width: 100%;
     height: 100%;
-    display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    @media screen and (min-width: $size-md) {
+      width: 50%;
+    }
   }
 
   &__left > img {
@@ -223,12 +244,22 @@ export default {
     flex-flow: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: $spacer * 7.5;
-    padding-right: $spacer * 5;
+    padding-top: $spacer * 7;
 
     & > button {
       margin-top: auto;
-      margin-bottom: 20%;
+      margin-bottom: 10%;
+      font-size: $font-size-lg;
+
+      @media screen and (min-width: $size-md) {
+        margin-bottom: 20%;
+        font-size: $font-size-xl;
+      }
+    }
+
+    @media screen and (min-width: $size-md) {
+      padding-top: $spacer * 7.5;
+      padding-right: $spacer * 5;
     }
   }
 
@@ -243,12 +274,19 @@ export default {
   }
 
   &__exit {
-    width: $spacer * 4;
-    height: $spacer * 4;
+    width: $spacer * 3;
+    height: $spacer * 3;
     position: absolute;
-    top: $spacer * 7.5;
-    right: $spacer * 7.5;
+    top: $spacer * 2.5;
+    right: $spacer * 2.5;
     cursor: pointer;
+
+    @media screen and (min-width: $size-md) {
+      width: $spacer * 4;
+      height: $spacer * 4;
+      top: $spacer * 7.5;
+      right: $spacer * 7.5;
+    }
   }
 
   &__modes {
@@ -276,7 +314,11 @@ export default {
 
   &__input {
     position: relative;
-    margin-bottom: $spacer * 3;
+    margin-bottom: $spacer * 1.5;
+
+    @media screen and (min-width: $size-md) {
+      margin-bottom: $spacer * 3;
+    }
 
     & > label {
       font-size: $font-size-lg;

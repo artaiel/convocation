@@ -237,6 +237,7 @@ export default {
     color: $c-light;
     font-size: $font-size-lg;
     padding: 2rem 0;
+    text-align: center;
   }
 
   &__item {
@@ -252,7 +253,7 @@ export default {
     font-size: inherit;
     padding: $spacer $spacer * 3;
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   &__languages {
@@ -261,7 +262,8 @@ export default {
     &::before {
       content: "";
       width: 15%;
-      left: $spacer * 3;
+      left: 50%;
+      transform: translateX(-50%);
       top: 0;
       height: 1px;
       background-color: wheat;
