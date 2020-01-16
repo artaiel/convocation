@@ -13,12 +13,18 @@
           <img v-if="userAvailable" :src="require(`@/assets/images/corner.png`)" alt="" class="day__user-available">
         </transition>
       </button>
-      <div class="day__attendees" :class="{ 'day__attendees--selected': isDayCurrentlyViewed }" @click="viewDay">
+      <div v-if="shouldDisplayFullView" class="day__attendees" :class="{ 'day__attendees--selected': isDayCurrentlyViewed }" @click="viewDay">
         <div
           v-for="person in attendeesSum"
           :key="person"
           class="day__person"
         />
+      </div>
+      <div v-else-if="attendeesSum > 0" class="day__person-count" :class="{ 'day__attendees--selected': isDayCurrentlyViewed }" @click="viewDay">
+        <img src="@/assets/images/helmet.png" alt="" class="day__person-one">
+        <div class="day__person-text">
+          {{ attendeesSum }}
+        </div>
       </div>
     </template>
   </div>
@@ -84,6 +90,9 @@ export default {
     },
     isDayCurrentlyViewed () {
       return `${this.day}-${this.month}-${this.year}` === this.viewedDate
+    },
+    shouldDisplayFullView () {
+      return this.attendees < 9 && window.innerWidth > 600
     }
   },
   methods: {
@@ -210,6 +219,38 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
     mix-blend-mode: hard-light;
+  }
+
+  &__person-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+  }
+
+  &__person-one {
+    width: $spacer * 1.5;
+    @include blend-hard-light;
+
+    @media screen and (min-width: $size-sm) {
+      width: $spacer * 2;
+    }
+
+    @media screen and (min-width: $size-lg) {
+      width: $spacer * 3;
+    }
+  }
+
+  &__person-text {
+    font-size: $font-size-lg;
+    margin-left: 3px;
+    transform: translateY(-1px);
+
+    @media screen and (min-width: $size-sm) {
+      font-size: $font-size-xxl;
+      transform: translateY(-3px);
+      margin-left: 7px;
+    }
   }
 
   &--placeholder {

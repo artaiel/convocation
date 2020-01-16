@@ -191,7 +191,7 @@ export default {
   }
 
   &__header {
-    font-size: $font-size-xl;
+    font-size: $font-size-lg;
     margin-bottom: $spacer * 2;
 
     @media screen and (min-width: $size-md) {
@@ -200,7 +200,11 @@ export default {
   }
 
   &__details {
-    font-size: $font-size-lg;
+    font-size: $font-size;
+
+    @media screen and (min-width: $size-md) {
+      font-size: $font-size-lg;
+    }
 
     & > p {
       margin-bottom: $spacer * 2;
@@ -271,47 +275,6 @@ export default {
     resize: none;
   }
 }
-
-// .main-btn {
-//   @include btn-reset;
-//   display: block;
-//   color: white;
-//   background: linear-gradient(180deg, #554834 0%, rgba(164, 105, 1, 0) 493.48%, #503F23 493.48%, rgba(255, 255, 255, 0) 493.48%);
-//   border: 2px solid $c-brown;
-//   margin: 0 auto;
-//   padding: $spacer $spacer * 4;
-//   color: #FFEDCA;
-//   font-size: $font-size-xxl;
-//   @include transition-basic;
-//   position: relative;
-
-//   &:hover {
-//     color: white;
-//   };
-
-//   &:hover::after {
-//     opacity: .15;
-//   };
-
-//   &::after {
-//     content: "";
-//     position: absolute;
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgb(0, 0, 0);
-//     left: 0;
-//     top: 0;
-//     opacity: 0;
-//     @include transition-basic;
-//     z-index: 1;
-//   }
-
-//   & > span {
-//     position: relative;
-//     z-index: 2;
-//   }
-// }
 
 .form-alert {
   & > input, textarea {

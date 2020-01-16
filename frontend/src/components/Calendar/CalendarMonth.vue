@@ -155,9 +155,13 @@ export default {
   &__controls {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: $body-width-sm;
     margin: 0 auto;
     margin-bottom: 3rem;
+
+    @media screen and (min-width: $size-lg) {
+      width: 50%;
+    }
   }
 
   &__month-change {
@@ -204,9 +208,13 @@ export default {
     &::before {
       content: '';
       width: 0;
-      padding-bottom: 100%;
+      padding-bottom: 120%;
       grid-row: 1 / 1;
       grid-column: 1 / 1;
+
+      @media screen and (min-width: $size-md) {
+        padding-bottom: 100%;
+      }
     }
 
     & > *:first-child {

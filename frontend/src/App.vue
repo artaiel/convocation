@@ -50,7 +50,11 @@ export default {
   min-height: 100vh;
   background-image: url('~@/assets/images/background.jpg');
   background-position: top left;
-  padding: $spacer * 3 0;
+  padding: $spacer 0;
+
+  @media screen and (min-width: $size-sm) {
+    padding: $spacer * 3 0;
+  }
 
   &--darken-background::after {
     content: "";

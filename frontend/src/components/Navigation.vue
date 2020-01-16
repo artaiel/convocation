@@ -119,7 +119,11 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  margin-bottom: $spacer * 10;
+  margin-bottom: $spacer * 2;
+
+  @media screen and (min-width: $size-md) {
+    margin-bottom: $spacer * 10;
+  }
 
   @media screen and (min-width: $size-lg) {
     width: $body-width-lg;
@@ -235,7 +239,7 @@ export default {
   &__list {
     list-style: none;
     color: $c-light;
-    font-size: $font-size-lg;
+    font-size: $font-size-xl;
     padding: 2rem 0;
     text-align: center;
   }
