@@ -152,19 +152,18 @@ export default {
           eventEmail: this.eventEmail
         })
       }
-      console.log(this.validateFormData())
     },
     validateFormData () {
-      console.log('submit!')
+      // console.log('submit!')
       this.$v.$touch()
       if (this.$v.$invalid) {
         // this.submitStatus = 'ERROR'
-        console.log('error')
+        // console.log('error')
         return false
       } else {
         // do your submit logic here
         // this.submitStatus = 'PENDING'
-        console.log('ready to submit')
+        // console.log('ready to submit')
         return true
       }
     }
