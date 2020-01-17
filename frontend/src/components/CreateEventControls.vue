@@ -24,6 +24,7 @@
           class="event-controls__user-nickname"
           type="text"
           @input="$emit('setName', $event.target.value)"
+          @focus="$event.target.select()"
           :value="translatedNickname"
           spellcheck="false"
           maxlength="25"
@@ -33,6 +34,7 @@
           class="event-controls__user-hours"
           :value="translatedUserHours"
           @input="updateHours"
+          @focus="$event.target.select()"
           spellcheck="false"
           maxlength="50"
         >
@@ -159,7 +161,11 @@ export default {
   }
 
   &__attendees {
-    font-size: $font-size-xl;
+    font-size: $font-size-lg;
+
+    @media screen and (min-width: $size-md) {
+      font-size: $font-size-xl;
+    }
   }
 
   &__table-info {
@@ -245,8 +251,8 @@ export default {
     background-size: 100%;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    width: 100px;
-    height: 150px;
+    width: 75px;
+    height: 100px;
     @include blend-hard-light;
     @include transition-long;
 
@@ -267,6 +273,11 @@ export default {
       opacity: 0;
       transform: translateY(5px);
       @include transition-long;
+    }
+
+    @media screen and (min-width: $size-md) {
+      width: 100px;
+      height: 150px;
     }
   }
 

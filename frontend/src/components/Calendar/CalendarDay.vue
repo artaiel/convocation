@@ -10,7 +10,7 @@
       </div>
       <button class="day__select" :class="{ 'day__selected': daySelected, 'day__select--hoverable': !dayPassed }" @click="selectDay">
         <transition>
-          <img v-if="userAvailable" :src="require(`@/assets/images/corner.png`)" alt="" class="day__user-available">
+          <img v-if="userAvailable" src="@/assets/images/corner.png" alt="" class="day__user-available">
         </transition>
       </button>
       <div v-if="shouldDisplayFullView" class="day__attendees" :class="{ 'day__attendees--selected': isDayCurrentlyViewed }" @click="viewDay">
@@ -225,7 +225,13 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50%;
+    height: 40%;
+    @include transition-basic;
+
+    &:hover, &:focus {
+      background-color: rgba(49, 49, 49, 0.05);
+      box-shadow: 0px 2px 10px $c-dark;
+    }
   }
 
   &__person-one {

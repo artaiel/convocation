@@ -179,6 +179,7 @@ export default {
         console.log('failed')
       } else {
         console.log('passed')
+        this.$emit('toggleLoading')
       }
     },
     validateLoginData () {

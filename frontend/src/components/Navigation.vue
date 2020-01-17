@@ -233,7 +233,7 @@ export default {
     height: $spacer * 5;
     cursor: pointer;
     right: 2%;
-    top: $spacer * 3;
+    top: $spacer;
   }
 
   &__list {
