@@ -1,0 +1,121 @@
+{
+  "12345": {
+    "name": "Mortal Empires conquest",
+    "description": "Conquering this rat infested jungle",
+    "owner": "ObjectId",
+    "dates": {
+      "2020": {
+        "0": {
+          "1": {
+            "selected": true,
+            "attendees": [
+              {
+                "name": "Teclis",
+                "time": "12:00-17:00"
+              },
+              {
+                "name": "Tyrion",
+                "time": ""
+              }
+            ]
+          },
+          "4": {
+            "attendees": [
+              {
+                "name": "Tyrion",
+                "time": ""
+              }
+            ]
+          },
+          "14": {
+            "attendees": [
+              {
+                "name": "Teclis",
+                "time": "12:00-17:00"
+              },
+              {
+                "name": "Tyrion",
+                "time": ""
+              }
+            ]
+          }
+        },
+        "1": {
+          "5": {
+            "selected": true,
+            "attendees": [
+              {
+                "name": "Teclis",
+                "time": "12:00-17:00"
+              },
+              {
+                "name": "Tyrion",
+                "time": ""
+              },
+              {
+                "name": "Malekith",
+                "time": ""
+              },
+              {
+                "name": "Teclis",
+                "time": "12:00-17:00"
+              },
+              {
+                "name": "Tyrion",
+                "time": ""
+              },
+              {
+                "name": "Malekith",
+                "time": ""
+              },
+              {
+                "name": "Teclis",
+                "time": "12:00-17:00"
+              },
+              {
+                "name": "Tyrion",
+                "time": ""
+              },
+              {
+                "name": "Malekith",
+                "time": ""
+              }
+            ]
+          },
+          "15": {
+            "attendees": [
+              {
+                "name": "Tyrion",
+                "time": ""
+              }
+            ]
+          },
+          "21": {
+            "attendees": [
+              {
+                "name": "Teclis",
+                "time": "12:00-17:00"
+              },
+              {
+                "name": "Tyrion",
+                "time": ""
+              }
+            ]
+          }
+        }
+      }
+    },
+    "attendees": [
+      {
+        "id": "asgfsd34634ga",
+        "name": "Teclis",
+        "user": "?ref to actual user if exists user?"
+      },
+      {
+        "id": "6w3434634ga",
+        "name": "Tyrion",
+        "user": "?ref to actual user if exists user?"
+      }
+    ]
+  }
+}

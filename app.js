@@ -1,12 +1,16 @@
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser');
 
 const compression = require('compression')
 
+const eventsRoutes = require('./routes/events')
+const { mongoConnect } = require('./db/db')
+
 const app = express()
-const router = express.Router();
 
 app.use(compression())
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // allow fetching data on local default vue dev server
 app.use((req, res, next) => {
@@ -14,13 +18,11 @@ app.use((req, res, next) => {
   next()
 })
 
-router.get('/api', (req, res, next) => {
-  res.json({ "attendee": "Ana" })
-})
-
-app.use(router)
+app.use(eventsRoutes)
 
 app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
-// app.use(express.static(path.join(__dirname, 'test')))
 
-app.listen(process.env.PORT || 5000)
+
+mongoConnect(() => {
+  app.listen(process.env.PORT || 5000)
+})
