@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const compression = require('compression')
 
+const authRoutes = require('./routes/auth')
 const eventsRoutes = require('./routes/events')
 const { mongoConnect } = require('./db/db')
 
@@ -18,7 +19,18 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(authRoutes)
 app.use(eventsRoutes)
+
+app.use((error, req, res, next) => {
+  const status = error.statusCode || 500
+  const message = error.message
+  const data = error.data
+  res.status(status).json({
+    message,
+    data
+  })
+})
 
 app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
 
