@@ -128,6 +128,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
+import apiClient from '@/lib/APIClient'
 
 export default {
   mixins: [validationMixin],
@@ -174,12 +175,16 @@ export default {
       this.mode = mode
       this.$v.$reset()
     },
-    handleLoginAction () {
+    async handleLoginAction () {
       if (this.validateLoginData()) {
         console.log('failed')
       } else {
-        console.log('passed')
         this.$emit('toggleLoading')
+        const test = await apiClient.call('login', {
+          userIdentifier: this.username,
+          password: this.password
+        })
+        console.log(test)
       }
     },
     validateLoginData () {
