@@ -61,10 +61,17 @@ exports.login = async (req, res, next) => {
     res
       .status(200)
       .cookie('tau', token, { httpOnly: true, maxAge: 2592000000 }) // 1000 * 60 * 60 * 24 * 30
-      .cookie('ua', true, { maxAge: 2592000000 })
+      .cookie('ccua', true, { maxAge: 2592000000 })
       .json({ msg: 'logged in' })
   } catch (err) {
     next(err)
   }
 }
 
+exports.logout = (req, res, next) => {
+  res
+    .status(200)
+    .clearCookie('tau')
+    .clearCookie('ccua')
+    .json({ msg: 'log out' })
+}

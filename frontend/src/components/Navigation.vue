@@ -15,7 +15,7 @@
           <li @click="toggleSidebar" class="sidebar__item">
             <router-link to="/">Create event</router-link>
           </li>
-          <li @click="toggleSidebar" v-if="loggedIn" class="sidebar__item">
+          <li @click="toggleSidebar" v-if="userLoggedIn" class="sidebar__item">
             <router-link to="/my-events">Your events</router-link>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
@@ -25,10 +25,10 @@
             <router-link to="/event">ex event</router-link>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
-            <button v-if="!loggedIn" class="sidebar__button" @click="$emit('clickSignIn')">Sign in</button>
+            <button v-if="!userLoggedIn" class="sidebar__button" @click="$emit('clickSignIn')">Sign in</button>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
-            <button v-if="loggedIn" class="sidebar__button">Log out</button>
+            <button v-if="userLoggedIn" class="sidebar__button">Log out</button>
           </li>
         </ul>
         <ul class="sidebar__list sidebar__languages">
@@ -41,7 +41,7 @@
     <div class="nav__desktop">
       <div class="nav__links">
         <router-link to="/" class="nav__links-item">Create event</router-link>
-        <router-link v-if="loggedIn" to="/my-events" class="nav__links-item">Your events</router-link>
+        <router-link v-if="userLoggedIn" to="/my-events" class="nav__links-item">Your events</router-link>
         <div
           class="nav__languages"
           @mouseleave="languageHovered = false"
@@ -68,8 +68,8 @@
         </div>
         <router-link to="/donate" class="nav__links-item">Donate</router-link>
         <router-link to="/event" class="nav__links-item">exevent</router-link>
-        <button v-if="!loggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
-        <button v-if="loggedIn" class="nav__links-item">Log out</button>
+        <button v-if="!userLoggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
+        <button v-if="userLoggedIn" class="nav__links-item" @click="logOut">Log out</button>
       </div>
     </div>
     <div class="nav__mobile" @click="toggleSidebar">
@@ -81,13 +81,19 @@
 </template>
 
 <script>
+import apiClient from '@/lib/APIClient'
 import { languages } from '@/lib/constants'
 
 export default {
+  props: {
+    userLoggedIn: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       languageHovered: false,
-      loggedIn: false,
       languages,
       sidebarDisplayed: false
     }
@@ -108,6 +114,11 @@ export default {
     chooseLanguageMobile (languageCode) {
       this.changeLocale(languageCode)
       this.toggleSidebar()
+    },
+    async logOut () {
+      await apiClient.call('logout')
+      this.$emit('checkIfLoggedIn')
+      if (this.$route.path !== '/') this.$router.push({ path: '/' })
     }
   }
 }

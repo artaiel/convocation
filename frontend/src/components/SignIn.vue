@@ -180,11 +180,13 @@ export default {
         console.log('failed')
       } else {
         this.$emit('toggleLoading')
-        const test = await apiClient.call('login', {
+        await apiClient.call('login', {
           userIdentifier: this.username,
           password: this.password
         })
-        console.log(test)
+        this.$emit('checkIfLoggedIn')
+        this.$emit('toggleLoading')
+        this.$emit('closeSignIn')
       }
     },
     validateLoginData () {

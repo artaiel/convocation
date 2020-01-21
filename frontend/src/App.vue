@@ -1,10 +1,20 @@
 <template>
   <div class="app" :class="{ 'app--darken-background': signInModalVisible }">
-    <Navigation @clickSignIn="toggleSignIn"/>
+    <Navigation
+      :userLoggedIn="userLoggedIn"
+      @clickSignIn="toggleSignIn"
+      @checkIfLoggedIn="checkIfLoggedIn"
+    />
     <router-view/>
     <img class="hero" :src="heroImage"/>
     <transition name="fade">
-      <SignIn v-if="signInModalVisible" @close="closeSignIn" @toggleLoading="toggleLoading"/>
+      <SignIn
+        v-if="signInModalVisible"
+        @close="closeSignIn"
+        @toggleLoading="toggleLoading"
+        @closeSignIn="closeSignIn"
+        @checkIfLoggedIn="checkIfLoggedIn"
+      />
     </transition>
     <transition name="fade">
       <div v-if="loading" class="loader-background">
@@ -17,6 +27,7 @@
 <script>
 import Navigation from '@/components/Navigation'
 import SignIn from '@/components/SignIn'
+import { isLoggedIn } from '@/lib/auth.js'
 
 export default {
   components: {
@@ -26,7 +37,8 @@ export default {
   data () {
     return {
       signInModalVisible: false,
-      loading: false
+      loading: false,
+      userLoggedIn: false
     }
   },
   computed: {
@@ -43,7 +55,13 @@ export default {
     },
     toggleLoading () {
       this.loading = !this.loading
+    },
+    checkIfLoggedIn () {
+      this.userLoggedIn = isLoggedIn()
     }
+  },
+  mounted () {
+    this.checkIfLoggedIn()
   }
 }
 </script>
@@ -96,7 +114,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(245, 245, 245, 0.4);
+  background-color: transparent;
   z-index: 2;
 }
 

@@ -8,6 +8,12 @@ const actionDefs = {
       method: 'POST',
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/login' : '/auth/login'
     }
+  },
+  'logout' () {
+    return {
+      method: 'GET',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/logout' : '/auth/logout'
+    }
   }
 }
 
@@ -16,14 +22,21 @@ class ApiClient {
     this.headers = { ...defaultHeaders }
   }
 
-  call (action, data = {} ) {
+  call (action, data ) {
     const { method, endpoint } = actionDefs[action]()
+    if (method !== 'GET') {
+      return fetch(endpoint, {
+        method: method,
+        headers: defaultHeaders,
+        credentials: 'include',
+        body: JSON.stringify(data)
+      })
+    }
     return fetch(endpoint, {
-      method: method,
-      headers: defaultHeaders,
-      credentials: 'include',
-      body: JSON.stringify(data)
-    })
+        method: method,
+        headers: defaultHeaders,
+        credentials: 'include'
+      })
   }
 }
 
