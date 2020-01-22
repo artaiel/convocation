@@ -3,10 +3,11 @@ const mongodb = require('mongodb')
 const ObjectId = mongodb.ObjectId
 
 class Event {
-  constructor (name, description, ownerId, dates, attendees) {
-    this.name = name
+  constructor (eventName, description, ownerId, ownerName, dates, attendees) {
+    this.eventName = eventName
     this.description = description
     this.ownerId = ownerId
+    this.ownerName = ownerName
     this.dates = dates
     this.attendees = attendees
   }
@@ -16,7 +17,8 @@ class Event {
     let dbUpdated = db.collection('events').insertOne(this)
     return dbUpdated
       .then(result => {
-        console.log(result)
+        // console.log(result)
+        return result
       })
       .catch(err => {
         console.log(err)

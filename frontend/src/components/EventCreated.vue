@@ -70,7 +70,6 @@ export default {
 <style lang="scss">
 .home {
   &__link {
-    width: $body-width;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;

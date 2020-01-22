@@ -3,6 +3,12 @@ const defaultHeaders = {
 }
 
 const actionDefs = {
+  'createEvent' () {
+    return {
+      method: 'POST',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/create' : '/event/create'
+    }
+  },
   'login' () {
     return {
       method: 'POST',

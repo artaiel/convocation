@@ -3,13 +3,14 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const mongodb = require('mongodb')
 const { getDB } = require('../db/db')
+const ObjectId = mongodb.ObjectId
 
 class User {
-  constructor(username, email, password, eventsOwned) {
+  constructor(username, email, password) {
     this.username = username
     this.email = email
     this.password = password
-    this.eventsOwned = eventsOwned
+    this.eventsOwned = []
   }
 
   createUser () {
@@ -32,6 +33,16 @@ class User {
         { email: usernameOrEmail }
       ]
     })
+  }
+
+  static addUserEventsOwned (userId, eventId) {
+    const db = getDB()
+    return db
+      .collection('users')
+      .updateOne(
+        { _id: ObjectId(userId) },
+        { $push: { "eventsOwned": eventId }}
+      )
   }
 }
 

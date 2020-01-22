@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const Event = require('../models/event')
+const User = require('../models/user')
 
 // exports.getEvent = (req, res, next) => {
 //   const eventId = req.params.eventId
@@ -36,22 +37,24 @@ exports.getEvent = (req, res, next) => {
 }
 
 
-exports.createEvent = (req, res, next) => {
-  console.log(req.body)
-  const name = req.body.name
-  const description = req.body.description
-  const ownerId = req.body.ownerId
-  const dates = req.body.dates
-  const attendees = req.body.attendees
-  const event = new Event(name, description, ownerId, dates, attendees)
-  event
-    .save()
-    .then(res => {
-      console.log(res)
+exports.createEvent = async (req, res, next) => {
+  try {
+    const ownerName = req.body.eventOwner
+    const description = req.body.eventDescription
+    const eventName = req.body.eventName
+    const ownerId = req.userId ? req.userId : null
+    const event = new Event(eventName, description, ownerId, ownerName)
+    const newEventData = await event.save()
+    const updatedUser = await User.addUserEventsOwned(ownerId, newEventData.insertedId)
+    console.log(newEventData.insertedId)
+    console.log(updatedUser)
+    res.status(200).json({
+      eventId: newEventData.insertedId
     })
-    .catch(err => {
-      console.log(err)
-    })
+  } catch (error) {
+    err.status = 500
+    next(error)
+  }
 }
 
 exports.deleteEvent = (req, res, next) => {

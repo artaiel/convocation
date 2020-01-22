@@ -83,7 +83,7 @@
           </span>
         </label>
       </div>
-      <div
+      <!-- <div
         class="event-input"
         :class="{ 'form-alert': $v.eventEmail.$error }"
       >
@@ -104,7 +104,7 @@
             - a valid email required
           </span>
         </label>
-      </div>
+      </div> -->
       <button class="main-btn" @click="handleEventCreation">
         <span>
           Create event
@@ -116,7 +116,8 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength, email } from 'vuelidate/lib/validators'
+// import { required, minLength, email } from 'vuelidate/lib/validators'
+import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
   mixins: [validationMixin],
@@ -128,18 +129,18 @@ export default {
     eventOwner: {
       required,
       minLength: minLength(2)
-    },
-    eventEmail: {
-      required,
-      email
-    },
+    }
+    // eventEmail: {
+    //   required,
+    //   email
+    // },
   },
   data () {
     return {
       eventName: null,
       eventDescription: null,
-      eventOwner: null,
-      eventEmail: null
+      eventOwner: null
+      // eventEmail: null
     }
   },
   methods: {
@@ -148,8 +149,8 @@ export default {
         this.$emit('dataSubmitted', {
           eventName: this.eventName,
           eventDescription: this.eventDescription,
-          eventOwner: this.eventOwner,
-          eventEmail: this.eventEmail
+          eventOwner: this.eventOwner
+          // eventEmail: this.eventEmail
         })
       }
     },

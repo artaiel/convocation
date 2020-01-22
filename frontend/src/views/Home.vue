@@ -8,6 +8,7 @@
 <script>
 import CreateEvent from '@/components/CreateEvent'
 import EventCreated from '@/components/EventCreated'
+import apiClient from '@/lib/APIClient'
 
 export default {
   components: {
@@ -21,8 +22,9 @@ export default {
     }
   },
   methods: {
-    handleSubmittedData (eventData) {
+    async handleSubmittedData (eventData) {
       this.eventData = eventData
+      await apiClient.call('createEvent', eventData)
       this.eventCreatedSuccessfully = true
     }
   }

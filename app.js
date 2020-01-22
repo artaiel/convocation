@@ -3,6 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser');
 
 const compression = require('compression')
+const cookieParser = require('cookie-parser')
 
 const authRoutes = require('./routes/auth')
 const eventsRoutes = require('./routes/events')
@@ -13,6 +14,7 @@ const app = express()
 app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 // allow fetching data on local default vue dev server
 app.use((req, res, next) => {

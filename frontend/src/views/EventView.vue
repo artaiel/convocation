@@ -7,7 +7,7 @@
       @selectDay="selectDay"
       @viewDate="viewDate"
     />
-    <CreateEventControls
+    <EventControls
       :viewedDate="viewedDate"
       :eventData="placeholderData"
       :currentlySelectedDates="currentlySelectedDates"
@@ -19,7 +19,7 @@
 
 <script>
 import CalendarMonth from '@/components/Calendar/CalendarMonth'
-import CreateEventControls from '@/components/CreateEventControls'
+import EventControls from '@/components/EventControls'
 
 import placeholderData from '@/lib/placeholderData.json'
 
@@ -27,7 +27,7 @@ export default {
   name: 'EventView',
   components: {
     CalendarMonth,
-    CreateEventControls
+    EventControls
   },
   data () {
     return {
