@@ -1,7 +1,7 @@
 <template>
   <div>
     <CreateEvent v-if="!eventCreatedSuccessfully" @dataSubmitted="handleSubmittedData" />
-    <EventCreated v-if="eventCreatedSuccessfully"/>
+    <EventCreated v-if="eventCreatedSuccessfully" :eventId="createdEventId"/>
   </div>
 </template>
 
@@ -17,14 +17,19 @@ export default {
   },
   data () {
     return {
-      eventData: null,
+      createdEventId: null,
       eventCreatedSuccessfully: false
     }
   },
   methods: {
     async handleSubmittedData (eventData) {
-      this.eventData = eventData
-      await apiClient.call('createEvent', eventData)
+      try {
+        const response = await apiClient.call('createEvent', eventData)
+        const parsedResponse = await response.json()
+        this.createdEventId = parsedResponse.eventId
+      } catch (err) {
+        console.log(err)
+      }
       this.eventCreatedSuccessfully = true
     }
   }

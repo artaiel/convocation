@@ -9,6 +9,18 @@ const actionDefs = {
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/create' : '/event/create'
     }
   },
+  'getEventData' (eventId) {
+    return {
+      method: 'GET',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/data/' + eventId : '/event/data/' + eventId
+    }
+  },
+  'signup' () {
+    return {
+      method: 'POST',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/signup' : '/auth/signup'
+    }
+  },
   'login' () {
     return {
       method: 'POST',
@@ -28,8 +40,8 @@ class ApiClient {
     this.headers = { ...defaultHeaders }
   }
 
-  call (action, data ) {
-    const { method, endpoint } = actionDefs[action]()
+  call (action, data, param) {
+    const { method, endpoint } = actionDefs[action](param)
     if (method !== 'GET') {
       return fetch(endpoint, {
         method: method,

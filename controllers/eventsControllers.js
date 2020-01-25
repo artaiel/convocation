@@ -3,23 +3,7 @@ const path = require('path')
 const Event = require('../models/event')
 const User = require('../models/user')
 
-// exports.getEvent = (req, res, next) => {
-//   const eventId = req.params.eventId
-//   console.log(eventId)
-//   fs.readFile(path.join(__dirname, '/..', 'placeholderData.json'), (err, data) => {
-//     if (err) console.log(err)
-//     const parsedData = JSON.parse(data)
-//     if (parsedData[eventId]) {
-//       res.status(200).json(parsedData[eventId])
-//     } else {
-//       res.status(404).json({
-//         msg: 'event not found'
-//       })
-//     }
-//   })
-// }
-
-exports.getEvent = (req, res, next) => {
+exports.getEventData = (req, res, next) => {
   const eventId = req.params.eventId
   Event.fetchById(eventId)
     .then(event => {

@@ -12,11 +12,11 @@
     </div>
     <div class="home__link">
       <div class="home__url">
-        <input type="text" :value="url" spellcheck="false">
+        <input type="text" :value="eventURL" spellcheck="false">
       </div>
       <button
         class="home__copy"
-        v-clipboard:copy="url"
+        v-clipboard:copy="eventURL"
         v-clipboard:success="handleCopySuccess"
         v-clipboard:error="handleCopyFailure"
       >
@@ -43,11 +43,21 @@
 <script>
 
 export default {
+  props: {
+    eventId: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
-      url: 'https://www.convocation.herokuapp.com/id/aiganstmdffycvs',
       popupSuccessVisible: false,
       popupFailureVisible: false
+    }
+  },
+  computed: {
+    eventURL () {
+      return 'https://circle-convocation.herokuapp.com/event/' + this.eventId
     }
   },
   methods: {

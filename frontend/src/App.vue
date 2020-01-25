@@ -17,7 +17,7 @@
       />
     </transition>
     <transition name="fade">
-      <div v-if="loading" class="loader-background">
+      <div v-if="isLoaderVisible" class="loader-background">
         <div class="loader"></div>
       </div>
     </transition>
@@ -28,6 +28,7 @@
 import Navigation from '@/components/Navigation'
 import SignIn from '@/components/SignIn'
 import { isLoggedIn } from '@/lib/auth.js'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -37,11 +38,11 @@ export default {
   data () {
     return {
       signInModalVisible: false,
-      loading: false,
       userLoggedIn: false
     }
   },
   computed: {
+    ...mapState(['isLoaderVisible']),
     heroImage () {
       return require('@/assets/images/raven.png')
     }
@@ -114,8 +115,10 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.1);
   z-index: 2;
+  backdrop-filter: blur(3px);
+  transition: all .4s ease-in-out;
 }
 
 .loader {
@@ -124,9 +127,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-}
-
-.loader {
   color: $c-blue-dark;
   width: 1em;
   height: 1em;

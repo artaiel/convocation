@@ -5,7 +5,7 @@ const router = express.Router()
 const eventsControllers = require('../controllers/eventsControllers')
 const isAuth = require('../middleware/isAuth')
 
-router.get('/event/:eventId', eventsControllers.getEvent)
+router.get('/event/data/:eventId', eventsControllers.getEventData)
 
 router.post('/event/create', isAuth, eventsControllers.createEvent)
 

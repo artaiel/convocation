@@ -129,6 +129,7 @@
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
 import apiClient from '@/lib/APIClient'
+import { mapMutations } from 'vuex'
 
 export default {
   mixins: [validationMixin],
@@ -165,9 +166,10 @@ export default {
     },
     modeSignUp () {
       return this.mode === 'signUp'
-    },
+    }
   },
   methods: {
+    ...mapMutations(['toggleLoader']),
     handleSignIn () {
       console.log('either of them really')
     },
@@ -176,20 +178,36 @@ export default {
       this.$v.$reset()
     },
     async handleLoginAction () {
-      if (this.validateLoginData()) {
-        console.log('failed')
-      } else {
-        this.$emit('toggleLoading')
-        await apiClient.call('login', {
-          userIdentifier: this.username,
-          password: this.password
-        })
+      if (!this.validationFailed()) {
+        const callType = this.modeSignIn ? 'login' : 'signup'
+        let callPayload
+        if (this.modeSignIn) {
+          callPayload = {
+            userIdentifier: this.username,
+            password: this.password
+          }
+        } else {
+          callPayload = {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            passwordRepeated: this.passwordRepeated
+          }
+        }
+        // this.$emit('toggleLoading')
+        this.toggleLoader()
+        try {
+          await apiClient.call(callType, callPayload)
+        } catch (err) {
+          console.log(err)
+        }
         this.$emit('checkIfLoggedIn')
-        this.$emit('toggleLoading')
+        // this.$emit('toggleLoading')
+        this.toggleLoader()
         this.$emit('closeSignIn')
       }
     },
-    validateLoginData () {
+    validationFailed () {
       this.$v.$touch()
       if (this.modeSignIn) {
         return this.$v.username.$error && this.$v.email.$error
