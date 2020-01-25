@@ -40,7 +40,6 @@
         :year="selectedYear"
         :active="true"
         :dayPassed="dayPassed(n)"
-        :eventData="eventData"
         :currentlySelectedDates="currentlySelectedDates"
         :viewedDate="viewedDate"
         @selectDay="selectDay"
@@ -61,10 +60,6 @@ export default {
     CalendarDay
   },
   props: {
-    eventData: {
-      type: Object,
-      default: () => {}
-    },
     currentlySelectedDates: {
       type: Object,
       default: () => {}

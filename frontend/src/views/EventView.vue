@@ -2,14 +2,12 @@
   <div class="event">
     <CalendarMonth
       :currentlySelectedDates="currentlySelectedDates"
-      :eventData="placeholderData"
       :viewedDate="viewedDate"
       @selectDay="selectDay"
       @viewDate="viewDate"
     />
     <EventControls
       :viewedDate="viewedDate"
-      :eventData="placeholderData"
       :currentlySelectedDates="currentlySelectedDates"
       @setAvailability="setAvailability"
       @setName="setName"
@@ -20,8 +18,7 @@
 <script>
 import CalendarMonth from '@/components/Calendar/CalendarMonth'
 import EventControls from '@/components/EventControls'
-import placeholderData from '@/lib/placeholderData.json'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 import apiClient from '@/lib/APIClient'
 
 export default {
@@ -32,19 +29,21 @@ export default {
   },
   data () {
     return {
-      placeholderData,
       currentlySelectedDates: {},
       viewedDate: ''
     }
   },
+  computed: {
+    ...mapState(['eventData'])
+  },
   methods: {
-    ...mapMutations(['toggleLoader']),
+    ...mapMutations(['toggleLoader', 'saveEventData']),
     async loadEventData () {
       this.toggleLoader()
       try {
         const response = await apiClient.call('getEventData', null, this.$route.params.id)
         const data = await response.json()
-        console.log(data)
+        this.saveEventData(data)
       } catch (err) {
         console.log(err)
       } finally {

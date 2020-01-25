@@ -3,7 +3,7 @@
     <div class="event-controls__info">
       <div class="event-controls__header">
         <div class="event-controls__event-name">
-          {{ eventData.name }}
+          {{ eventData.eventName }}
         </div>
       </div>
       <div class="event-controls__event-description">
@@ -62,12 +62,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
-    eventData: {
-      type: Object,
-      default: () => {}
-    },
     viewedDate: {
       type: String
     },
@@ -83,6 +81,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['eventData']),
     date () {
       let date = null
       if (this.viewedDate) {
@@ -104,7 +103,7 @@ export default {
     attendees () {
       let date
       if (this.viewedDate) date = this.viewedDate.split('-')
-      return date ? this.eventData?.dates[date[2]]?.[date[1]]?.[date[0]]?.attendees : null
+      return date ? this.eventData?.dates?.[date[2]]?.[date[1]]?.[date[0]]?.attendees : null
     }
   },
   methods: {

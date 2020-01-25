@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     active: {
@@ -50,10 +52,6 @@ export default {
     dayPassed: {
       type: Boolean
     },
-    eventData: {
-      type: Object,
-      default: () => {}
-    },
     currentlySelectedDates: {
       type: Object,
       default: () => {}
@@ -64,12 +62,12 @@ export default {
     }
   },
   data () {
-    return {
-    }
+    return {}
   },
   computed: {
+    ...mapState(['eventData']),
     daySelected () {
-      return this?.eventData?.dates[this.year]?.[this.month]?.[this.day]?.selected
+      return this.eventData?.dates?.[this.year]?.[this.month]?.[this.day]?.selected
     },
     digitFirst () {
       return String(this.day)[0]
@@ -78,7 +76,7 @@ export default {
       return String(this.day)[1]
     },
     attendees () {
-      return this?.eventData?.dates[this.year]?.[this.month]?.[this.day]?.attendees.length || 0
+      return this?.eventData?.dates?.[this.year]?.[this.month]?.[this.day]?.attendees.length || 0
     },
     attendeesSum () {
       return this.userAvailable ? this.attendees + 1 : this.attendees
