@@ -42,7 +42,7 @@
       <div class="event-controls__others">
         <div v-for="(person, index) in attendees" :key="`${person.name}-${index}`" class="event-controls__person">
           <div class="event-controls__person-name">
-            {{ person.name }}
+            {{ otherUserNickname(person.userId) }}
           </div>
           <div class="event-controls__person-time">
             {{ person.time || $t("defaultAvailability") }}
@@ -93,7 +93,9 @@ export default {
       return date ? date.join('-') : ''
     },
     isUserAttending () {
-      return !!this.currentlySelectedDates[this.viewedDate]
+      let date
+      if (this.viewedDate) date = this.viewedDate.split('-')
+      return this.eventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]]?.attendees
     },
     translatedNickname () {
       return this.currentlySelectedDates.nickname ? this.currentlySelectedDates.nickname : this.$t('name')
@@ -109,6 +111,9 @@ export default {
   },
   methods: {
     ...mapMutations(['toggleLoader', 'saveEventData']),
+    otherUserNickname (userId) {
+      return this.eventData.attendees.find(attendee => attendee.userId === userId).name
+    },
     updateHours (input) {
       this.$emit('setAvailability', {
         date: this.viewedDate,
@@ -117,10 +122,6 @@ export default {
     },
     async updateEvent () {
       this.toggleLoader()
-      // apiClient.call('updateEvent', {
-      //   eventId: this.eventData._id,
-      //   userAvailability: this.eventData.userDates
-      // })
       try {
         const response = await apiClient.call('updateEvent', {
           eventId: this.eventData._id,
