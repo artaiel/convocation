@@ -29,7 +29,7 @@ class Event {
     console.log('trying to fetch in model')
     const db = getDB()
     return db.collection('events')
-      .find({_id: ObjectId(eventId)})
+      .find({ _id: ObjectId(eventId) })
       .next()
       .then(event => {
         return event
@@ -41,6 +41,32 @@ class Event {
     // try {
     //   db.collection('events')
     // }
+  }
+
+  static updateEventAttendance (eventData) {
+    console.log('argumentInStaticUpdateEventAttendance', eventData)
+    const db = getDB()
+    return db.collection('events')
+      .findOneAndUpdate(
+        { _id: ObjectId(eventData._id) },
+        {
+          $set: {
+            dates: eventData.dates,
+            attendees: eventData.attendees
+          }
+        },
+        {
+          returnOriginal: false,
+          returnNewDocument: true
+        }
+      )
+      .catch(err => {
+        throw err
+      })
+    // const db = getDB()
+    // return db.collection('events')
+    //   .find({ _id: ObjectId(eventId) })
+    //   .next()
   }
 }
 

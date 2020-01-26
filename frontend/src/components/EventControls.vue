@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <button class="event-controls__save">
+      <button class="event-controls__save" @click="updateEvent">
         <div class="event-controls__scroll">
           <img src="@/assets/images/feather.png" alt="">
         </div>
@@ -62,7 +62,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+import apiClient from '@/lib/APIClient'
 
 export default {
   props: {
@@ -107,12 +108,44 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['toggleLoader', 'saveEventData']),
     updateHours (input) {
       this.$emit('setAvailability', {
         date: this.viewedDate,
         hours: input.target.value
       })
-    }
+    },
+    async updateEvent () {
+      this.toggleLoader()
+      // apiClient.call('updateEvent', {
+      //   eventId: this.eventData._id,
+      //   userAvailability: this.eventData.userDates
+      // })
+      try {
+        const response = await apiClient.call('updateEvent', {
+          eventId: this.eventData._id,
+          userAvailability: this.eventData.userDates
+        })
+        const data = await response.json()
+        this.saveEventData(data)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.toggleLoader()
+      }
+    },
+    async loadEventData () {
+      this.toggleLoader()
+      try {
+        const response = await apiClient.call('getEventData', null, this.$route.params.id)
+        const data = await response.json()
+        this.saveEventData(data)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.toggleLoader()
+      }
+    },
   },
   created () {
     if (this.currentlySelectedDates[this.viewedDate]?.hours) {

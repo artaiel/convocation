@@ -15,6 +15,12 @@ const actionDefs = {
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/data/' + eventId : '/event/data/' + eventId
     }
   },
+  'updateEvent' () {
+    return {
+      method: 'POST',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/update' : '/event/update'
+    }
+  },
   'signup' () {
     return {
       method: 'POST',

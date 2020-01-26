@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   props: {
@@ -82,9 +82,10 @@ export default {
       return this.userAvailable ? this.attendees + 1 : this.attendees
     },
     userAvailable () {
-      const id = `${this.day}-${this.month}-${this.year}`
+      // const id = `${this.day}-${this.month}-${this.year}`
 
-      return !!this.currentlySelectedDates[id]
+      // return !!this.currentlySelectedDates[id]
+      return !!this.eventData?.userDates?.[this.year]?.[this.month]?.[this.day]
     },
     isDayCurrentlyViewed () {
       return `${this.day}-${this.month}-${this.year}` === this.viewedDate
@@ -94,9 +95,15 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['selectDayAsAvailable']),
     selectDay () {
       if (!this.dayPassed) {
         this.$emit('selectDay', this.day)
+        this.selectDayAsAvailable({
+          year: this.year,
+          month: this.month,
+          day: this.day
+        })
       }
     },
     viewDay () {
@@ -177,6 +184,7 @@ export default {
     transform: rotate(90deg);
     width: 15px;
     height: 15px;
+    @include blend-hard-light;
 
     @media screen and (min-width: $size-sm) {
       width: 25px;
