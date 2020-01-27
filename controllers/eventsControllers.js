@@ -19,14 +19,23 @@ exports.getEventData = async (req, res, next) => {
     try {
       const eventData = await Event.fetchById(eventId)
       userNotEnrolled = !eventData.attendees.map(att => att.userId.toString()).includes(req.userId.toString())
+      const userData = await User.fetchUserById(req.userId)
+      console.log('get username from here I guess', userData)
       if (userNotEnrolled) {
         console.log('user not enrolled; fetching everything')
-        res.status(200).json({ userDates: {}, ...eventData })
+        res.status(200).json({ userDates: {}, userName: userData.username, ...eventData })
       } else {
         const { user, others } = extractUserDates(eventData, req.userId)
         const coreEventData = { ...eventData }
         coreEventData.dates = { ...others }
-        res.status(200).json({ userDates: user, ...coreEventData })
+        res.status(200).json(
+          {
+            userDates: user,
+            userName: userData.username,
+            userId: req.userId,
+            ...coreEventData
+          }
+        )
       }
     } catch (err) {
       next(err)
@@ -58,10 +67,8 @@ exports.createEvent = async (req, res, next) => {
 exports.updateEventAttendance = async (req, res, next) => {
   const eventId = req.body.eventId
   const userId = req.userId
+  const updatedUsername = req.body.usernameInEvent
   const updatedUserAvailability = req.body.userAvailability
-  // console.log(eventId)
-  // console.log(userId)
-  // console.log(req.body)
 
   if (!req.userId) {
     res.status(403).json({ msg: 'you must be logged in' })
@@ -73,27 +80,33 @@ exports.updateEventAttendance = async (req, res, next) => {
       eventData.dates = updatedEventDates
       const userAlreadyOnTheList = eventData.attendees.map(att => att.userId.toString()).includes(userId.toString())
       const userHasRecordsInEvent = Object.keys(updatedUserAvailability).length > 0
+      if (userAlreadyOnTheList && updatedUsername) {
+        eventData.attendees.find(user => user.userId.toString() === userId.toString()).name = updatedUsername
+      }
       if (userAlreadyOnTheList && !userHasRecordsInEvent) {
         eventData.attendees = eventData.attendees.filter(attendee => attendee.userId.toString() !== userId.toString())
       } else if (!userAlreadyOnTheList && userHasRecordsInEvent) {
         eventData.attendees.push({
           userId,
-          name: '' // get it from FE if user changed their name
+          name: updatedUsername
         })
       }
 
       // update event data
       let updatedEventData = await Event.updateEventAttendance(eventData)
       updatedEventData = updatedEventData.value
-      console.log('updatedEventData', updatedEventData)
 
-      // // extract current user just like in normally getting event data
+      // extract current user just like in normally getting event data
       const { user: updatedUserDates, others: updatedOthersDates } = extractUserDates(updatedEventData, userId)
       const coreEventData = { ...updatedEventData }
       coreEventData.dates = { ...updatedOthersDates }
-      // res.status(200).json({ msg: 'yeah ok' })
-      // res.status(200).json(updatedEventData.value)
-      res.status(201).json({ userDates: updatedUserDates, ...coreEventData })
+      const userData = await User.fetchUserById(req.userId)
+      res.status(201).json({
+        userDates: updatedUserDates,
+        userName: userData.username,
+        userId: userId,
+        ...coreEventData
+      })
     } catch (err) {
       next(err)
     }

@@ -25,7 +25,7 @@
           type="text"
           @input="$emit('setName', $event.target.value)"
           @focus="$event.target.select()"
-          :value="translatedNickname"
+          v-model="username"
           spellcheck="false"
           maxlength="25"
         >
@@ -82,7 +82,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['eventData']),
+    ...mapState(['eventData', 'usernameInEvent']),
+    username: {
+      get () {
+        return this.usernameInEvent
+      },
+      set (updatedUsername) {
+        this.updateUsernameInEvent(updatedUsername)
+      }
+    },
     date () {
       let date = null
       if (this.viewedDate) {
@@ -93,9 +101,8 @@ export default {
       return date ? date.join('-') : ''
     },
     isUserAttending () {
-      let date
-      if (this.viewedDate) date = this.viewedDate.split('-')
-      return this.eventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]]?.attendees
+      let date = this.viewedDate ? this.viewedDate.split('-') : null
+      return date ? this.eventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]]?.attendees : undefined
     },
     translatedNickname () {
       return this.currentlySelectedDates.nickname ? this.currentlySelectedDates.nickname : this.$t('name')
@@ -110,7 +117,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'saveEventData']),
+    ...mapMutations(['toggleLoader', 'saveEventData', 'updateUsernameInEvent']),
     otherUserNickname (userId) {
       return this.eventData.attendees.find(attendee => attendee.userId === userId).name
     },
@@ -125,7 +132,8 @@ export default {
       try {
         const response = await apiClient.call('updateEvent', {
           eventId: this.eventData._id,
-          userAvailability: this.eventData.userDates
+          userAvailability: this.eventData.userDates,
+          usernameInEvent: this.usernameInEvent
         })
         const data = await response.json()
         this.saveEventData(data)

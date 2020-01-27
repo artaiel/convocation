@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     eventData: {},
     localEventData: {},
+    usernameInEvent: null,
     isLoaderVisible: false,
     isErrorPopupVisible: false
   },
@@ -17,6 +18,14 @@ export default new Vuex.Store({
     },
     saveEventData (state, payload) {
       Vue.set(state, 'eventData', payload)
+      const existingUser = payload.attendees.find(user => user.userId === payload.userId)
+      const existingUsername = existingUser.name
+      if (existingUsername) {
+        console.log('existingUsername', existingUsername)
+        Vue.set(state, 'usernameInEvent', existingUsername)
+      } else {
+        Vue.set(state, 'usernameInEvent', payload.username)
+      }
     },
     selectDayAsAvailable (state, date) {
       const updatedEventData = { ...state.eventData }
@@ -51,6 +60,9 @@ export default new Vuex.Store({
         )
       }
       Vue.set(state, 'eventData', updatedEventData)
+    },
+    updateUsernameInEvent (state, updatedUsername) {
+      state.usernameInEvent = updatedUsername
     }
   },
   actions: {

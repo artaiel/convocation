@@ -35,6 +35,11 @@ class User {
     })
   }
 
+  static fetchUserById (userId) {
+    const db = getDB()
+    return db.collection('users').findOne({ _id: ObjectId(userId) })
+  }
+
   static addUserEventsOwned (userId, eventId) {
     const db = getDB()
     return db
