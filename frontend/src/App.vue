@@ -1,7 +1,6 @@
 <template>
   <div class="app" :class="{ 'app--darken-background': signInModalVisible }">
     <Navigation
-      :userLoggedIn="userLoggedIn"
       @clickSignIn="toggleSignIn"
       @checkIfLoggedIn="checkIfLoggedIn"
     />
@@ -28,7 +27,7 @@
 import Navigation from '@/components/Navigation'
 import SignIn from '@/components/SignIn'
 import { isLoggedIn } from '@/lib/auth.js'
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   components: {
@@ -37,8 +36,7 @@ export default {
   },
   data () {
     return {
-      signInModalVisible: false,
-      userLoggedIn: false
+      signInModalVisible: false
     }
   },
   computed: {
@@ -48,6 +46,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUserLoggedInState']),
     toggleSignIn () {
       this.signInModalVisible = !this.signInModalVisible
     },
@@ -58,7 +57,7 @@ export default {
       this.loading = !this.loading
     },
     checkIfLoggedIn () {
-      this.userLoggedIn = isLoggedIn()
+      this.setUserLoggedInState(isLoggedIn())
     }
   },
   mounted () {

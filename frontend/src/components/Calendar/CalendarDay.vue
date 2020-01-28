@@ -65,7 +65,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['eventData']),
+    ...mapState(['eventData', 'userLoggedIn']),
     daySelected () {
       return this.eventData?.dates?.[this.year]?.[this.month]?.[this.day]?.selected
     },
@@ -97,7 +97,7 @@ export default {
   methods: {
     ...mapMutations(['selectDayAsAvailable']),
     selectDay () {
-      if (!this.dayPassed) {
+      if (!this.dayPassed && this.userLoggedIn) {
         this.$emit('selectDay', this.day)
         this.selectDayAsAvailable({
           year: this.year,

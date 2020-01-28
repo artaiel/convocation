@@ -10,7 +10,8 @@ export default new Vuex.Store({
     localEventData: {},
     usernameInEvent: null,
     isLoaderVisible: false,
-    isErrorPopupVisible: false
+    isErrorPopupVisible: false,
+    userLoggedIn: false
   },
   mutations: {
     toggleLoader (state) {
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     updateUsernameInEvent (state, updatedUsername) {
       state.usernameInEvent = updatedUsername
+    },
+    setUserLoggedInState (state, value) {
+      state.userLoggedIn = value
     }
   },
   actions: {

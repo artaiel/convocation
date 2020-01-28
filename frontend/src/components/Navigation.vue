@@ -83,14 +83,9 @@
 <script>
 import apiClient from '@/lib/APIClient'
 import { languages } from '@/lib/constants'
+import { mapState } from 'vuex'
 
 export default {
-  props: {
-    userLoggedIn: {
-      type: Boolean,
-      default: false
-    }
-  },
   data () {
     return {
       languageHovered: false,
@@ -99,6 +94,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['userLoggedIn']),
     languageSelection () {
       return this.languages.filter(lang => lang !== this.$i18n.locale)
     }
