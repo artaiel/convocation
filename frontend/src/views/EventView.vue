@@ -20,6 +20,7 @@ import CalendarMonth from '@/components/Calendar/CalendarMonth'
 import EventControls from '@/components/EventControls'
 import { mapMutations, mapState } from 'vuex'
 import apiClient from '@/lib/APIClient'
+import { EventBus } from '@/lib/EventBus'
 
 export default {
   name: 'EventView',
@@ -73,6 +74,7 @@ export default {
   },
   mounted () {
     this.loadEventData()
+    EventBus.$once('login', this.loadEventData)
   }
 }
 </script>

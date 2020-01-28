@@ -40,9 +40,9 @@
         >
       </div>
       <div class="event-controls__others">
-        <div v-for="(person, index) in attendees" :key="`${person.name}-${index}`" class="event-controls__person">
+        <div v-for="(person, index) in attendeesNicknames" :key="`${person.name}-${index}`" class="event-controls__person">
           <div class="event-controls__person-name">
-            {{ otherUserNickname(person.userId) }}
+            {{ person.name }}
           </div>
           <div class="event-controls__person-time">
             {{ person.time || $t("defaultAvailability") }}
@@ -114,6 +114,28 @@ export default {
       let date
       if (this.viewedDate) date = this.viewedDate.split('-')
       return date ? this.eventData?.dates?.[date[2]]?.[date[1]]?.[date[0]]?.attendees : null
+    },
+    attendeesNicknames () {
+      if (this.attendees) {
+        return this.attendees.map(att => {
+          return {
+            time: att.time,
+            name: this.otherUserNickname(att.userId)
+          }
+        }).sort((a, b) => {
+          const u1 = a.name.toUpperCase(); // ignore upper and lowercase
+          const u2 = b.name.toUpperCase(); // ignore upper and lowercase
+          if (u1 < u2) {
+            return -1;
+          }
+          if (u1 > u2) {
+            return 1;
+          }
+          return 0;
+        })
+      }
+
+      return null
     }
   },
   methods: {
@@ -143,18 +165,18 @@ export default {
         this.toggleLoader()
       }
     },
-    async loadEventData () {
-      this.toggleLoader()
-      try {
-        const response = await apiClient.call('getEventData', null, this.$route.params.id)
-        const data = await response.json()
-        this.saveEventData(data)
-      } catch (err) {
-        console.log(err)
-      } finally {
-        this.toggleLoader()
-      }
-    },
+    // async loadEventData () {
+    //   this.toggleLoader()
+    //   try {
+    //     const response = await apiClient.call('getEventData', null, this.$route.params.id)
+    //     const data = await response.json()
+    //     this.saveEventData(data)
+    //   } catch (err) {
+    //     console.log(err)
+    //   } finally {
+    //     this.toggleLoader()
+    //   }
+    // },
   },
   created () {
     if (this.currentlySelectedDates[this.viewedDate]?.hours) {

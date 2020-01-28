@@ -19,25 +19,17 @@ export default new Vuex.Store({
     saveEventData (state, payload) {
       Vue.set(state, 'eventData', payload)
       const existingUser = payload.attendees.find(user => user.userId === payload.userId)
-      const existingUsername = existingUser.name
+      const existingUsername = existingUser ? existingUser.name : null
       if (existingUsername) {
-        console.log('existingUsername', existingUsername)
         Vue.set(state, 'usernameInEvent', existingUsername)
       } else {
-        Vue.set(state, 'usernameInEvent', payload.username)
+        Vue.set(state, 'usernameInEvent', payload.userName)
       }
     },
     selectDayAsAvailable (state, date) {
       const updatedEventData = { ...state.eventData }
-      // console.log('updatedUserDates', updatedEventData)
       const dayAlreadySelected = updatedEventData?.userDates?.[date.year]?.[date.month]?.[date.day]
       if (dayAlreadySelected) {
-        // deselect this day
-        // setValue(
-        //   updatedEventData,
-        //   `userDates.${date.year}.${date.month}.${date.day}`,
-        //   null
-        // )
         Vue.delete(state.eventData.userDates[date.year][date.month], date.day)
         // cleanup empty month
         const numberOfMonthsEntries = Object.entries(state.eventData.userDates[date.year][date.month]).length

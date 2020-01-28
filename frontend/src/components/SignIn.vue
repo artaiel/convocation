@@ -130,6 +130,7 @@ import { validationMixin } from 'vuelidate'
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators'
 import apiClient from '@/lib/APIClient'
 import { mapMutations } from 'vuex'
+import { EventBus } from '@/lib/EventBus'
 
 export default {
   mixins: [validationMixin],
@@ -170,9 +171,6 @@ export default {
   },
   methods: {
     ...mapMutations(['toggleLoader']),
-    handleSignIn () {
-      console.log('either of them really')
-    },
     selectMode (mode) {
       this.mode = mode
       this.$v.$reset()
@@ -194,17 +192,22 @@ export default {
             passwordRepeated: this.passwordRepeated
           }
         }
-        // this.$emit('toggleLoading')
         this.toggleLoader()
         try {
           await apiClient.call(callType, callPayload)
         } catch (err) {
           console.log(err)
+        } finally {
+          this.$emit('checkIfLoggedIn')
+          this.toggleLoader()
+          this.$emit('closeSignIn')
         }
-        this.$emit('checkIfLoggedIn')
-        // this.$emit('toggleLoading')
-        this.toggleLoader()
-        this.$emit('closeSignIn')
+        if (
+          callType === 'login' &&
+          this.$route.name ==='eventView'
+        ) {
+          EventBus.$emit('login')
+        }
       }
     },
     validationFailed () {
