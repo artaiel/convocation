@@ -23,7 +23,6 @@
         <input
           class="event-controls__user-nickname"
           type="text"
-          @input="$emit('setName', $event.target.value)"
           @focus="$event.target.select()"
           v-model="username"
           spellcheck="false"
@@ -32,9 +31,8 @@
         <input
           type="text"
           class="event-controls__user-hours"
-          :value="translatedUserHours"
-          @input="updateHours"
           @focus="$event.target.select()"
+          v-model="timeAvailable"
           spellcheck="false"
           maxlength="50"
         >
@@ -49,7 +47,11 @@
           </div>
         </div>
       </div>
-      <button class="event-controls__save" @click="updateEvent">
+      <button
+        v-if="userLoggedIn"
+        class="event-controls__save"
+        @click="updateEvent"
+      >
         <div class="event-controls__scroll">
           <img src="@/assets/images/feather.png" alt="">
         </div>
@@ -82,7 +84,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['eventData', 'usernameInEvent']),
+    ...mapState(['eventData', 'usernameInEvent', 'userLoggedIn']),
     username: {
       get () {
         return this.usernameInEvent
@@ -107,9 +109,6 @@ export default {
     translatedNickname () {
       return this.currentlySelectedDates.nickname ? this.currentlySelectedDates.nickname : this.$t('name')
     },
-    translatedUserHours () {
-      return this.userHours || this.$t('defaultAvailability')
-    },
     attendees () {
       let date
       if (this.viewedDate) date = this.viewedDate.split('-')
@@ -123,23 +122,38 @@ export default {
             name: this.otherUserNickname(att.userId)
           }
         }).sort((a, b) => {
-          const u1 = a.name.toUpperCase(); // ignore upper and lowercase
-          const u2 = b.name.toUpperCase(); // ignore upper and lowercase
+          const u1 = a.name.toUpperCase()
+          const u2 = b.name.toUpperCase()
           if (u1 < u2) {
-            return -1;
+            return -1
           }
           if (u1 > u2) {
-            return 1;
+            return 1
           }
-          return 0;
+          return 0
         })
       }
 
       return null
+    },
+    timeAvailable: {
+      get () {
+        let date
+        if (this.viewedDate) date = this.viewedDate.split('-')
+        const savedTime = this.eventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]].attendees[0].time
+        return savedTime ? savedTime : this.$t("defaultAvailability")
+        // return this.$t('defaultAvailability')
+      },
+      set (updatedTime) {
+        this.updateTimeAvailability({
+          date: this.date,
+          updatedTime
+        })
+      }
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'saveEventData', 'updateUsernameInEvent']),
+    ...mapMutations(['toggleLoader', 'saveEventData', 'updateUsernameInEvent', 'updateTimeAvailability']),
     otherUserNickname (userId) {
       return this.eventData.attendees.find(attendee => attendee.userId === userId).name
     },

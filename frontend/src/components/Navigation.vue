@@ -28,7 +28,7 @@
             <button v-if="!userLoggedIn" class="sidebar__button" @click="$emit('clickSignIn')">Sign in</button>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
-            <button v-if="userLoggedIn" class="sidebar__button">Log out</button>
+            <button v-if="userLoggedIn" class="sidebar__button" @click="logOut">Log out</button>
           </li>
         </ul>
         <ul class="sidebar__list sidebar__languages">
@@ -83,7 +83,7 @@
 <script>
 import apiClient from '@/lib/APIClient'
 import { languages } from '@/lib/constants'
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   data () {
@@ -100,6 +100,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['toggleLoader']),
     changeLocale (locale) {
       this.$i18n.locale = locale
       this.languageHovered = false
@@ -112,9 +113,16 @@ export default {
       this.toggleSidebar()
     },
     async logOut () {
-      await apiClient.call('logout')
-      this.$emit('checkIfLoggedIn')
-      if (this.$route.path !== '/') this.$router.push({ path: '/' })
+      this.toggleLoader()
+      try {
+        await apiClient.call('logout')
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.toggleLoader()
+        this.$emit('checkIfLoggedIn')
+        if (this.$route.path !== '/') this.$router.push({ path: '/' })
+      }
     }
   }
 }

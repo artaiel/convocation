@@ -10,7 +10,6 @@
       :viewedDate="viewedDate"
       :currentlySelectedDates="currentlySelectedDates"
       @setAvailability="setAvailability"
-      @setName="setName"
     />
   </div>
 </template>
@@ -67,9 +66,6 @@ export default {
     },
     setAvailability (availability) {
       this.currentlySelectedDates[availability.date].hours = availability.hours
-    },
-    setName (nickname) {
-      this.currentlySelectedDates.nickname = nickname
     }
   },
   mounted () {

@@ -74,7 +74,7 @@
           <input
             id="password"
             v-model="password"
-            type="text"
+            type="password"
             required
             spellcheck="false"
             autocomplete="off"
@@ -97,7 +97,7 @@
           <input
             id="passwordRepeated"
             v-model="passwordRepeated"
-            type="text"
+            type="password"
             required
             spellcheck="false"
             autocomplete="off"

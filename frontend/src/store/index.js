@@ -57,6 +57,11 @@ export default new Vuex.Store({
     updateUsernameInEvent (state, updatedUsername) {
       state.usernameInEvent = updatedUsername
     },
+    updateTimeAvailability (state, timeData) {
+      const date = timeData.date.split('-')
+      date[1] = date[1] - 1
+      state.eventData.userDates[date[2]][date[1]][date[0]].attendees[0].time = timeData.updatedTime
+    },
     setUserLoggedInState (state, value) {
       state.userLoggedIn = value
     }
