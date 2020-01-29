@@ -22,7 +22,7 @@
             <router-link to="/donate">Donate</router-link>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
-            <router-link to="/event/5e32014a3e2ba90424cd26c1">ex event</router-link>
+            <router-link to="/event/5e32069e1c9d440000cb867a">ex event</router-link>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
             <button v-if="!userLoggedIn" class="sidebar__button" @click="$emit('clickSignIn')">Sign in</button>
@@ -67,7 +67,7 @@
           </transition>
         </div>
         <!-- <router-link to="/donate" class="nav__links-item">Donate</router-link> -->
-        <router-link to="/event/5e32014a3e2ba90424cd26c1" class="nav__links-item">exevent</router-link>
+        <router-link to="/event/5e32069e1c9d440000cb867a" class="nav__links-item">exevent</router-link>
         <button v-if="!userLoggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
         <button v-if="userLoggedIn" class="nav__links-item" @click="logOut">Log out</button>
       </div>

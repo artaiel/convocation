@@ -99,7 +99,7 @@ export default {
     ...mapMutations(['selectDayAsAvailable']),
     selectDay () {
       if (!this.dayPassed && this.userLoggedIn) {
-        this.$emit('selectDay', this.day)
+        // this.$emit('selectDay', this.day)
         this.selectDayAsAvailable({
           year: this.year,
           month: this.month,

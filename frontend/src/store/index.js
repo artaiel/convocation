@@ -46,9 +46,9 @@ export default new Vuex.Store({
     },
     selectDayAsAvailable (state, date) {
       const updatedEventData = { ...state.eventData }
-      const dayAlreadySelected = updatedEventData?.userDates?.[date.year]?.[date.month]?.[date.day]
+      const dayAlreadySelected = updatedEventData?.userDates?.[date.year]?.[date.month]?.[date.day]?.attendees
       if (dayAlreadySelected) {
-        Vue.delete(state.eventData.userDates[date.year][date.month], date.day)
+        Vue.delete(state.eventData.userDates[date.year][date.month][date.day], 'attendees')
         // cleanup empty month
         const numberOfMonthsEntries = Object.entries(state.eventData.userDates[date.year][date.month]).length
         if (numberOfMonthsEntries === 0) Vue.delete(state.eventData.userDates[date.year], date.month)
@@ -65,7 +65,8 @@ export default new Vuex.Store({
                 userId: 'myUserId',
                 time: ''
               }
-            ]
+            ],
+            selected: updatedEventData?.userDates?.[date.year]?.[date.month]?.[date.day]?.selected
           }
         )
       }
