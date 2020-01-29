@@ -17,6 +17,19 @@ export default new Vuex.Store({
     toggleLoader (state) {
       state.isLoaderVisible = !state.isLoaderVisible
     },
+    saveMeetingDate (state, day) {
+      const date = day.split('-')
+      const selectedInSession = state.eventData.userDates[date[2]][date[1]][date[0]].selected
+      // const selectedEarlier = state.eventData.dates[date[2]][date[1]][date[0]].selected
+      if (selectedInSession) {
+        Vue.delete(state.eventData.userDates[date[2]][date[1]][date[0]], 'selected')
+      } else {
+        Vue.set(state.eventData.userDates[date[2]][date[1]][date[0]], 'selected', true)
+      }
+      // if (selectedEarlier) {
+      //   Vue.delete(state.eventData.dates[date[2]][date[1]][date[0]], 'selected')
+      // }
+    },
     saveEventData (state, payload) {
       Vue.set(state, 'eventData', payload)
       const existingUser = payload.attendees.find(user => user.userId === payload.userId)
@@ -64,6 +77,11 @@ export default new Vuex.Store({
     },
     setUserLoggedInState (state, value) {
       state.userLoggedIn = value
+    }
+  },
+  getters: {
+    isEventOwner (state) {
+      return state.eventData.ownerId === state.eventData.userId
     }
   },
   actions: {

@@ -209,15 +209,28 @@ export default {
           EventBus.$emit('login')
         }
       }
+
+      return
     },
     validationFailed () {
       this.$v.$touch()
       if (this.modeSignIn) {
-        return this.$v.username.$error && this.$v.email.$error
+        return this.$v.username.$error || this.$v.password.$error
       } else {
         return this.$v.$invalid
       }
+    },
+    listenForEnter (e) {
+      if (e.code === "Enter") {
+        this.handleLoginAction()
+      }
     }
+  },
+  mounted () {
+    document.addEventListener('keypress', this.listenForEnter)
+  },
+  beforeDestroy () {
+    document.removeEventListener('keypress', this.listenForEnter)
   }
 }
 </script>

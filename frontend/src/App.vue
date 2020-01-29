@@ -99,10 +99,10 @@ export default {
     display: block;
   }
   @supports (mix-blend-mode: darken) {
-    height: 50vh;
+    height: 45vh;
     position: fixed;
-    right: 0;
-    bottom: 0;
+    right: 5rem;
+    bottom: 1rem;
     @include blend-darken;
   }
   display: none;

@@ -10,6 +10,16 @@
         {{ eventData.description }}
       </div>
     </div>
+    <button
+      v-if="isEventOwner && viewedDate"
+      class="event-controls__owner-date-select"
+      @click="selectMeetingDay"
+    >
+      <img src="~@/assets/images/rose.png" alt="">
+      <span>
+        Select as meeting day
+      </span>
+    </button>
     <div class="event-controls__attendees">
       <div v-if="viewedDate" class="event-controls__table-info">
         <div class="event-controls__table-title">
@@ -64,27 +74,18 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapGetters, mapState } from 'vuex'
 import apiClient from '@/lib/APIClient'
 
 export default {
   props: {
     viewedDate: {
       type: String
-    },
-    currentlySelectedDates: {
-      type: Object,
-      default: () => {}
-    }
-  },
-  data () {
-    return {
-      userNickname: null,
-      userHours: null
     }
   },
   computed: {
     ...mapState(['eventData', 'usernameInEvent', 'userLoggedIn']),
+    ...mapGetters(['isEventOwner']),
     username: {
       get () {
         return this.usernameInEvent
@@ -105,9 +106,6 @@ export default {
     isUserAttending () {
       let date = this.viewedDate ? this.viewedDate.split('-') : null
       return date ? this.eventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]]?.attendees : undefined
-    },
-    translatedNickname () {
-      return this.currentlySelectedDates.nickname ? this.currentlySelectedDates.nickname : this.$t('name')
     },
     attendees () {
       let date
@@ -142,7 +140,6 @@ export default {
         if (this.viewedDate) date = this.viewedDate.split('-')
         const savedTime = this.eventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]].attendees[0].time
         return savedTime ? savedTime : this.$t("defaultAvailability")
-        // return this.$t('defaultAvailability')
       },
       set (updatedTime) {
         this.updateTimeAvailability({
@@ -153,9 +150,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'saveEventData', 'updateUsernameInEvent', 'updateTimeAvailability']),
+    ...mapMutations(['toggleLoader', 'saveEventData', 'updateUsernameInEvent', 'updateTimeAvailability', 'saveMeetingDate']),
     otherUserNickname (userId) {
       return this.eventData.attendees.find(attendee => attendee.userId === userId).name
+    },
+    selectMeetingDay () {
+      this.saveMeetingDate(this.viewedDate)
     },
     updateHours (input) {
       this.$emit('setAvailability', {
@@ -177,35 +177,6 @@ export default {
         console.log(err)
       } finally {
         this.toggleLoader()
-      }
-    },
-    // async loadEventData () {
-    //   this.toggleLoader()
-    //   try {
-    //     const response = await apiClient.call('getEventData', null, this.$route.params.id)
-    //     const data = await response.json()
-    //     this.saveEventData(data)
-    //   } catch (err) {
-    //     console.log(err)
-    //   } finally {
-    //     this.toggleLoader()
-    //   }
-    // },
-  },
-  created () {
-    if (this.currentlySelectedDates[this.viewedDate]?.hours) {
-      this.userHours = this.currentlySelectedDates[this.viewedDate].hours
-    }
-    if (this.currentlySelectedDates.nickname) {
-      this.userNickname = this.currentlySelectedDates.nickname
-    }
-  },
-  watch: {
-    viewedDate: function () {
-      if (this.currentlySelectedDates[this.viewedDate]?.hours) {
-        this.userHours = this.currentlySelectedDates[this.viewedDate].hours
-      } else {
-        this.userHours = null
       }
     }
   }
@@ -231,10 +202,37 @@ export default {
     align-items: center;
   }
 
-  &__header {
-    // display: flex;
-    // flex-flow: column;
-    // justify-content: space-between;
+  &__owner-date-select {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    margin: 2rem auto;
+    font-family: inherit;
+    @include transition-basic;
+    cursor: pointer;
+    padding: .5rem;
+
+    &:hover > img {
+      filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+    }
+
+    &:hover > span {
+      filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+    }
+
+    & > img {
+      width: 2.5rem;
+      @include blend-hard-light;
+      margin-right: 1rem;
+      @include transition-basic;
+    }
+
+    & > span {
+      font-size: $font-size-lg;
+      font-family: inherit;
+      @include transition-basic;
+    }
   }
 
   &__attendees {

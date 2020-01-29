@@ -68,6 +68,7 @@ export default {
     ...mapState(['eventData', 'userLoggedIn']),
     daySelected () {
       return this.eventData?.dates?.[this.year]?.[this.month]?.[this.day]?.selected
+        || this.eventData?.userDates?.[this.year]?.[this.month]?.[this.day]?.selected
     },
     digitFirst () {
       return String(this.day)[0]
