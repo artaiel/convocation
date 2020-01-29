@@ -17,7 +17,9 @@ exports.getEventData = async (req, res, next) => {
     }
   } else {
     try {
+      console.log('eventId in get', eventId)
       const eventData = await Event.fetchById(eventId)
+      console.log('eventData in get', eventData)
       userNotEnrolled = !eventData.attendees.map(att => att.userId.toString()).includes(req.userId.toString())
       const userData = await User.fetchUserById(req.userId)
       console.log('get username from here I guess', userData)
@@ -50,7 +52,7 @@ exports.createEvent = async (req, res, next) => {
     const description = req.body.eventDescription
     const eventName = req.body.eventName
     const ownerId = req.userId ? req.userId : null
-    const event = new Event(eventName, description, ownerId, ownerName)
+    const event = new Event(eventName, description, ownerId, ownerName, {}, [])
     const newEventData = await event.save()
     const updatedUser = await User.addUserEventsOwned(ownerId, newEventData.insertedId)
     // console.log(newEventData.insertedId)
@@ -75,6 +77,10 @@ exports.updateEventAttendance = async (req, res, next) => {
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
+      console.log('event id')
+      console.log(eventId)
+      console.log('event data log')
+      console.log(eventData)
       const { others } = extractUserDates(eventData, userId)
       const isOwner = eventData.ownerId.toString() === userId.toString()
       const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId, isOwner) // add updated user to other's selections, and add userId from cookie into placeholder from FE
