@@ -44,7 +44,7 @@ class Event {
   }
 
   static updateEventAttendance (eventData) {
-    console.log('argumentInStaticUpdateEventAttendance', eventData)
+    // console.log('argumentInStaticUpdateEventAttendance', eventData)
     const db = getDB()
     return db.collection('events')
       .findOneAndUpdate(

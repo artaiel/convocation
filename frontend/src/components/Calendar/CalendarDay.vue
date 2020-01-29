@@ -86,7 +86,7 @@ export default {
       // const id = `${this.day}-${this.month}-${this.year}`
 
       // return !!this.currentlySelectedDates[id]
-      return !!this.eventData?.userDates?.[this.year]?.[this.month]?.[this.day]
+      return !!this.eventData?.userDates?.[this.year]?.[this.month]?.[this.day]?.attendees?.length
     },
     isDayCurrentlyViewed () {
       return `${this.day}-${this.month}-${this.year}` === this.viewedDate

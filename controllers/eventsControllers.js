@@ -76,7 +76,8 @@ exports.updateEventAttendance = async (req, res, next) => {
     try {
       const eventData = await Event.fetchById(eventId)
       const { others } = extractUserDates(eventData, userId)
-      const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId) // add updated user to other's selections, and add userId from cookie into placeholder from FE
+      const isOwner = eventData.ownerId.toString() === userId.toString()
+      const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId, isOwner) // add updated user to other's selections, and add userId from cookie into placeholder from FE
       eventData.dates = updatedEventDates
       const userAlreadyOnTheList = eventData.attendees.map(att => att.userId.toString()).includes(userId.toString())
       const userHasRecordsInEvent = Object.keys(updatedUserAvailability).length > 0

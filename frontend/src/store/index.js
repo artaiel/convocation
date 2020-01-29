@@ -18,17 +18,21 @@ export default new Vuex.Store({
       state.isLoaderVisible = !state.isLoaderVisible
     },
     saveMeetingDate (state, day) {
+      let updatedEventData = { ...state.eventData }
       const date = day.split('-')
-      const selectedInSession = state.eventData.userDates[date[2]][date[1]][date[0]].selected
-      // const selectedEarlier = state.eventData.dates[date[2]][date[1]][date[0]].selected
-      if (selectedInSession) {
-        Vue.delete(state.eventData.userDates[date[2]][date[1]][date[0]], 'selected')
+      const daySelected = updatedEventData?.userDates?.[date[2]]?.[date[1]]?.[date[0]]
+      if (daySelected && daySelected.selected) {
+        updatedEventData.userDates[date[2]][date[1]][date[0]].selected = false
+      } else if (daySelected) {
+        updatedEventData.userDates[date[2]][date[1]][date[0]].selected = true
       } else {
-        Vue.set(state.eventData.userDates[date[2]][date[1]][date[0]], 'selected', true)
+        setValue(
+          updatedEventData,
+          `userDates.${date[2]}.${date[1]}.${date[0]}`,
+          { selected: true }
+        )
       }
-      // if (selectedEarlier) {
-      //   Vue.delete(state.eventData.dates[date[2]][date[1]][date[0]], 'selected')
-      // }
+      Vue.set(state, 'eventData', updatedEventData)
     },
     saveEventData (state, payload) {
       Vue.set(state, 'eventData', payload)
