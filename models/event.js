@@ -44,7 +44,7 @@ class Event {
   }
 
   static updateEventAttendance (eventData) {
-    // console.log('argumentInStaticUpdateEventAttendance', eventData)
+    console.log('argumentInStaticUpdateEventAttendance', eventData.dates['2020']['0'])
     const db = getDB()
     return db.collection('events')
       .findOneAndUpdate(

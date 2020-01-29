@@ -34,23 +34,42 @@ exports.extractUserDates = (eventData, userId) => {
 
 exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOwner) => {
   const eventDates = otherUsers
+  console.log('-----------------------------------------------------------------------------------------------')
+  console.log('in merge user dates, isOwner: ', isEventOwner)
 
   Object.entries(updatedUserAvailability).forEach(year => {
     Object.entries(year[1]).forEach(month => {
       Object.entries(month[1]).forEach(day => {
-        const userAvailabilityThisDay = day[1].attendees[0]
-        userAvailabilityThisDay.userId = userId
+        let userAvailabilityThisDay
+        if (day[1].attendees) {
+          userAvailabilityThisDay = day[1].attendees[0]
+          userAvailabilityThisDay.userId = userId
+        }
+
         const dayRecordExists = eventDates
           && eventDates[year[0]]
           && eventDates[year[0]][month[0]]
           && eventDates[year[0]][month[0]][day[0]]
           && eventDates[year[0]][month[0]][day[0]].attendees
-        dayRecordExists
-          ? eventDates[year[0]][month[0]][day[0]].attendees.push(userAvailabilityThisDay)
-          : setValue(eventDates, `${year[0]}.${month[0]}.${day[0]}.attendees`, [userAvailabilityThisDay])
-          if (isEventOwner && day[1].selected) {
-            eventDates[year[0]][month[0]][day[0]].selected = true
-          }
+
+        if (dayRecordExists && userAvailabilityThisDay) {
+          eventDates[year[0]][month[0]][day[0]].attendees.push(userAvailabilityThisDay)
+        } else if (userAvailabilityThisDay) {
+          setValue(eventDates, `${year[0]}.${month[0]}.${day[0]}.attendees`, [userAvailabilityThisDay])
+        }
+        if (isEventOwner && day[1].selected) {
+          setValue(eventDates, `${year[0]}.${month[0]}.${day[0]}.selected`, true)
+        }
+        // dayRecordExists && userAvailabilityThisDay
+        //   ? eventDates[year[0]][month[0]][day[0]].attendees.push(userAvailabilityThisDay)
+        //   : setValue(eventDates, `${year[0]}.${month[0]}.${day[0]}.attendees`, [userAvailabilityThisDay])
+        // if (isEventOwner && day[1].selected) {
+        //   eventDates[year[0]][month[0]][day[0]].selected = true
+        // }
+        console.log(`date: ${day[0]} ${month[0]} ${year[0]}`)
+        console.log(day[1])
+        console.log('saved as')
+        console.log(eventDates[year[0]][month[0]][day[0]])
       })
     })
   })
