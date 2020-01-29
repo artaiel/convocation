@@ -14,13 +14,16 @@ exports.extractUserDates = (eventData, userId) => {
           day[1].attendees.forEach(attendee => {
             if (attendee.userId.toString() === userId.toString()) {
               setValue(user, `${year[0]}.${month[0]}.${day[0]}`, { attendees: [ attendee ] })
-              if (isOwner) user[year[0]][month[0]][day[0]].selected = !!day[1].selected
+              // if (isOwner) user[year[0]][month[0]][day[0]].selected = !!day[1].selected
             } else {
               otherAttendees.push(attendee)
             }
           })
           setValue(others, `${year[0]}.${month[0]}.${day[0]}`, { attendees: otherAttendees })
           if (!isOwner) others[year[0]][month[0]][day[0]].selected = !!day[1].selected
+        }
+        if (day[1].selected && isOwner) {
+          setValue(user, `${year[0]}.${month[0]}.${day[0]}.selected`, true)
         }
       })
     })
@@ -77,7 +80,7 @@ exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOw
   Object.entries(eventDates).forEach(year => {
     Object.entries(year[1]).forEach(month => {
       Object.entries(month[1]).forEach(day => {
-        if (day[1].attendees.length === 0) delete eventDates[year[0]][month[0]][day[0]].attendees
+        if (day[1] && day[1].attendees && day[1].attendees.length === 0) delete eventDates[year[0]][month[0]][day[0]].attendees
       })
     })
   })
