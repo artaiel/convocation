@@ -54,7 +54,7 @@ exports.createEvent = async (req, res, next) => {
     const ownerId = req.userId ? req.userId : null
     const event = new Event(eventName, description, ownerId, ownerName, {}, [])
     const newEventData = await event.save()
-    const updatedUser = await User.addUserEventsOwned(ownerId, newEventData.insertedId)
+    await User.addUserEventsOwned(ownerId, newEventData.insertedId)
     // console.log(newEventData.insertedId)
     // console.log(updatedUser)
     res.status(200).json({
@@ -77,10 +77,10 @@ exports.updateEventAttendance = async (req, res, next) => {
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
-      console.log('event id')
-      console.log(eventId)
-      console.log('event data log')
-      console.log(eventData)
+      // console.log('event id')
+      // console.log(eventId)
+      // console.log('event data log')
+      // console.log(eventData)
       const { others } = extractUserDates(eventData, userId)
       const isOwner = eventData.ownerId.toString() === userId.toString()
       const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId, isOwner) // add updated user to other's selections, and add userId from cookie into placeholder from FE
@@ -97,6 +97,7 @@ exports.updateEventAttendance = async (req, res, next) => {
           userId,
           name: updatedUsername
         })
+        await User.addUserEventsAttending(userId, eventData._id)
       }
 
       // update event data

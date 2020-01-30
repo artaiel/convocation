@@ -37,8 +37,8 @@ exports.extractUserDates = (eventData, userId) => {
 
 exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOwner) => {
   const eventDates = otherUsers
-  console.log('-----------------------------------------------------------------------------------------------')
-  console.log('in merge user dates, isOwner: ', isEventOwner)
+  // console.log('-----------------------------------------------------------------------------------------------')
+  // console.log('in merge user dates, isOwner: ', isEventOwner)
 
   Object.entries(updatedUserAvailability).forEach(year => {
     Object.entries(year[1]).forEach(month => {
@@ -69,10 +69,10 @@ exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOw
         // if (isEventOwner && day[1].selected) {
         //   eventDates[year[0]][month[0]][day[0]].selected = true
         // }
-        console.log(`date: ${day[0]} ${month[0]} ${year[0]}`)
-        console.log(day[1])
-        console.log('saved as')
-        console.log(eventDates[year[0]][month[0]][day[0]])
+        // console.log(`date: ${day[0]} ${month[0]} ${year[0]}`)
+        // console.log(day[1])
+        // console.log('saved as')
+        // console.log(eventDates[year[0]][month[0]][day[0]])
       })
     })
   })

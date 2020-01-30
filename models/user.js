@@ -11,6 +11,7 @@ class User {
     this.email = email
     this.password = password
     this.eventsOwned = []
+    this.eventsAttending = []
   }
 
   createUser () {
@@ -47,6 +48,16 @@ class User {
       .updateOne(
         { _id: ObjectId(userId) },
         { $push: { "eventsOwned": eventId }}
+      )
+  }
+
+  static addUserEventsAttending (userId, eventId) {
+    const db = getDB()
+    return db
+      .collection('users')
+      .updateOne(
+        { _id: ObjectId(userId) },
+        { $push: { "eventsAttending": eventId }}
       )
   }
 }

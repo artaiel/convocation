@@ -38,6 +38,12 @@ const actionDefs = {
       method: 'GET',
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/logout' : '/auth/logout'
     }
+  },
+  'getUserData' () {
+    return {
+      method: 'GET',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/user/events' : '/user/events'
+    }
   }
 }
 

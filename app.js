@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 
 const authRoutes = require('./routes/auth')
 const eventsRoutes = require('./routes/events')
+const userRoutes = require('./routes/user')
 const { mongoConnect } = require('./db/db')
 
 const app = express()
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes)
 app.use(eventsRoutes)
+app.use(userRoutes)
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500
