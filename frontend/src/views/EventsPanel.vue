@@ -1,33 +1,125 @@
 <template>
-  <div class="about">
-    <h1>This is the user settings panel</h1>
+  <div class="user-panel">
+    <div class="user-panel__controls">
+      <button class="user-panel__menu-view" :class="{'user-panel__menu-view--active': ownedSelected }" @click="selectView('owned')">
+        Owned
+      </button>
+      <button class="user-panel__menu-view" :class="{'user-panel__menu-view--active': attendingSelected }" @click="selectView('attending')">
+        Attending
+      </button>
+      <button class="user-panel__menu-view" :class="{'user-panel__menu-view--active': settingsSelected }" @click="selectView('settings')">
+        Settings
+      </button>
+    </div>
+    <transition :name="transitionType" mode="out-in">
+      <component :is="currentComponent"/>
+    </transition>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import EventsAttending from '@/components/UserPanel/EventsAttending.vue'
+import EventsOwned from '@/components/UserPanel/EventsOwned.vue'
+import UserSettings from '@/components/UserPanel/UserSettings.vue'
+import { mapMutations, mapState } from 'vuex'
 import apiClient from '@/lib/APIClient'
 
 export default {
+  components:{
+    EventsOwned,
+    EventsAttending,
+    UserSettings
+  },
   data () {
     return {
+      currentView: 'attending',
+      transitionType: ''
+    }
+  },
+  computed: {
+    ...mapState(['userInfo']),
+    currentComponent () {
+      if (this.ownedSelected) return 'EventsOwned'
+      if (this.attendingSelected) return 'EventsAttending'
+      if (this.settingsSelected) return 'UserSettings'
 
+      return null
+    },
+    ownedSelected () {
+      return this.currentView === 'owned'
+    },
+    attendingSelected () {
+      return this.currentView === 'attending'
+    },
+    settingsSelected () {
+      return this.currentView === 'settings'
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader']),
+    ...mapMutations(['toggleLoader', 'saveUserData']),
+    selectView (view) {
+      const leftToRight = this.ownedSelected || (this.attendingSelected && view === 'settings')
+      leftToRight
+        ? this.transitionType = 'left-to-right'
+        : this.transitionType = 'right-to-left'
+      this.currentView = view
+    }
   },
   async mounted () {
-    this.toggleLoader()
-    try {
-      const response = await apiClient.call('getUserData')
-      const responseData = await response.json()
-      console.log(responseData)
-    } catch (err) {
-      console.log(err)
-    } finally {
+    if (!this.userInfo) {
       this.toggleLoader()
+      try {
+        const response = await apiClient.call('getUserData')
+        const responseData = await response.json()
+        this.saveUserData(responseData)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.toggleLoader()
+      }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.user-panel {
+  width: $body-width-sm;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+
+  @media screen and (min-width: $size-lg) {
+    max-width: $body-width-lg;
+  }
+
+  @media screen and (min-width: $size-xxl) {
+    max-width: $body-width-xl;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+
+  &__menu-view {
+    margin: 0 1rem;
+    @include transition-basic;
+    @include btn-reset;
+    color: rgba($c-dark, .7);
+    cursor: pointer;
+    font-size: inherit;
+    position: relative;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: $c-dark;
+    }
+
+    &--active {
+      color: $c-dark;
+      border-bottom: 2px solid $c-brown;
+    }
+  }
+}
+</style>

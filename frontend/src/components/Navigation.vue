@@ -100,7 +100,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader']),
+    ...mapMutations(['toggleLoader', 'clearUserData']),
     changeLocale (locale) {
       this.$i18n.locale = locale
       this.languageHovered = false
@@ -119,6 +119,7 @@ export default {
       } catch (err) {
         console.error(err)
       } finally {
+        this.clearUserData()
         this.toggleLoader()
         this.$emit('checkIfLoggedIn')
         if (this.$route.path !== '/') this.$router.push({ path: '/' })

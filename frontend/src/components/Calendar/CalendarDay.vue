@@ -83,9 +83,6 @@ export default {
       return this.userAvailable ? this.attendees + 1 : this.attendees
     },
     userAvailable () {
-      // const id = `${this.day}-${this.month}-${this.year}`
-
-      // return !!this.currentlySelectedDates[id]
       return !!this.eventData?.userDates?.[this.year]?.[this.month]?.[this.day]?.attendees?.length
     },
     isDayCurrentlyViewed () {
@@ -99,7 +96,6 @@ export default {
     ...mapMutations(['selectDayAsAvailable']),
     selectDay () {
       if (!this.dayPassed && this.userLoggedIn) {
-        // this.$emit('selectDay', this.day)
         this.selectDayAsAvailable({
           year: this.year,
           month: this.month,
@@ -158,6 +154,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: 60%;
+    transition: all .3s ease-in-out;
     @include btn-reset;
 
     & > input {

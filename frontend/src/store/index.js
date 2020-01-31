@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     eventData: {},
+    userInfo: null,
     localEventData: {},
     usernameInEvent: null,
     isLoaderVisible: false,
@@ -43,6 +44,10 @@ export default new Vuex.Store({
       } else {
         Vue.set(state, 'usernameInEvent', payload.userName)
       }
+    },
+    saveUserData (state, payload) {
+      console.log('saving user data')
+      Vue.set(state, 'userInfo', payload)
     },
     selectDayAsAvailable (state, date) {
       const updatedEventData = { ...state.eventData }
@@ -82,6 +87,9 @@ export default new Vuex.Store({
     },
     setUserLoggedInState (state, value) {
       state.userLoggedIn = value
+    },
+    clearUserData (state) {
+      state.userInfo = {}
     }
   },
   getters: {

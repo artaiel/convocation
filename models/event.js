@@ -38,9 +38,20 @@ class Event {
         console.log('error at static fetchById')
         console.log(err)
       })
-    // try {
-    //   db.collection('events')
-    // }
+  }
+
+  static fetchMultipleEventsById (eventIds) {
+    const db = getDB()
+    return db.collection('events')
+      .find({ _id: { $in: eventIds } })
+      .toArray()
+      .then(event => {
+        return event
+      })
+      .catch(err => {
+        console.log('error fetching multiple events')
+        return err
+      })
   }
 
   static updateEventAttendance (eventData) {
