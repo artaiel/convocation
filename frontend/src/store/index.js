@@ -7,7 +7,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     eventData: {},
-    userInfo: null,
+    userInfo: {
+      eventsAttending: [],
+      eventsOwned: [],
+      userData: {}
+    },
     localEventData: {},
     usernameInEvent: null,
     isLoaderVisible: false,
@@ -79,6 +83,12 @@ export default new Vuex.Store({
     },
     updateUsernameInEvent (state, updatedUsername) {
       state.usernameInEvent = updatedUsername
+    },
+    updateUsername (state, username) {
+      state.userInfo.userData.username = username
+    },
+    updateEmail (state, email) {
+      state.userInfo.userData.email = email
     },
     updateTimeAvailability (state, timeData) {
       const date = timeData.date.split('-')

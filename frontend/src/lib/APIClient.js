@@ -9,6 +9,12 @@ const actionDefs = {
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/create' : '/event/create'
     }
   },
+  'deleteUser' () {
+    return {
+      method: 'DELETE',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/user/delete' : '/user/delete'
+    }
+  },
   'getEventData' (eventId) {
     return {
       method: 'GET',
@@ -19,6 +25,12 @@ const actionDefs = {
     return {
       method: 'POST',
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/update' : '/event/update'
+    }
+  },
+  'updateUserData' () {
+    return {
+      method: 'POST',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/user/update' : '/user/update'
     }
   },
   'signup' () {

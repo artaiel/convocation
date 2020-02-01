@@ -154,7 +154,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: 60%;
-    transition: all .3s ease-in-out;
+    transition: background-color .3s ease-in-out;
     @include btn-reset;
 
     & > input {

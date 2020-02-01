@@ -60,13 +60,13 @@ export default {
     selectView (view) {
       const leftToRight = this.ownedSelected || (this.attendingSelected && view === 'settings')
       leftToRight
-        ? this.transitionType = 'left-to-right'
-        : this.transitionType = 'right-to-left'
+        ? this.transitionType = 'right-to-left'
+        : this.transitionType = 'left-to-right'
       this.currentView = view
     }
   },
   async mounted () {
-    if (!this.userInfo) {
+    if (!this.userInfo.userData.username) {
       this.toggleLoader()
       try {
         const response = await apiClient.call('getUserData')
