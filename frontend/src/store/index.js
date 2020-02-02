@@ -90,14 +90,17 @@ export default new Vuex.Store({
     updateEmail (state, email) {
       state.userInfo.userData.email = email
     },
-    updateEventTitle (state, title) {
-      console.log(title)
+    updateEventTitle (state, payload) {
+      state.userInfo.eventsOwned[payload.eventIndex].eventName = payload.title
     },
-    updateEventDescription (state, desc) {
-      console.log(desc)
+    updateEventDescription (state, payload) {
+      state.userInfo.eventsOwned[payload.eventIndex].description = payload.description
     },
-    updateEventWebhook (state, webhook) {
-      console.log(webhook)
+    updateEventEmailNotifications (state, payload) {
+      state.userInfo.eventsOwned[payload.eventIndex].emailNotifications = payload.emailNotifications
+    },
+    updateEventWebhook (state, payload) {
+      state.userInfo.eventsOwned[payload.eventIndex].webhookUrl = payload.webhook
     },
     updateTimeAvailability (state, timeData) {
       const date = timeData.date.split('-')

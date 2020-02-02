@@ -129,6 +129,62 @@ exports.updateEventAttendance = async (req, res, next) => {
   // if - entries, remove user from attendees list for that event
 }
 
+exports.updateEventData = async (req, res, next) => {
+  const eventId = req.body.eventId
+  const userId = req.userId
+  const updatedUsername = req.body.usernameInEvent
+  const updatedUserAvailability = req.body.userAvailability
+
+  console.log(req.body)
+  // if (!req.userId) {
+  //   res.status(403).json({ msg: 'you must be logged in' })
+  // } else {
+  //   try {
+  //     const eventData = await Event.fetchById(eventId)
+  //     // console.log('event id')
+  //     // console.log(eventId)
+  //     // console.log('event data log')
+  //     // console.log(eventData)
+  //     const { others } = extractUserDates(eventData, userId)
+  //     const isOwner = eventData.ownerId.toString() === userId.toString()
+  //     const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId, isOwner) // add updated user to other's selections, and add userId from cookie into placeholder from FE
+  //     eventData.dates = updatedEventDates
+  //     const userAlreadyOnTheList = eventData.attendees.map(att => att.userId.toString()).includes(userId.toString())
+  //     const userHasRecordsInEvent = Object.keys(updatedUserAvailability).length > 0
+  //     if (userAlreadyOnTheList && updatedUsername) {
+  //       eventData.attendees.find(user => user.userId.toString() === userId.toString()).name = updatedUsername
+  //     }
+  //     if (userAlreadyOnTheList && !userHasRecordsInEvent) {
+  //       eventData.attendees = eventData.attendees.filter(attendee => attendee.userId.toString() !== userId.toString())
+  //     } else if (!userAlreadyOnTheList && userHasRecordsInEvent) {
+  //       eventData.attendees.push({
+  //         userId,
+  //         name: updatedUsername
+  //       })
+  //       await User.addUserEventsAttending(userId, eventData._id)
+  //     }
+
+  //     // update event data
+  //     let updatedEventData = await Event.updateEventAttendance(eventData)
+  //     updatedEventData = updatedEventData.value
+
+  //     // extract current user just like in normally getting event data
+  //     const { user: updatedUserDates, others: updatedOthersDates } = extractUserDates(updatedEventData, userId)
+  //     const coreEventData = { ...updatedEventData }
+  //     coreEventData.dates = { ...updatedOthersDates }
+  //     const userData = await User.fetchUserById(req.userId)
+  //     res.status(201).json({
+  //       userDates: updatedUserDates,
+  //       userName: userData.username,
+  //       userId: userId,
+  //       ...coreEventData
+  //     })
+  //   } catch (err) {
+  //     next(err)
+  //   }
+  // }
+}
+
 exports.deleteEvent = (req, res, next) => {
   const eventId = req.body.eventId
   //

@@ -40,7 +40,7 @@
     </transition>
     <div class="nav__desktop">
       <div class="nav__links">
-        <router-link to="/" class="nav__links-item">Create event</router-link>
+        <router-link to="/" class="nav__links-item">{{ homeLink }}</router-link>
         <router-link v-if="userLoggedIn" to="/my-events" class="nav__links-item">Your events</router-link>
         <div
           class="nav__languages"
@@ -97,6 +97,11 @@ export default {
     ...mapState(['userLoggedIn']),
     languageSelection () {
       return this.languages.filter(lang => lang !== this.$i18n.locale)
+    },
+    homeLink () {
+      return this.userLoggedIn
+        ? 'Create event'
+        : 'Home'
     }
   },
   methods: {

@@ -223,8 +223,6 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: $c-dark;
-  // width:  20rem;
-  // height: 10rem;
   color: white;
   display: flex;
   flex-flow: column;
@@ -244,8 +242,14 @@ export default {
 
   &__btn {
     @include btn-reset;
+    @include transition-basic;
     margin: 0 1rem;
     font-size: inherit;
+    color:rgba(white, .75);
+
+    &:hover {
+      color: white;
+    }
   }
 }
 </style>

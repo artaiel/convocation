@@ -17,7 +17,7 @@
         </p>
       </div>
     </div>
-    <div class="home__event-form">
+    <div v-if="userLoggedIn" class="home__event-form">
       <div
         class="event-input"
         :class="{ 'form-alert': $v.eventName.$error }"
@@ -83,40 +83,21 @@
           </span>
         </label>
       </div>
-      <!-- <div
-        class="event-input"
-        :class="{ 'form-alert': $v.eventEmail.$error }"
-      >
-        <input
-          id="eventEmail"
-          v-model="eventEmail"
-          type="text"
-          required
-          spellcheck="false"
-          autocomplete="off"
-        >
-        <label
-          for="eventEmail"
-          class="event-input-label"
-        >
-          Your e-mail
-          <span v-if="$v.eventEmail.$error" class="form-error-msg">
-            - a valid email required
-          </span>
-        </label>
-      </div> -->
       <button class="main-btn" @click="handleEventCreation">
         <span>
           Create event
         </span>
       </button>
     </div>
+    <div v-else class="home__cta">
+      Sign in to create and participate in events!
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { validationMixin } from 'vuelidate'
-// import { required, minLength, email } from 'vuelidate/lib/validators'
 import { required, minLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -130,18 +111,16 @@ export default {
       required,
       minLength: minLength(2)
     }
-    // eventEmail: {
-    //   required,
-    //   email
-    // },
   },
   data () {
     return {
       eventName: null,
       eventDescription: null,
       eventOwner: null
-      // eventEmail: null
     }
+  },
+  computed: {
+    ...mapState(['userLoggedIn']),
   },
   methods: {
     handleEventCreation () {
@@ -150,7 +129,6 @@ export default {
           eventName: this.eventName,
           eventDescription: this.eventDescription,
           eventOwner: this.eventOwner
-          // eventEmail: this.eventEmail
         })
       }
     },
@@ -215,6 +193,14 @@ export default {
     & > .event-input {
       margin-bottom: $spacer * 4;
     }
+  }
+
+  &__cta {
+    text-align: center;
+    margin-top: 3rem;
+    font-weight: 600;
+    font-size: $font-size-xl;
+    padding: 0 2rem;
   }
 }
 

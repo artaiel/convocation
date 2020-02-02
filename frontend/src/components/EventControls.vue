@@ -5,6 +5,9 @@
         <div class="event-controls__event-name">
           {{ eventData.eventName }}
         </div>
+        <div class="event-controls__event-owner">
+          {{ eventOwnerName }}
+        </div>
       </div>
       <div class="event-controls__event-description">
         {{ eventData.description }}
@@ -86,6 +89,9 @@ export default {
   computed: {
     ...mapState(['eventData', 'usernameInEvent', 'userLoggedIn']),
     ...mapGetters(['isEventOwner']),
+    eventOwnerName () {
+      return 'Owner: ' + this.eventData.ownerName
+    },
     username: {
       get () {
         return this.usernameInEvent
@@ -166,7 +172,7 @@ export default {
     async updateEvent () {
       this.toggleLoader()
       try {
-        const response = await apiClient.call('updateEvent', {
+        const response = await apiClient.call('updateEventAvailability', {
           eventId: this.eventData._id,
           userAvailability: this.eventData.userDates,
           usernameInEvent: this.usernameInEvent
@@ -205,6 +211,7 @@ export default {
   &__owner-date-select {
     background: none;
     border: none;
+    outline: none;
     display: flex;
     align-items: center;
     margin: 2rem auto;
@@ -292,6 +299,17 @@ export default {
   &__event-name {
     font-size: $font-size-xxl;
     font-weight: 700;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+
+  &__event-owner {
+    font-size: $font-size;
+  }
+
+  &__event-description {
+    margin-top: .5rem;
+    white-space: pre-line;
   }
 
   &__person {
