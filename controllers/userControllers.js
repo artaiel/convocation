@@ -19,7 +19,8 @@ exports.getUserData = async (req, res, next) => {
       },
       eventsOwned: eventsOwned.map(event => {
         const { _id, eventName, description, ...otherProperties } = event
-        return { _id, eventName, description }
+        const attendeeNames = otherProperties.attendees.map(att => att.name)
+        return { _id, eventName, description, attendeeNames }
       }),
       eventsAttending: eventsAttending.map(event => {
         return {

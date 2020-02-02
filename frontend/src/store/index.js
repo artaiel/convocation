@@ -90,6 +90,15 @@ export default new Vuex.Store({
     updateEmail (state, email) {
       state.userInfo.userData.email = email
     },
+    updateEventTitle (state, title) {
+      console.log(title)
+    },
+    updateEventDescription (state, desc) {
+      console.log(desc)
+    },
+    updateEventWebhook (state, webhook) {
+      console.log(webhook)
+    },
     updateTimeAvailability (state, timeData) {
       const date = timeData.date.split('-')
       date[1] = date[1] - 1
