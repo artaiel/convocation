@@ -11,7 +11,7 @@ class Event {
     this.dates = dates
     this.attendees = attendees
     this.emailNotifications = true
-    this.webhookUrl = null
+    this.webhookUrl = ''
   }
 
   save () {
@@ -78,31 +78,31 @@ class Event {
       })
   }
 
-  static updateEventData (eventData) {
-    // console.log('argumentInStaticUpdateEventAttendance', eventData.dates['2020']['0'])
-    // const db = getDB()
-    // return db.collection('events')
-    //   .findOneAndUpdate(
-    //     { _id: ObjectId(eventData._id) },
-    //     {
-    //       $set: {
-    //         dates: eventData.dates,
-    //         attendees: eventData.attendees
-    //       }
-    //     },
-    //     {
-    //       returnOriginal: false,
-    //       returnNewDocument: true
-    //     }
-    //   )
-    //   .catch(err => {
-    //     throw err
-    //   })
-    // const db = getDB()
-    // return db.collection('events')
-    //   .find({ _id: ObjectId(eventId) })
-    //   .next()
-    console.log(eventData)
+  static updateEventData (eventId, update) {
+    const db = getDB()
+    return db.collection('events')
+      .findOneAndUpdate(
+        { _id: ObjectId(eventId) },
+        {
+          $set: update
+        },
+        {
+          returnOriginal: false,
+          returnNewDocument: true
+        }
+      )
+      .catch(err => {
+        throw err
+      })
+  }
+
+  static removeEvent (eventId) {
+    const db = getDB()
+    return db.collection('events')
+      .remove({ _id: ObjectId(eventId) })
+      .catch(err => {
+        throw err
+      })
   }
 }
 

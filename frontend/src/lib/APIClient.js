@@ -15,10 +15,16 @@ const actionDefs = {
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/user/delete' : '/user/delete'
     }
   },
+  'deleteEvent' (eventId) {
+    return {
+      method: 'DELETE',
+      endpoint: process.env.NODE_ENV === 'development' ? `http://localhost:5000/event/${eventId}` : `/event/${eventId}`
+    }
+  },
   'getEventData' (eventId) {
     return {
       method: 'GET',
-      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/event/data/' + eventId : '/event/data/' + eventId
+      endpoint: process.env.NODE_ENV === 'development' ? `http://localhost:5000/event/data/${eventId}` : `/event/data/${eventId}`
     }
   },
   'updateEventAvailability' () {
@@ -72,19 +78,20 @@ class ApiClient {
 
   call (action, data, param) {
     const { method, endpoint } = actionDefs[action](param)
-    if (method !== 'GET') {
+    if (method === 'POST') {
       return fetch(endpoint, {
         method: method,
         headers: defaultHeaders,
         credentials: 'include',
         body: JSON.stringify(data)
       })
+    } else {
+      return fetch(endpoint, {
+          method: method,
+          headers: defaultHeaders,
+          credentials: 'include'
+        })
     }
-    return fetch(endpoint, {
-        method: method,
-        headers: defaultHeaders,
-        credentials: 'include'
-      })
   }
 }
 

@@ -60,6 +60,24 @@ class User {
         { $push: { "eventsAttending": eventId }}
       )
   }
+
+  static removeEventInMentions (eventId) {
+    const db = getDB()
+    return db.collection('users')
+      .update(
+        {},
+        {
+          $pull: {
+            eventsOwned: ObjectId(eventId),
+            eventsAttending: ObjectId(eventId)
+          }
+        },
+        { multi: true }
+      )
+      .catch(err => {
+        throw err
+      })
+  }
 }
 
 module.exports = User

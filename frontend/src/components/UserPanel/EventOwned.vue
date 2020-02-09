@@ -170,7 +170,8 @@ export default {
       'updateEventWebhook',
       'updateEventEmailNotifications',
       'toggleLoader',
-      'saveUserData'
+      'saveUserData',
+      'updateEventData'
     ]),
     validationFailed () {
       this.$v.$touch()
@@ -196,17 +197,26 @@ export default {
           emailNotifications: this.emailNotifications,
           webhookUrl: this.webhook
         }
-        const response = apiClient.call('updateEventData', updatePayload)
+        const response = await apiClient.call('updateEventData', updatePayload)
         const responseData = await response.json()
-        this.saveUserData(responseData)
+        if (responseData.msg) throw new Error ('no update')
       } catch (err) {
         console.log(err)
       } finally {
         this.toggleLoader()
       }
     },
-    deleteEvent () {
-      console.log('confirmation first')
+    async deleteEvent () {
+      try {
+        this.toggleLoader()
+        const response = await apiClient.call('deleteEvent', null, this.userInfo.eventsOwned[this.eventIndex]._id)
+        const responseData = await response.json()
+        console.log(responseData)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.toggleLoader()
+      }
     }
   }
 }

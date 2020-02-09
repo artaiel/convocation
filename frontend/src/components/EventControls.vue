@@ -304,11 +304,11 @@ export default {
   }
 
   &__event-owner {
-    font-size: $font-size;
+    font-size: $font-size-lg;
   }
 
   &__event-description {
-    margin-top: .5rem;
+    margin-top: .8rem;
     white-space: pre-line;
   }
 

@@ -66,17 +66,15 @@ export default {
     }
   },
   async mounted () {
-    if (!this.userInfo.userData.username) {
+    this.toggleLoader()
+    try {
+      const response = await apiClient.call('getUserData')
+      const responseData = await response.json()
+      this.saveUserData(responseData)
+    } catch (err) {
+      console.log(err)
+    } finally {
       this.toggleLoader()
-      try {
-        const response = await apiClient.call('getUserData')
-        const responseData = await response.json()
-        this.saveUserData(responseData)
-      } catch (err) {
-        console.log(err)
-      } finally {
-        this.toggleLoader()
-      }
     }
   }
 }
