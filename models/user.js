@@ -78,6 +78,33 @@ class User {
         throw err
       })
   }
+
+  static async updateUserData (userId, formData) {
+    const db = getDB()
+    const update = {
+      username: formData.username,
+      email: formData.email
+    }
+    if (formData.password) {
+      try {
+        const hashedPassword = await bcryptjs.hash(formData.password, 12)
+        update.password = hashedPassword
+      } catch (err) {
+        next(err)
+      }
+    }
+
+    return db.collection('users')
+      .findOneAndUpdate(
+        { _id: ObjectId(userId) },
+        {
+          $set: update
+        }
+      )
+      .catch(err => {
+        throw err
+      })
+  }
 }
 
 module.exports = User

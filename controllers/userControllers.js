@@ -39,30 +39,14 @@ exports.updateUserData = async (req, res, next) => {
     error.status = 403
     next(error)
   } else {
-    const userData = await User.fetchUserById(req.userId)
-    console.log(userData)
-    console.log('updatedDataFromFE')
-    console.log(req.body)
-    // const eventsOwned = await Event.fetchMultipleEventsById(userData.eventsOwned)
-    // const eventsAttending = await Event.fetchMultipleEventsById(userData.eventsAttending)
-    // res.json({
-    //   msg: 'event info',
-    //   userData: {
-    //     username: userData.username,
-    //     email: userData.email
-    //   },
-    //   eventsOwned: eventsOwned.map(event => {
-    //     const { _id, eventName, description, ...otherProperties } = event
-    //     return { _id, eventName, description }
-    //   }),
-    //   eventsAttending: eventsAttending.map(event => {
-    //     return {
-    //       _id: event._id,
-    //       eventName: event.eventName,
-    //       description: event.description
-    //     }
-    //   })
-    // })
+    try {
+      await User.updateUserData(req.userId, req.body)
+      res.status(200).json({
+        msg: 'updated userdata'
+      })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
@@ -72,9 +56,15 @@ exports.deleteUser = async (req, res, next) => {
     error.status = 403
     next(error)
   } else {
-    // const userData = await User.fetchUserById(req.userId)
-    // console.log(userData)
+
+    // list user events attended
+    // list user events owned
+    // remove events owned
+    // remove mentions in events attending?
+    // remove user
+    const user = await User.fetchUserById(req.userId)
+    console.log(user)
     console.log('gotta delete users events first')
-    res.status(201).json('yeah yeah')
+    res.status(201).json(user)
   }
 }

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import setValue from 'set-value'
+import apiClient from '@/lib/APIClient'
 
 Vue.use(Vuex)
 
@@ -120,7 +121,30 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async getUserData ({ commit }) {
+      commit('toggleLoader')
+      try {
+        const response = await apiClient.call('getUserData')
+        const responseData = await response.json()
+        commit('saveUserData', responseData)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        commit('toggleLoader')
+      }
+    }
   },
   modules: {
   }
 })
+
+// this.toggleLoader()
+// try {
+//   const response = await apiClient.call('getUserData')
+//   const responseData = await response.json()
+//   this.saveUserData(responseData)
+// } catch (err) {
+//   console.log(err)
+// } finally {
+//   this.toggleLoader()
+// }

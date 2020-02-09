@@ -113,20 +113,23 @@ export default {
   },
   methods: {
     ...mapMutations(['updateUsername', 'updateEmail', 'toggleLoader']),
-    updateData () {
+    async updateData () {
       if (this.validationFailed()) {
         return
       }
 
+      this.toggleLoader()
       try {
         const updatePayload = {
           username: this.username,
           email: this.email,
           password: this.password
         }
-        apiClient.call('updateUserData', updatePayload)
+        await apiClient.call('updateUserData', updatePayload)
       } catch (err) {
         console.log(err)
+      } finally {
+        this.toggleLoader()
       }
     },
     async deleteUser () {
@@ -134,8 +137,8 @@ export default {
       try {
         await apiClient.call('deleteUser')
         this.hideConfirmation()
-        this.$router.push({ path: '/' })
         this.toggleLoader()
+        this.$router.push({ path: '/' })
       } catch (err) {
         console.log(err)
         this.toggleLoader()

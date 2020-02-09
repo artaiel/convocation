@@ -21,8 +21,8 @@
 import EventsAttending from '@/components/UserPanel/EventsAttending.vue'
 import EventsOwned from '@/components/UserPanel/EventsOwned.vue'
 import UserSettings from '@/components/UserPanel/UserSettings.vue'
-import { mapMutations, mapState } from 'vuex'
-import apiClient from '@/lib/APIClient'
+import { mapActions, mapMutations, mapState } from 'vuex'
+// import apiClient from '@/lib/APIClient'
 
 export default {
   components:{
@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     ...mapMutations(['toggleLoader', 'saveUserData']),
+    ...mapActions(['getUserData']),
     selectView (view) {
       const leftToRight = this.ownedSelected || (this.attendingSelected && view === 'settings')
       leftToRight
@@ -66,16 +67,17 @@ export default {
     }
   },
   async mounted () {
-    this.toggleLoader()
-    try {
-      const response = await apiClient.call('getUserData')
-      const responseData = await response.json()
-      this.saveUserData(responseData)
-    } catch (err) {
-      console.log(err)
-    } finally {
-      this.toggleLoader()
-    }
+    // this.toggleLoader()
+    // try {
+    //   const response = await apiClient.call('getUserData')
+    //   const responseData = await response.json()
+    //   this.saveUserData(responseData)
+    // } catch (err) {
+    //   console.log(err)
+    // } finally {
+    //   this.toggleLoader()
+    // }
+    this.getUserData()
   }
 }
 </script>

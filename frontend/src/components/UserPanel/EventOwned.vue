@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { minLength, url, required } from 'vuelidate/lib/validators'
 import apiClient from '@/lib/APIClient'
@@ -173,6 +173,7 @@ export default {
       'saveUserData',
       'updateEventData'
     ]),
+    ...mapActions(['getUserData']),
     validationFailed () {
       this.$v.$touch()
       return this.$v.$error
@@ -212,10 +213,12 @@ export default {
         const response = await apiClient.call('deleteEvent', null, this.userInfo.eventsOwned[this.eventIndex]._id)
         const responseData = await response.json()
         console.log(responseData)
+        this.getUserData()
       } catch (err) {
         console.log(err)
       } finally {
         this.toggleLoader()
+        this.hideConfirmation()
       }
     }
   }
