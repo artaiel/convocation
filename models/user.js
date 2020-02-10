@@ -27,6 +27,11 @@ class User {
     ]}).toArray()
   }
 
+  static deleteUser (userId) {
+    const db = getDB()
+    return db.collection('users').deleteOne({ _id: ObjectId(userId) })
+  }
+
   static findUser (usernameOrEmail) {
     const db = getDB()
     return db.collection('users').findOne({ $or: [
@@ -58,6 +63,16 @@ class User {
       .updateOne(
         { _id: ObjectId(userId) },
         { $push: { "eventsAttending": eventId }}
+      )
+  }
+
+  static removeUserEventsAttending (userId, eventId) {
+    const db = getDB()
+    return db
+      .collection('users')
+      .updateOne(
+        { _id: ObjectId(userId) },
+        { $pull: { "eventsAttending": eventId }}
       )
   }
 

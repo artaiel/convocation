@@ -57,7 +57,8 @@ class Event {
   }
 
   static updateEventAttendance (eventData) {
-    console.log('argumentInStaticUpdateEventAttendance', eventData.dates['2020']['0'])
+    console.log('eventData to update in db')
+    console.log(eventData)
     const db = getDB()
     return db.collection('events')
       .findOneAndUpdate(
@@ -99,7 +100,7 @@ class Event {
   static removeEvent (eventId) {
     const db = getDB()
     return db.collection('events')
-      .remove({ _id: ObjectId(eventId) })
+      .deleteOne({ _id: ObjectId(eventId) })
       .catch(err => {
         throw err
       })

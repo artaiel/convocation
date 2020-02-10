@@ -56,15 +56,46 @@ exports.deleteUser = async (req, res, next) => {
     error.status = 403
     next(error)
   } else {
+    console.log('------------------ start deleting user ----------------------')
 
     // list user events attended
     // list user events owned
     // remove events owned
     // remove mentions in events attending?
     // remove user
-    const user = await User.fetchUserById(req.userId)
-    console.log(user)
-    console.log('gotta delete users events first')
-    res.status(201).json(user)
+    try {
+      const user = await User.fetchUserById(req.userId)
+      const eventsOwned = user.eventsOwned.length > 0 ? [...user.eventsOwned] : null
+      const eventsAttending = user.eventsAttending.length > 0 ? [...user.eventsAttending] : null
+
+      // remove owned event data
+      if (eventsOwned) {
+        const removeOwnedEvents = eventsOwned.map(async event => {
+          return await Event.removeEvent(event)
+        })
+        await Promise.all(removeOwnedEvents)
+      }
+
+      // remove event from list of attended events for other users
+      if (eventsAttending) {
+        const removeMentionsOfEvents = eventsAttending.map(async event => {
+          return await User.removeEventInMentions(event)
+        })
+        await Promise.all(removeMentionsOfEvents)
+      }
+
+      // remove user attendance in other events?
+
+      // delete user itself
+      await User.deleteUser(req.userId)
+
+      res
+        .status(200)
+        .clearCookie('tau')
+        .clearCookie('ccua')
+        .json({ msg: 'log out' })
+    } catch (err) {
+      next(err)
+    }
   }
 }

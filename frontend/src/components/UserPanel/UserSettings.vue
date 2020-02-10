@@ -112,7 +112,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateUsername', 'updateEmail', 'toggleLoader']),
+    ...mapMutations(['updateUsername', 'updateEmail', 'toggleLoader', 'clearUserData', 'updateUserLoggedInState']),
     async updateData () {
       if (this.validationFailed()) {
         return
@@ -138,6 +138,8 @@ export default {
         await apiClient.call('deleteUser')
         this.hideConfirmation()
         this.toggleLoader()
+        this.clearUserData()
+        this.updateUserLoggedInState()
         this.$router.push({ path: '/' })
       } catch (err) {
         console.log(err)

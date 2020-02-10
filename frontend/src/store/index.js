@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import setValue from 'set-value'
 import apiClient from '@/lib/APIClient'
+import { isLoggedIn } from '@/lib/auth.js'
 
 Vue.use(Vuex)
 
@@ -59,11 +60,17 @@ export default new Vuex.Store({
       const dayAlreadySelected = updatedEventData?.userDates?.[date.year]?.[date.month]?.[date.day]?.attendees
       if (dayAlreadySelected) {
         Vue.delete(state.eventData.userDates[date.year][date.month][date.day], 'attendees')
+        if (!state.eventData.userDates[date.year][date.month][date.day].selected) {
+          Vue.delete(state.eventData.userDates[date.year][date.month], [date.day])
+        }
         // cleanup empty month
         const numberOfMonthsEntries = Object.entries(state.eventData.userDates[date.year][date.month]).length
+        console.log(state.eventData.userDates)
+        console.log('numberOfMonthsEntries', numberOfMonthsEntries)
         if (numberOfMonthsEntries === 0) Vue.delete(state.eventData.userDates[date.year], date.month)
         // cleanup empty year
         const numberOfYearsEntries = Object.entries(state.eventData.userDates[date.year]).length
+        console.log('numberOfYearsEntries', numberOfYearsEntries)
         if (numberOfYearsEntries === 0) Vue.delete(state.eventData.userDates, date.year)
       } else {
         setValue(
@@ -108,8 +115,8 @@ export default new Vuex.Store({
       date[1] = date[1] - 1
       state.eventData.userDates[date[2]][date[1]][date[0]].attendees[0].time = timeData.updatedTime
     },
-    setUserLoggedInState (state, value) {
-      state.userLoggedIn = value
+    updateUserLoggedInState (state) {
+      state.userLoggedIn = isLoggedIn()
     },
     clearUserData (state) {
       state.userInfo = {}

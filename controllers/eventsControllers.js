@@ -55,8 +55,6 @@ exports.createEvent = async (req, res, next) => {
     const event = new Event(eventName, description, ownerId, ownerName, {}, [])
     const newEventData = await event.save()
     await User.addUserEventsOwned(ownerId, newEventData.insertedId)
-    // console.log(newEventData.insertedId)
-    // console.log(updatedUser)
     res.status(200).json({
       eventId: newEventData.insertedId
     })
@@ -77,10 +75,6 @@ exports.updateEventAttendance = async (req, res, next) => {
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
-      // console.log('event id')
-      // console.log(eventId)
-      // console.log('event data log')
-      // console.log(eventData)
       const { others } = extractUserDates(eventData, userId)
       const isOwner = eventData.ownerId.toString() === userId.toString()
       const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId, isOwner) // add updated user to other's selections, and add userId from cookie into placeholder from FE
@@ -92,6 +86,7 @@ exports.updateEventAttendance = async (req, res, next) => {
       }
       if (userAlreadyOnTheList && !userHasRecordsInEvent) {
         eventData.attendees = eventData.attendees.filter(attendee => attendee.userId.toString() !== userId.toString())
+        await User.removeUserEventsAttending(userId, eventData._id)
       } else if (!userAlreadyOnTheList && userHasRecordsInEvent) {
         eventData.attendees.push({
           userId,
@@ -101,6 +96,8 @@ exports.updateEventAttendance = async (req, res, next) => {
       }
 
       // update event data
+      console.log('eventData !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+      console.log(eventData)
       let updatedEventData = await Event.updateEventAttendance(eventData)
       updatedEventData = updatedEventData.value
 
@@ -119,14 +116,6 @@ exports.updateEventAttendance = async (req, res, next) => {
       next(err)
     }
   }
-
-  // get eventData
-  // pass to helper, along with updated user availability
-  // after removing old user availibilty (existing helper) -> join other users with updated availibity in dates object (new helper)
-  // set dates in eventData in that collection
-  // ??? profit?
-  // return updated event data again
-  // if - entries, remove user from attendees list for that event
 }
 
 exports.updateEventData = async (req, res, next) => {
@@ -179,5 +168,4 @@ exports.deleteEvent = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-  //
 }

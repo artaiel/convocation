@@ -2,7 +2,7 @@
   <div class="app" :class="{ 'app--darken-background': signInModalVisible }">
     <Navigation
       @clickSignIn="toggleSignIn"
-      @checkIfLoggedIn="checkIfLoggedIn"
+      @checkIfLoggedIn="updateUserLoggedInState"
     />
     <router-view/>
     <img class="hero" :src="heroImage"/>
@@ -12,7 +12,7 @@
         @close="closeSignIn"
         @toggleLoading="toggleLoading"
         @closeSignIn="closeSignIn"
-        @checkIfLoggedIn="checkIfLoggedIn"
+        @checkIfLoggedIn="updateUserLoggedInState"
       />
     </transition>
     <transition name="fade">
@@ -26,7 +26,6 @@
 <script>
 import Navigation from '@/components/Navigation'
 import SignIn from '@/components/SignIn'
-import { isLoggedIn } from '@/lib/auth.js'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
@@ -46,7 +45,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setUserLoggedInState']),
+    ...mapMutations(['updateUserLoggedInState']),
     toggleSignIn () {
       this.signInModalVisible = !this.signInModalVisible
     },
@@ -55,13 +54,10 @@ export default {
     },
     toggleLoading () {
       this.loading = !this.loading
-    },
-    checkIfLoggedIn () {
-      this.setUserLoggedInState(isLoggedIn())
     }
   },
   mounted () {
-    this.checkIfLoggedIn()
+    this.updateUserLoggedInState()
   }
 }
 </script>
