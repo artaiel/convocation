@@ -66,7 +66,7 @@ exports.deleteUser = async (req, res, next) => {
     try {
       const user = await User.fetchUserById(req.userId)
       const eventsOwned = user.eventsOwned.length > 0 ? [...user.eventsOwned] : null
-      const eventsAttending = user.eventsAttending.length > 0 ? [...user.eventsAttending] : null
+      // const eventsAttending = user.eventsAttending.length > 0 ? [...user.eventsAttending] : null
 
       // remove owned event data
       if (eventsOwned) {
@@ -77,8 +77,8 @@ exports.deleteUser = async (req, res, next) => {
       }
 
       // remove event from list of attended events for other users
-      if (eventsAttending) {
-        const removeMentionsOfEvents = eventsAttending.map(async event => {
+      if (eventsOwned) {
+        const removeMentionsOfEvents = eventsOwned.map(async event => {
           return await User.removeEventInMentions(event)
         })
         await Promise.all(removeMentionsOfEvents)

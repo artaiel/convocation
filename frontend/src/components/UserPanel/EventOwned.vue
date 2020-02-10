@@ -28,9 +28,9 @@
       <label class="owned__label">
         URL
       </label >
-      <p class="owned__event-url">
+      <router-link class="owned__event-url" :to="{ path: routerUrl }">
         {{ eventUrl }}
-      </p>
+      </router-link>
     </div>
     <div class="owned__element">
       <label class="owned__label">
@@ -126,9 +126,12 @@ export default {
     },
     eventUrl () {
       const base = process.env.NODE_ENV === 'development'
-        ? 'https://circle-convocation.herokuapp.com'
-        : `${window.location.protocol}//${window.location.host}`
+        ? `${window.location.protocol}//${window.location.host}`
+        : 'https://circle-convocation.herokuapp.com'
       return `${base}/event/${this.userInfo.eventsOwned[this.eventIndex]._id}`
+    },
+    routerUrl () {
+      return `/event/${this.userInfo.eventsOwned[this.eventIndex]._id}`
     },
     title: {
       get () {
