@@ -1,16 +1,21 @@
 <template>
   <div class="event">
-    <CalendarMonth
-      :currentlySelectedDates="currentlySelectedDates"
-      :viewedDate="viewedDate"
-      @selectDay="selectDay"
-      @viewDate="viewDate"
-    />
-    <EventControls
-      :viewedDate="viewedDate"
-      :currentlySelectedDates="currentlySelectedDates"
-      @setAvailability="setAvailability"
-    />
+    <template v-if="!eventData._id">
+      no event found
+    </template>
+    <template v-else>
+      <CalendarMonth
+        :currentlySelectedDates="currentlySelectedDates"
+        :viewedDate="viewedDate"
+        @selectDay="selectDay"
+        @viewDate="viewDate"
+      />
+      <EventControls
+        :viewedDate="viewedDate"
+        :currentlySelectedDates="currentlySelectedDates"
+        @setAvailability="setAvailability"
+      />
+    </template>
   </div>
 </template>
 
@@ -37,12 +42,15 @@ export default {
     ...mapState(['eventData'])
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'saveEventData']),
+    ...mapMutations(['toggleLoader', 'saveEventData', 'clearEventData']),
     async loadEventData () {
       this.toggleLoader()
       try {
         const response = await apiClient.call('getEventData', null, this.$route.params.id)
         const data = await response.json()
+        if (data.message) {
+          throw new Error(data.message)
+        }
         this.saveEventData(data)
       } catch (err) {
         console.log(err)
@@ -69,6 +77,7 @@ export default {
     }
   },
   mounted () {
+    this.clearEventData()
     this.loadEventData()
     EventBus.$once('login', this.loadEventData)
   }

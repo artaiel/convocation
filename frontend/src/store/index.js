@@ -120,6 +120,9 @@ export default new Vuex.Store({
     },
     clearUserData (state) {
       state.userInfo = {}
+    },
+    clearEventData (state) {
+      state.eventData = {}
     }
   },
   getters: {

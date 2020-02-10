@@ -20,6 +20,12 @@ exports.getEventData = async (req, res, next) => {
       console.log('eventId in get', eventId)
       const eventData = await Event.fetchById(eventId)
       console.log('eventData in get', eventData)
+      if (!eventData) {
+        const error = new Error('no such event')
+        error.statusCode = 404
+        next(error)
+        return
+      }
       userNotEnrolled = !eventData.attendees.map(att => att.userId.toString()).includes(req.userId.toString())
       const userData = await User.fetchUserById(req.userId)
       console.log('get username from here I guess', userData)
