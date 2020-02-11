@@ -28,7 +28,7 @@ export default {
         const parsedResponse = await response.json()
         this.createdEventId = parsedResponse.eventId
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       }
       this.eventCreatedSuccessfully = true
     }

@@ -52,7 +52,7 @@ export default new Vuex.Store({
       }
     },
     saveUserData (state, payload) {
-      console.log('saving user data')
+      // console.log('saving user data')
       Vue.set(state, 'userInfo', payload)
     },
     selectDayAsAvailable (state, date) {
@@ -65,12 +65,12 @@ export default new Vuex.Store({
         }
         // cleanup empty month
         const numberOfMonthsEntries = Object.entries(state.eventData.userDates[date.year][date.month]).length
-        console.log(state.eventData.userDates)
-        console.log('numberOfMonthsEntries', numberOfMonthsEntries)
+        // console.log(state.eventData.userDates)
+        // console.log('numberOfMonthsEntries', numberOfMonthsEntries)
         if (numberOfMonthsEntries === 0) Vue.delete(state.eventData.userDates[date.year], date.month)
         // cleanup empty year
         const numberOfYearsEntries = Object.entries(state.eventData.userDates[date.year]).length
-        console.log('numberOfYearsEntries', numberOfYearsEntries)
+        // console.log('numberOfYearsEntries', numberOfYearsEntries)
         if (numberOfYearsEntries === 0) Vue.delete(state.eventData.userDates, date.year)
       } else {
         setValue(
@@ -138,7 +138,7 @@ export default new Vuex.Store({
         const responseData = await response.json()
         commit('saveUserData', responseData)
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       } finally {
         commit('toggleLoader')
       }

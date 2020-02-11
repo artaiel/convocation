@@ -53,7 +53,7 @@ export default {
         }
         this.saveEventData(data)
       } catch (err) {
-        console.log(err)
+        // console.log(err)
       } finally {
         this.toggleLoader()
       }
