@@ -1,9 +1,14 @@
 <template>
   <div class="event">
-    <template v-if="!eventData._id">
-      no event found
+    <template v-if="fetchFailed">
+      <div class="event__not-found">
+        <p>
+          This event doesn't exist.
+        </p>
+        <img src="@/assets/images/rat.png" alt="">
+      </div>
     </template>
-    <template v-else>
+    <template v-else-if="eventData._id">
       <CalendarMonth
         :currentlySelectedDates="currentlySelectedDates"
         :viewedDate="viewedDate"
@@ -35,7 +40,8 @@ export default {
   data () {
     return {
       currentlySelectedDates: {},
-      viewedDate: ''
+      viewedDate: '',
+      fetchFailed: false
     }
   },
   computed: {
@@ -54,6 +60,7 @@ export default {
         this.saveEventData(data)
       } catch (err) {
         // console.log(err)
+        this.fetchFailed = true
       } finally {
         this.toggleLoader()
       }
@@ -83,3 +90,31 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.event__not-found {
+  max-width: $body-width-sm;
+  margin: 10rem auto 0 auto;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+
+  @media screen and (min-width: $size-lg) {
+    max-width: $body-width-lg;
+  }
+
+  @media screen and (min-width: $size-xxl) {
+    max-width: $body-width-xl;
+  }
+
+  & > p {
+    font-size: $font-size-lg;
+  }
+
+  & > img {
+    @include blend-darken;
+    max-width: 15rem;
+    margin-top: 1.5rem;
+  }
+}
+</style>

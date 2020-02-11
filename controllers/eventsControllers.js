@@ -31,7 +31,13 @@ exports.getEventData = async (req, res, next) => {
       console.log('get username from here I guess', userData)
       if (userNotEnrolled) {
         console.log('user not enrolled; fetching everything')
-        res.status(200).json({ userDates: {}, userName: userData.username, ...eventData })
+        res.status(200).json(
+          {
+            userDates: {},
+            userName: userData.username,
+            userId: req.userId,
+            ...eventData }
+        )
       } else {
         const { user, others } = extractUserDates(eventData, req.userId)
         const coreEventData = { ...eventData }

@@ -251,6 +251,7 @@ export default {
     display: flex;
     flex-flow: column;
     margin-bottom: 1rem;
+    word-wrap: break-word;
   }
 
   &__label {
