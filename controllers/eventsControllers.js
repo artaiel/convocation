@@ -1,8 +1,10 @@
 const fs = require('fs')
 const path = require('path')
+const axios = require('axios')
+
 const Event = require('../models/event')
 const User = require('../models/user')
-const { extractUserDates, mergeUserDates } = require('../utils/helpers')
+const { extractUserDates, mergeUserDates, countDaysAvailable } = require('../utils/helpers')
 
 exports.getEventData = async (req, res, next) => {
   const eventId = req.params.eventId
@@ -11,15 +13,21 @@ exports.getEventData = async (req, res, next) => {
   if (!req.userId) {
     try {
       const eventData = await Event.fetchById(eventId)
+      if (!eventData) {
+        const error = new Error('no such event')
+        error.statusCode = 404
+        next(error)
+        return
+      }
       res.status(200).json(eventData)
     } catch (err) {
       next(err)
     }
   } else {
     try {
-      console.log('eventId in get', eventId)
+      // console.log('eventId in get', eventId)
       const eventData = await Event.fetchById(eventId)
-      console.log('eventData in get', eventData)
+      // console.log('eventData in get', eventData)
       if (!eventData) {
         const error = new Error('no such event')
         error.statusCode = 404
@@ -87,7 +95,7 @@ exports.updateEventAttendance = async (req, res, next) => {
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
-      const { others } = extractUserDates(eventData, userId)
+      const { user, others } = extractUserDates(eventData, userId)
       const isOwner = eventData.ownerId.toString() === userId.toString()
       const updatedEventDates = mergeUserDates(others, updatedUserAvailability, userId, isOwner) // add updated user to other's selections, and add userId from cookie into placeholder from FE
       eventData.dates = updatedEventDates
@@ -110,14 +118,40 @@ exports.updateEventAttendance = async (req, res, next) => {
       // update event data
       console.log('eventData !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       console.log(eventData)
+      console.log(updatedUsername)
       let updatedEventData = await Event.updateEventAttendance(eventData)
       updatedEventData = updatedEventData.value
+
+      // send webhook
+      if (updatedEventData.webhookUrl) {
+        console.log('updatedUserAvailability', updatedUserAvailability)
+        console.log('user', user)
+        const dataBefore = countDaysAvailable(user)
+        const dataNow = countDaysAvailable(updatedUserAvailability)
+        console.log(updatedUsername + ' has updated their attendance :dragon:. Had ' + dataBefore.count + ' days available, now has ' + dataNow.count + '.')
+        let difference = ''
+        if (dataNow.count > dataBefore.count) difference = ` with ${dataNow.count - dataBefore.count} more potential dates than before.`
+        if (dataNow.count < dataBefore.count) difference = ` with ${dataBefore.count - dataNow.count} fewer potential dates than before.`
+        const message = `${updatedUsername} has updated their attendance ${difference}`
+        console.log(dataBefore.selectedDates)
+        console.log(dataNow.selectedDates)
+        // axios({
+        //   method: 'POST',
+        //   url: updatedEventData.webhookUrl,
+        //   headers: { 'content-type': 'application/json' },
+        //   data: {
+        //     content: message
+        //   }
+        // })
+      }
 
       // extract current user just like in normally getting event data
       const { user: updatedUserDates, others: updatedOthersDates } = extractUserDates(updatedEventData, userId)
       const coreEventData = { ...updatedEventData }
       coreEventData.dates = { ...updatedOthersDates }
       const userData = await User.fetchUserById(req.userId)
+      // console.log('updating user')
+      // console.log(userData)
       res.status(201).json({
         userDates: updatedUserDates,
         userName: userData.username,
@@ -167,7 +201,6 @@ exports.updateEventData = async (req, res, next) => {
 }
 
 exports.deleteEvent = async (req, res, next) => {
-  const eventId = req.body.eventId
   console.log(req.params.eventId)
   try {
     await Promise.all([

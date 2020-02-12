@@ -233,13 +233,13 @@ export default {
   width: $body-width-sm;
   width: 100%;
 
-  &::after {
+  &:not(:last-child)::after {
     content: "";
     display: block;
-    width: 15%;
-    height: 2px;
-    background-color: $c-dark;
-    margin: 3rem auto 2rem auto;
+    width: 100%;
+    height: 3px;
+    margin: 2rem auto;
+    box-shadow: 0px 8px 10px black;
   }
 
   &__qm {

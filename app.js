@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
   const message = error.message
   const data = error.data
   res.status(status).json({
-    message,
+    error: message,
     data
   })
 })

@@ -194,13 +194,15 @@ export default {
         }
         this.toggleLoader()
         try {
-          await apiClient.call(callType, callPayload)
+          const response = await apiClient.call(callType, callPayload)
+          const parsedResponse = await response.json()
+          if (parsedResponse.error) throw new Error(parsedResponse.error)
+          this.$emit('closeSignIn')
         } catch (err) {
-          console.log(err)
+          alert(err)
         } finally {
           this.$emit('checkIfLoggedIn')
           this.toggleLoader()
-          this.$emit('closeSignIn')
         }
         if (
           callType === 'login' &&

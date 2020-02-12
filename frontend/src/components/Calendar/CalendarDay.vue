@@ -77,7 +77,7 @@ export default {
       return String(this.day)[1]
     },
     attendees () {
-      return this?.eventData?.dates?.[this.year]?.[this.month]?.[this.day]?.attendees.length || 0
+      return this?.eventData?.dates?.[this.year]?.[this.month]?.[this.day]?.attendees?.length || 0
     },
     attendeesSum () {
       return this.userAvailable ? this.attendees + 1 : this.attendees

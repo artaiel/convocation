@@ -87,3 +87,19 @@ exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOw
 
   return eventDates
 }
+
+exports.countDaysAvailable = (attendanceData) => {
+  let data = {
+    count: 0,
+    selectedDates: []
+  }
+  Object.entries(attendanceData).forEach(year => {
+    Object.entries(year[1]).forEach(month => {
+      Object.entries(month[1]).forEach(day => {
+        if (day[1].attendees && day[1].attendees.length) data.count ++
+        if (day[1].selected) data.selectedDates.push(`${day[0]}-${month[0]}-${year[0]}`)
+      })
+    })
+  })
+  return data
+}

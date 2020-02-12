@@ -14,7 +14,7 @@
       </div>
     </div>
     <button
-      v-if="isEventOwner && viewedDate"
+      v-if="isEventOwner && !datePassed && viewedDate"
       class="event-controls__owner-date-select"
       @click="selectMeetingDay"
     >
@@ -108,6 +108,10 @@ export default {
       }
 
       return date ? date.join('-') : ''
+    },
+    datePassed () {
+      const date = this.viewedDate.split('-')
+      return new Date(date[2], date[1], date[0]) < new Date().setHours(0,0,0,0)
     },
     isUserAttending () {
       let date = this.viewedDate ? this.viewedDate.split('-') : null

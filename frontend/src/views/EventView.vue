@@ -54,12 +54,12 @@ export default {
       try {
         const response = await apiClient.call('getEventData', null, this.$route.params.id)
         const data = await response.json()
-        if (data.message) {
-          throw new Error(data.message)
+        if (data.error) {
+          throw new Error(data.error)
         }
         this.saveEventData(data)
       } catch (err) {
-        // console.log(err)
+        console.log(err)
         this.fetchFailed = true
       } finally {
         this.toggleLoader()
