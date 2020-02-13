@@ -4,9 +4,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import i18n from './plugins/i18n'
+import VTooltip from 'v-tooltip'
 
 Vue.config.productionTip = false
 Vue.use(VueClipboard)
+Vue.use(VTooltip)
 
 new Vue({
   router,

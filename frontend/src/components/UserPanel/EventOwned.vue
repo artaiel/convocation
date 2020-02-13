@@ -19,10 +19,20 @@
         <img
           src="@/assets/images/questionmark.png"
           class="owned__qm"
+          v-tooltip.bottom="{
+            content: webhookTooltip,
+            html: true,
+            delay: 250,
+            trigger: 'manual',
+            show: showTooltip
+          }"
+          @mouseover="showTooltip = true"
+          @mouseout="showTooltip = false"
+          @click="showTooltip = !showTooltip"
         >
         <span v-if="$v.webhook.$error" class="owned__error-msg">- must be a valid URL</span>
       </label >
-      <input class="owned__input" v-model="webhook" spellcheck="false"/>
+      <input class="owned__input" v-model="webhook" spellcheck="false" @focus="$event.target.select()"/>
     </div>
     <div class="owned__element">
       <label class="owned__label">
@@ -100,7 +110,8 @@ export default {
   },
   data () {
     return {
-      confirmationVisible: false
+      confirmationVisible: false,
+      showTooltip: false
     }
   },
   computed: {
@@ -157,6 +168,9 @@ export default {
         this.updateEventEmailNotifications({ eventIndex: this.eventIndex, emailNotifications: val })
       }
     },
+    triggerMode () {
+      return window.innerWidth > 768 ? 'hover' : 'click'
+    },
     webhook: {
       get () {
         return this.userInfo.eventsOwned[this.eventIndex].webhookUrl
@@ -164,6 +178,9 @@ export default {
       set (val) {
         this.updateEventWebhook({ eventIndex: this.eventIndex, webhook: val })
       }
+    },
+    webhookTooltip () {
+      return `You can provide a URL where updates about your event will be sent to as a short message - for example to a discord server or a slack channel, or any service that accepts webhooks.`
     }
   },
   methods: {
@@ -223,12 +240,22 @@ export default {
         this.toggleLoader()
         this.hideConfirmation()
       }
+    },
+    hideTooltipOnClick () {
+      this.showTooltip = false
+    }
+  },
+  watch: {
+    showTooltip (val) {
+      val
+        ? document.addEventListener('click', this.hideTooltipOnClick)
+        : document.removeEventListener('click', this.hideTooltipOnClick)
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .owned {
   width: $body-width-sm;
   width: 100%;
@@ -245,6 +272,7 @@ export default {
   &__qm {
     width: 1rem;
     margin: 0 .5rem;
+    cursor: help;
   }
 
   &__element {
@@ -364,5 +392,115 @@ export default {
       color: white;
     }
   }
+}
+
+.tooltip {
+  .tooltip-inner {
+    background: $c-dark;
+    color: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    word-wrap: pre;
+    max-width: 25rem;
+    text-align: center;
+    font-size: $font-size-lg;
+  }
+  .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+    border-color: black;
+    z-index: 1;
+  }
+  &[x-placement^="top"] {
+    margin-bottom: 5px;
+    .tooltip-arrow {
+      border-width: 5px 5px 0 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      bottom: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+  &[x-placement^="bottom"] {
+    margin-top: 5px;
+    .tooltip-arrow {
+      border-width: 0 5px 5px 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-top-color: transparent !important;
+      top: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+  // &[x-placement^="right"] {
+  //   margin-left: 5px;
+  //   .tooltip-arrow {
+  //     border-width: 5px 5px 5px 0;
+  //     border-left-color: transparent !important;
+  //     border-top-color: transparent !important;
+  //     border-bottom-color: transparent !important;
+  //     left: -5px;
+  //     top: calc(50% - 5px);
+  //     margin-left: 0;
+  //     margin-right: 0;
+  //   }
+  // }
+  // &[x-placement^="left"] {
+  //   margin-right: 5px;
+  //   .tooltip-arrow {
+  //     border-width: 5px 0 5px 5px;
+  //     border-top-color: transparent !important;
+  //     border-right-color: transparent !important;
+  //     border-bottom-color: transparent !important;
+  //     right: -5px;
+  //     top: calc(50% - 5px);
+  //     margin-left: 0;
+  //     margin-right: 0;
+  //   }
+  // }
+  // &[aria-hidden='true'] {
+  //   visibility: hidden;
+  //   opacity: 0;
+  //   transition: opacity .15s, visibility .15s;
+  // }
+  // &[aria-hidden='false'] {
+  //   visibility: visible;
+  //   opacity: 1;
+  //   transition: opacity .15s;
+  // }
+  // &.info {
+  //   $color: rgba(#004499, .9);
+  //   .tooltip-inner {
+  //     background: $color;
+  //     color: white;
+  //     padding: 24px;
+  //     border-radius: 5px;
+  //     box-shadow: 0 5px 30px rgba(black, .1);
+  //   }
+  //   .tooltip-arrow {
+  //     border-color: $color;
+  //   }
+  // }
+  // &.popover {
+  //   $color: #f9f9f9;
+  //   .popover-inner {
+  //     background: $color;
+  //     color: black;
+  //     padding: 24px;
+  //     border-radius: 5px;
+  //     box-shadow: 0 5px 30px rgba(black, .1);
+  //   }
+  //   .popover-arrow {
+  //     border-color: $color;
+  //   }
+  // }
 }
 </style>

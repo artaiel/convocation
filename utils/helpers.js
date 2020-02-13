@@ -103,3 +103,58 @@ exports.countDaysAvailable = (attendanceData) => {
   })
   return data
 }
+
+const formatDate = (dateString) => {
+  const date = dateString.split('-')
+  date[1] = +date[1] + 1
+  return date.join('.')
+}
+
+exports.createWebhookEventSelectedMessage = (dataBefore, dataNow) => {
+  const newSelectedDates = dataNow.selectedDates.map(selected => dataBefore.selectedDates.includes(selected) ? null : selected).filter(date => !!date)
+  const removedSelectedDates = dataBefore.selectedDates.map(selected => dataNow.selectedDates.includes(selected) ? null : selected).filter(date => !!date)
+  const newDatesCount = newSelectedDates.length
+  const removedDatesCount = removedSelectedDates.length
+  let dateAnnouncement
+  if (newDatesCount && removedDatesCount) {
+    dateAnnouncement = `:mage: Prepare @here! `
+    if (newDatesCount === 1) {
+      dateAnnouncement += `A new date has been set for a meeting on ${formatDate(newSelectedDates[0])}, and `
+    } else {
+      dateAnnouncement += `New dates have been set for meetings on ${newSelectedDates.map(date => formatDate(date)).join(', ')}, and `
+    }
+    if (removedDatesCount === 1) {
+      dateAnnouncement += `session has been canceled on ${formatDate(removedSelectedDates[0])}`
+    } else {
+      dateAnnouncement += `sessions have been canceled on ${removedSelectedDates.map(date => formatDate(date)).join(', ')}`
+    }
+
+  } else if (newDatesCount) {
+    if (newDatesCount === 1) {
+      dateAnnouncement = `:mage: Prepare @here! A new date has been set for a meeting on ${formatDate(newSelectedDates[0])}`
+    } else {
+      dateAnnouncement = `:mage: Prepare @here! New dates have been set for meetings on ${newSelectedDates.map(date => formatDate(date)).join(', ')}`
+    }
+  } else if (removedDatesCount) {
+    if (removedDatesCount === 1) {
+      dateAnnouncement = `:skull: Watch out @here! Session has been cancelled on ${formatDate(removedSelectedDates[0])}`
+    } else {
+      dateAnnouncement = `:skull: Watch out @here! Sessions have been cancelled on ${removedSelectedDates.map(date => formatDate(date)).join(', ')}`
+    }
+  }
+
+  return dateAnnouncement
+}
+
+exports.createWebhookEventUpdateMessage = (dataBefore, dataNow, updatedUsername) => {
+  let difference = ''
+  if (dataNow.count > dataBefore.count) {
+    const count = dataNow.count - dataBefore.count
+    difference = `with ${count} more potential date${count === 1 ? '' : 's'} than before.`
+  }
+  if (dataNow.count < dataBefore.count) {
+    const count = dataBefore.count - dataNow.count
+    difference = `with ${count} fewer potential date${count === 1 ? '' : 's'} than before.`
+  }
+  return `:dragon: ${updatedUsername} has updated their attendance ${difference}`
+}

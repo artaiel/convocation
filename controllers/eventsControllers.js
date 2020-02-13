@@ -4,7 +4,13 @@ const axios = require('axios')
 
 const Event = require('../models/event')
 const User = require('../models/user')
-const { extractUserDates, mergeUserDates, countDaysAvailable } = require('../utils/helpers')
+const {
+  extractUserDates,
+  mergeUserDates,
+  countDaysAvailable,
+  createWebhookEventSelectedMessage,
+  createWebhookEventUpdateMessage
+} = require('../utils/helpers')
 
 exports.getEventData = async (req, res, next) => {
   const eventId = req.params.eventId
@@ -116,33 +122,35 @@ exports.updateEventAttendance = async (req, res, next) => {
       }
 
       // update event data
-      console.log('eventData !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-      console.log(eventData)
-      console.log(updatedUsername)
       let updatedEventData = await Event.updateEventAttendance(eventData)
       updatedEventData = updatedEventData.value
 
       // send webhook
       if (updatedEventData.webhookUrl) {
-        console.log('updatedUserAvailability', updatedUserAvailability)
-        console.log('user', user)
         const dataBefore = countDaysAvailable(user)
         const dataNow = countDaysAvailable(updatedUserAvailability)
-        console.log(updatedUsername + ' has updated their attendance :dragon:. Had ' + dataBefore.count + ' days available, now has ' + dataNow.count + '.')
-        let difference = ''
-        if (dataNow.count > dataBefore.count) difference = ` with ${dataNow.count - dataBefore.count} more potential dates than before.`
-        if (dataNow.count < dataBefore.count) difference = ` with ${dataBefore.count - dataNow.count} fewer potential dates than before.`
-        const message = `${updatedUsername} has updated their attendance ${difference}`
-        console.log(dataBefore.selectedDates)
-        console.log(dataNow.selectedDates)
-        // axios({
-        //   method: 'POST',
-        //   url: updatedEventData.webhookUrl,
-        //   headers: { 'content-type': 'application/json' },
-        //   data: {
-        //     content: message
-        //   }
-        // })
+
+        const dateAnnouncement = createWebhookEventSelectedMessage(dataBefore, dataNow)
+        if (dateAnnouncement) {
+          axios({
+            method: 'POST',
+            url: updatedEventData.webhookUrl,
+            headers: { 'content-type': 'application/json' },
+            data: {
+              content: dateAnnouncement
+            }
+          })
+        } else {
+          const message = createWebhookEventUpdateMessage(dataBefore, dataNow, updatedUsername)
+          axios({
+            method: 'POST',
+            url: updatedEventData.webhookUrl,
+            headers: { 'content-type': 'application/json' },
+            data: {
+              content: message
+            }
+          })
+        }
       }
 
       // extract current user just like in normally getting event data
