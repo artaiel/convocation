@@ -105,7 +105,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'clearUserData']),
+    ...mapMutations(['toggleLoader', 'clearUserData', 'showPopup']),
     changeLocale (locale) {
       this.$i18n.locale = locale
       this.languageHovered = false
@@ -121,6 +121,7 @@ export default {
       this.toggleLoader()
       try {
         await apiClient.call('logout')
+        this.showPopup({ info: 'signedOut' })
       } catch (err) {
         console.error(err)
       } finally {

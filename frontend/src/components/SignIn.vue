@@ -170,7 +170,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader']),
+    ...mapMutations(['toggleLoader', 'showPopup']),
     selectMode (mode) {
       this.mode = mode
       this.$v.$reset()
@@ -198,6 +198,7 @@ export default {
           const parsedResponse = await response.json()
           if (parsedResponse.error) throw new Error(parsedResponse.error)
           this.$emit('closeSignIn')
+          this.showPopup({ info: 'signedIn' })
         } catch (err) {
           alert(err)
         } finally {

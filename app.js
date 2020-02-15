@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
+const history = require('connect-history-api-fallback')
 
 const compression = require('compression')
 const cookieParser = require('cookie-parser')
@@ -40,7 +41,10 @@ app.use((error, req, res, next) => {
   })
 })
 
-app.use(express.static(path.join(__dirname, 'frontend', 'dist')))
+const staticServing = express.static(path.join(__dirname, 'frontend', 'dist'))
+app.use(staticServing)
+app.use('*', staticServing)
+
 
 
 mongoConnect(() => {

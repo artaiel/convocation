@@ -20,18 +20,23 @@
         <div class="loader"></div>
       </div>
     </transition>
+    <transition name="popup-transition">
+      <Popup v-if="popup.visible"/>
+    </transition>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation'
 import SignIn from '@/components/SignIn'
+import Popup from '@/components/Popup'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
   components: {
     Navigation,
-    SignIn
+    SignIn,
+    Popup
   },
   data () {
     return {
@@ -39,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['isLoaderVisible']),
+    ...mapState(['isLoaderVisible', 'popup']),
     heroImage () {
       return require('@/assets/images/raven.png')
     }

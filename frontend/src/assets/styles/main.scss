@@ -5,6 +5,7 @@ $body-width: 40%;
 $body-width-sm: 96%;
 $body-width-lg: 60%;
 $body-width-xl: 40%;
+$br: 4px;
 
 // Breakpoints
 $size-xs: 480px !default;
@@ -218,5 +219,62 @@ input, textarea {
   &-leave-to {
     transform: translate3d(-5rem, 0, 0);
     opacity: 0;
+  }
+}
+
+.popup-transition {
+  &-enter-active {
+    transition: all 0.31s ease-in-out;
+  }
+  &-leave-active {
+    transition: all 0.31s ease-in-out;
+  }
+  &-enter {
+    transform: translate3d(-50%, -5rem, 0);
+    opacity: 0;
+  }
+  &-leave-to {
+    transform: translate3d(-50%, -5rem, 0);
+    opacity: 0;
+  }
+}
+
+
+// common classes
+.confirmation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $c-dark;
+  color: white;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-evenly;
+  padding: 2rem;
+  border-radius: $br;
+  // font-size: $font-size;
+
+  &__text {
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  &__btn {
+    @include btn-reset;
+    @include transition-basic;
+    margin: 0 1rem;
+    font-size: inherit;
+    color:rgba(white, .5);
+
+    &:hover {
+      color: white;
+    }
   }
 }

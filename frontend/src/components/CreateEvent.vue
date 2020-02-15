@@ -90,7 +90,7 @@
       </button>
     </div>
     <div v-else class="home__cta">
-      Sign in to create and participate in events!
+      Sign up to create and participate in events!
     </div>
   </div>
 </template>

@@ -191,6 +191,7 @@ export default {
       'updateEventEmailNotifications',
       'toggleLoader',
       'saveUserData',
+      'showPopup',
       'updateEventData'
     ]),
     ...mapActions(['getUserData']),
@@ -221,8 +222,10 @@ export default {
         const response = await apiClient.call('updateEventData', updatePayload)
         const responseData = await response.json()
         if (responseData.msg) throw new Error ('no update')
+        this.showPopup({ info: 'eventDeleted' })
       } catch (err) {
         console.log(err)
+        this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
       }
@@ -231,11 +234,15 @@ export default {
       try {
         this.toggleLoader()
         const response = await apiClient.call('deleteEvent', null, this.userInfo.eventsOwned[this.eventIndex]._id)
-        const responseData = await response.json()
-        console.log(responseData)
+        const data = await response.json()
+        if (data.error) {
+          throw new Error(data.error)
+        }
         this.getUserData()
+        this.showPopup({ info: 'eventDeleted' })
       } catch (err) {
         console.log(err)
+        this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
         this.hideConfirmation()
@@ -358,52 +365,16 @@ export default {
   }
 }
 
-.confirmation {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: $c-dark;
-  color: white;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-evenly;
-  padding: 2rem;
-
-  &__text {
-    text-align: center;
-    padding: 0 2rem;
-  }
-
-  &__controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-
-  &__btn {
-    @include btn-reset;
-    @include transition-basic;
-    margin: 0 1rem;
-    font-size: inherit;
-    color:rgba(white, .75);
-
-    &:hover {
-      color: white;
-    }
-  }
-}
-
 .tooltip {
   .tooltip-inner {
     background: $c-dark;
     color: white;
-    border-radius: 12px;
+    border-radius: $br;
     padding: 1.5rem 2rem;
     word-wrap: pre;
     max-width: 25rem;
     text-align: center;
-    font-size: $font-size-lg;
+    line-height: 1.5;
   }
   .tooltip-arrow {
     width: 0;
@@ -440,67 +411,5 @@ export default {
       margin-bottom: 0;
     }
   }
-  // &[x-placement^="right"] {
-  //   margin-left: 5px;
-  //   .tooltip-arrow {
-  //     border-width: 5px 5px 5px 0;
-  //     border-left-color: transparent !important;
-  //     border-top-color: transparent !important;
-  //     border-bottom-color: transparent !important;
-  //     left: -5px;
-  //     top: calc(50% - 5px);
-  //     margin-left: 0;
-  //     margin-right: 0;
-  //   }
-  // }
-  // &[x-placement^="left"] {
-  //   margin-right: 5px;
-  //   .tooltip-arrow {
-  //     border-width: 5px 0 5px 5px;
-  //     border-top-color: transparent !important;
-  //     border-right-color: transparent !important;
-  //     border-bottom-color: transparent !important;
-  //     right: -5px;
-  //     top: calc(50% - 5px);
-  //     margin-left: 0;
-  //     margin-right: 0;
-  //   }
-  // }
-  // &[aria-hidden='true'] {
-  //   visibility: hidden;
-  //   opacity: 0;
-  //   transition: opacity .15s, visibility .15s;
-  // }
-  // &[aria-hidden='false'] {
-  //   visibility: visible;
-  //   opacity: 1;
-  //   transition: opacity .15s;
-  // }
-  // &.info {
-  //   $color: rgba(#004499, .9);
-  //   .tooltip-inner {
-  //     background: $color;
-  //     color: white;
-  //     padding: 24px;
-  //     border-radius: 5px;
-  //     box-shadow: 0 5px 30px rgba(black, .1);
-  //   }
-  //   .tooltip-arrow {
-  //     border-color: $color;
-  //   }
-  // }
-  // &.popover {
-  //   $color: #f9f9f9;
-  //   .popover-inner {
-  //     background: $color;
-  //     color: black;
-  //     padding: 24px;
-  //     border-radius: 5px;
-  //     box-shadow: 0 5px 30px rgba(black, .1);
-  //   }
-  //   .popover-arrow {
-  //     border-color: $color;
-  //   }
-  // }
 }
 </style>

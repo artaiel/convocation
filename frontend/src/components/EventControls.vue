@@ -160,7 +160,14 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'saveEventData', 'updateUsernameInEvent', 'updateTimeAvailability', 'saveMeetingDate']),
+    ...mapMutations([
+      'toggleLoader',
+      'saveEventData',
+      'updateUsernameInEvent',
+      'updateTimeAvailability',
+      'saveMeetingDate',
+      'showPopup'
+    ]),
     otherUserNickname (userId) {
       return this.eventData.attendees.find(attendee => attendee.userId === userId).name
     },
@@ -183,8 +190,10 @@ export default {
         })
         const data = await response.json()
         this.saveEventData(data)
+        this.showPopup({ info: 'eventUpdated' })
       } catch (err) {
         console.log(err)
+        this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
       }
