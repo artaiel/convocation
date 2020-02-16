@@ -133,16 +133,10 @@ export default {
       }
     },
     validateFormData () {
-      // console.log('submit!')
       this.$v.$touch()
       if (this.$v.$invalid) {
-        // this.submitStatus = 'ERROR'
-        // console.log('error')
         return false
       } else {
-        // do your submit logic here
-        // this.submitStatus = 'PENDING'
-        // console.log('ready to submit')
         return true
       }
     }

@@ -14,6 +14,14 @@
       <textarea class="owned__input owned__input--description" v-model="description" spellcheck="false"/>
     </div>
     <div class="owned__element">
+      <label class="owned__label">
+        URL
+      </label >
+      <router-link class="owned__event-url" :to="{ path: routerUrl }">
+        {{ eventUrl }}
+      </router-link>
+    </div>
+    <div class="owned__element">
       <label class="owned__label" :class="{'owned__label--error': $v.webhook.$error }">
         Webhook
         <img
@@ -36,20 +44,40 @@
     </div>
     <div class="owned__element">
       <label class="owned__label">
-        URL
-      </label >
-      <router-link class="owned__event-url" :to="{ path: routerUrl }">
-        {{ eventUrl }}
-      </router-link>
-    </div>
-    <div class="owned__element">
-      <label class="owned__label">
         Email notification on user updates
       </label >
       <label :for="`emailNotificationCheckbox-${eventIndex}`" class="owned__checkbox-icon">
         <img v-if="emailNotifications" src="@/assets/images/exit.png" alt="Icon marking email notification on attendee updates as active" class="owned__checkbox-icon-img">
       </label>
       <input type="checkbox" :id="`emailNotificationCheckbox-${eventIndex}`" v-model="emailNotifications" class="owned__checkbox-input">
+    </div>
+    <div class="owned__element">
+      <label class="owned__label">
+        Notifications language
+      </label >
+      <div class="owned__notification-language">
+        <button
+          class="owned__notification-language"
+          :class="{'owned__notification-language--active': notificationLanguageEn }"
+          @click="changeNotificationLanguage('en')"
+        >
+          English
+        </button>
+        <button
+          class="owned__notification-language"
+          :class="{'owned__notification-language--active': notificationLanguageDe }"
+          @click="changeNotificationLanguage('de')"
+        >
+          Deutsch
+        </button>
+        <button
+          class="owned__notification-language"
+          :class="{'owned__notification-language--active': notificationLanguagePl }"
+          @click="changeNotificationLanguage('pl')"
+        >
+          Polski
+        </button>
+      </div>
     </div>
     <div class="owned__element">
       <label class="owned__label">
@@ -168,6 +196,15 @@ export default {
         this.updateEventEmailNotifications({ eventIndex: this.eventIndex, emailNotifications: val })
       }
     },
+    notificationLanguageEn () {
+      return this.userInfo.eventsOwned[this.eventIndex].notificationLanguage === 'en'
+    },
+    notificationLanguageDe () {
+      return this.userInfo.eventsOwned[this.eventIndex].notificationLanguage === 'de'
+    },
+    notificationLanguagePl () {
+      return this.userInfo.eventsOwned[this.eventIndex].notificationLanguage === 'pl'
+    },
     triggerMode () {
       return window.innerWidth > 768 ? 'hover' : 'click'
     },
@@ -192,9 +229,13 @@ export default {
       'toggleLoader',
       'saveUserData',
       'showPopup',
-      'updateEventData'
+      'updateEventData',
+      'setEventNotificationLanguage'
     ]),
     ...mapActions(['getUserData']),
+    changeNotificationLanguage (locale) {
+      this.setEventNotificationLanguage({ eventIndex: this.eventIndex, locale })
+    },
     validationFailed () {
       this.$v.$touch()
       return this.$v.$error
@@ -217,15 +258,15 @@ export default {
           eventName: this.title,
           description: this.description,
           emailNotifications: this.emailNotifications,
-          webhookUrl: this.webhook
+          webhookUrl: this.webhook,
+          notificationLanguage: this.userInfo.eventsOwned[this.eventIndex].notificationLanguage
         }
         const response = await apiClient.call('updateEventData', updatePayload)
         const responseData = await response.json()
-        if (responseData.msg) throw new Error ('no update')
-        this.showPopup({ info: 'eventDeleted' })
+        if (responseData.error) throw new Error (responseData.error)
+        this.showPopup({ info: 'eventUpdated' })
       } catch (err) {
-        console.log(err)
-        this.showPopup({ info: 'errorGeneric', isError: true })
+        this.showPopup({ info: err.message || 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
       }
@@ -361,6 +402,26 @@ export default {
     & > span {
       @include transition-basic;
       opacity: .6;
+    }
+  }
+
+  &__notification-language {
+    margin-right: 1rem;
+    @include transition-basic;
+    @include btn-reset;
+    color: rgba($c-dark, .7);
+    cursor: pointer;
+    font-size: inherit;
+    position: relative;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: $c-dark;
+    }
+
+    &--active {
+      color: $c-dark;
+      border-bottom: 2px solid $c-brown;
     }
   }
 }

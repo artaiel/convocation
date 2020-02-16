@@ -20,12 +20,16 @@
     "1": "Something went wrong. Please try again later."
   },
   "popupInfo": {
+    "eventCreated": "Event created successfully!",
     "eventUpdated": "Event updated successfully!",
     "accountUpdated": "Account info updated",
     "eventDeleted": "Event deleted",
     "accountDeleted": "Account deleted",
     "signedIn": "Signed in!",
     "signedOut": "Signed out",
-    "errorGeneric": "Something went wrong - please try again later."
+    "passwordRestore": "Check your email for more information",
+    "urlCopied": "URL copied to clipboard!",
+    "errorGeneric": "Something went wrong - please try again later.",
+    "errorNoEventUpdate": "No change in your event detected."
   }
 }

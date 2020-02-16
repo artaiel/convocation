@@ -112,7 +112,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateUsername', 'updateEmail', 'toggleLoader', 'clearUserData', 'updateUserLoggedInState']),
+    ...mapMutations(['updateUsername', 'updateEmail', 'toggleLoader', 'clearUserData', 'updateUserLoggedInState', 'showPopup']),
     async updateData () {
       if (this.validationFailed()) {
         return
@@ -125,9 +125,13 @@ export default {
           email: this.email,
           password: this.password
         }
-        await apiClient.call('updateUserData', updatePayload)
+        const response = await apiClient.call('updateUserData', updatePayload)
+        const parsedResponse = await response.json()
+        if (parsedResponse.error) throw new Error(parsedResponse.error)
+        this.showPopup({ info: 'accountUpdated' })
       } catch (err) {
         console.log(err)
+        this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
       }

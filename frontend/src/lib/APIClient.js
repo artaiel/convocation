@@ -63,6 +63,12 @@ const actionDefs = {
       endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/logout' : '/auth/logout'
     }
   },
+  'forgotPassword' () {
+    return {
+      method: 'POST',
+      endpoint: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/auth/forgot-password' : '/auth/forgot-password'
+    }
+  },
   'getUserData' () {
     return {
       method: 'GET',

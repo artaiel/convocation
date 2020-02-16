@@ -18,9 +18,9 @@ exports.getUserData = async (req, res, next) => {
         email: userData.email
       },
       eventsOwned: eventsOwned.map(event => {
-        const { _id, eventName, description, emailNotifications, webhookUrl, ...otherProperties } = event
+        const { _id, eventName, description, emailNotifications, webhookUrl, notificationLanguage, ...otherProperties } = event
         const attendeeNames = otherProperties.attendees.map(att => att.name)
-        return { _id, eventName, description, attendeeNames, emailNotifications, webhookUrl }
+        return { _id, eventName, description, attendeeNames, emailNotifications, webhookUrl, notificationLanguage }
       }),
       eventsAttending: eventsAttending.map(event => {
         return {

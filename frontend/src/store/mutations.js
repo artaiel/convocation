@@ -119,5 +119,8 @@ export default {
       isError: null,
       visible: false
     })
+  },
+  setEventNotificationLanguage (state, payload) {
+    state.userInfo.eventsOwned[payload.eventIndex].notificationLanguage = payload.locale
   }
 }

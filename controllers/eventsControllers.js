@@ -8,9 +8,10 @@ const {
   extractUserDates,
   mergeUserDates,
   countDaysAvailable,
-  createWebhookEventSelectedMessage,
-  createWebhookEventUpdateMessage
 } = require('../utils/helpers')
+const { createEventUpdateEmail, transporter } = require('../notifications/email')
+const { createWebhookEventSelectedMessage, createWebhookEventUpdateMessage } = require('../notifications/translations')
+
 
 exports.getEventData = async (req, res, next) => {
   const eventId = req.params.eventId
@@ -85,7 +86,7 @@ exports.createEvent = async (req, res, next) => {
       eventId: newEventData.insertedId
     })
   } catch (error) {
-    err.status = 500
+    error.status = 500
     next(error)
   }
 }
@@ -125,12 +126,33 @@ exports.updateEventAttendance = async (req, res, next) => {
       let updatedEventData = await Event.updateEventAttendance(eventData)
       updatedEventData = updatedEventData.value
 
+
+      let dataBefore, dataNow
+      if (updatedEventData.emailNotifications || updatedEventData.webhookUrl) {
+        dataBefore = countDaysAvailable(user)
+        dataNow = countDaysAvailable(updatedUserAvailability)
+      }
+
+      // send email to owner
+      if (updatedEventData.emailNotifications && !isOwner) {
+        const ownerData = await User.fetchUserById(updatedEventData.ownerId)
+        const message = createEventUpdateEmail({
+          email: ownerData.email,
+          username: updatedUsername,
+          dataBefore,
+          dataNow,
+          eventId: updatedEventData._id,
+          language: updatedEventData.notificationLanguage
+        })
+        transporter.sendMail(message)
+      }
+
       // send webhook
       if (updatedEventData.webhookUrl) {
-        const dataBefore = countDaysAvailable(user)
-        const dataNow = countDaysAvailable(updatedUserAvailability)
+        // const dataBefore = countDaysAvailable(user)
+        // const dataNow = countDaysAvailable(updatedUserAvailability)
 
-        const dateAnnouncement = createWebhookEventSelectedMessage(dataBefore, dataNow)
+        const dateAnnouncement = createWebhookEventSelectedMessage(dataBefore, dataNow, updatedEventData.notificationLanguage)
         if (dateAnnouncement) {
           axios({
             method: 'POST',
@@ -141,7 +163,7 @@ exports.updateEventAttendance = async (req, res, next) => {
             }
           })
         } else {
-          const message = createWebhookEventUpdateMessage(dataBefore, dataNow, updatedUsername)
+          const message = createWebhookEventUpdateMessage(dataBefore, dataNow, updatedUsername, updatedEventData.notificationLanguage)
           axios({
             method: 'POST',
             url: updatedEventData.webhookUrl,
@@ -177,10 +199,11 @@ exports.updateEventData = async (req, res, next) => {
   const eventName = req.body.eventName
   const webhookUrl = req.body.webhookUrl
   const emailNotifications = req.body.emailNotifications
+  const notificationLanguage = req.body.notificationLanguage
   const description = req.body.description
 
   if (!req.userId) {
-    res.status(403).json({ msg: 'you must be logged in' })
+    res.status(403).json({ error: 'you must be logged in' })
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
@@ -191,12 +214,13 @@ exports.updateEventData = async (req, res, next) => {
       if (description !== eventData.description) update.description = description
       if (emailNotifications !== eventData.emailNotifications) update.emailNotifications = emailNotifications
       if (webhookUrl !== eventData.webhookUrl) update.webhookUrl = webhookUrl
+      if (notificationLanguage !== eventData.notificationLanguage) update.notificationLanguage = notificationLanguage
       const hasNewData = Object.keys(update).length > 0
       // return if there is no nothing to update
       if (!hasNewData) {
-        res.status(400).json({
-          msg: 'no change detected'
-        })
+        const error = new Error('errorNoEventUpdate')
+        error.statusCode = 404
+        next(error)
         return
       }
 

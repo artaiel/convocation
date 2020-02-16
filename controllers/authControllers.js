@@ -1,6 +1,8 @@
 const User = require('../models/user')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const cryptoRandomString = require('crypto-random-string')
+const { createNewPasswordEmail, transporter } = require('../notifications/email')
 
 exports.signup = async (req, res, next) => {
   const username = req.body.username
@@ -63,6 +65,28 @@ exports.login = async (req, res, next) => {
       .cookie('tau', token, { httpOnly: true, maxAge: 2592000000 }) // 1000 * 60 * 60 * 24 * 30
       .cookie('ccua', true, { maxAge: 2592000000 })
       .json({ msg: 'logged in' })
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    const userData = await User.findUser(req.body.restorePasswordIdentifier)
+    if (userData) {
+      const temporaryPassword = cryptoRandomString({ length: 10, type: 'url-safe'})
+      await User.updateUserData(userData._id, {
+        username: userData.username,
+        email: userData.email,
+        password: temporaryPassword
+      })
+      console.log(temporaryPassword)
+      // send email with it
+      createNewPasswordEmail
+      const message = createNewPasswordEmail(userData.email, temporaryPassword)
+      transporter.sendMail(message)
+    }
+    res.status(200).json({})
   } catch (err) {
     next(err)
   }

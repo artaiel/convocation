@@ -22,7 +22,6 @@ import EventsAttending from '@/components/UserPanel/EventsAttending.vue'
 import EventsOwned from '@/components/UserPanel/EventsOwned.vue'
 import UserSettings from '@/components/UserPanel/UserSettings.vue'
 import { mapActions, mapMutations, mapState } from 'vuex'
-// import apiClient from '@/lib/APIClient'
 
 export default {
   components:{

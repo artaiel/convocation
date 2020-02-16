@@ -19,7 +19,7 @@ export default new Vuex.Store({
     isErrorPopupVisible: false,
     userLoggedIn: false,
     popup: {
-      info: 'eventUpdated',
+      info: 'null',
       isError: null,
       visible: false
     }

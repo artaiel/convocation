@@ -11,7 +11,8 @@ class Event {
     this.dates = dates
     this.attendees = attendees
     this.emailNotifications = true
-    this.webhookUrl = ''
+    this.webhookUrl = '',
+    this.notificationLanguage = 'en'
   }
 
   save () {

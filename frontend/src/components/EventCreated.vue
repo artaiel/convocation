@@ -23,7 +23,7 @@
         {{ $t('copy') }}
       </button>
     </div>
-    <transition name="slide-down">
+    <!-- <transition name="slide-down">
       <div v-if="popupSuccessVisible" class="home__popup">
         <p class="bold">
           {{ $t('linkCopied') }}
@@ -36,11 +36,12 @@
           {{ $t('linkCopyingFailed') }}
         </p>
       </div>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -49,29 +50,18 @@ export default {
       default: ''
     }
   },
-  data () {
-    return {
-      popupSuccessVisible: false,
-      popupFailureVisible: false
-    }
-  },
   computed: {
     eventURL () {
-      return 'https://circle-convocation.herokuapp.com/event/' + this.eventId
+      return `${window.location.origin}/event/${this.eventId}`
     }
   },
   methods: {
+    ...mapMutations(['showPopup']),
     handleCopySuccess () {
-      this.popupSuccessVisible = true
-      window.setTimeout(() => {
-        this.popupSuccessVisible = false
-      }, 1700)
+      this.showPopup({ info: 'urlCopied' })
     },
     handleCopyFailure () {
-      this.popupFailureVisible = true
-      window.setTimeout(() => {
-        this.popupFailureVisible = false
-      }, 1700)
+      this.showPopup({ info: 'errorGeneric', isError: true })
     }
   }
 }

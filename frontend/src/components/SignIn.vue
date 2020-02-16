@@ -1,5 +1,22 @@
 <template>
   <div class="sign-in">
+    <transition name="fade">
+      <div v-if="isRestorePasswordVisible" class="sign-in__restore">
+        <button class="sign-in__restore-close" @click="toggleRestorePassword">
+          <img
+            src="@/assets/images/exit.png"
+            alt="Close sign up modal window"
+          >
+        </button>
+        <div class="sign-in__restore-title">
+          Don't worry, it happens to all of us.
+        </div>
+        <input v-model="restorePasswordIdentifier" type="text" class="sign-in__restore-input" placeholder="Your username or email" spellcheck="false"/>
+        <button class="sign-in__restore-btn" @click="initiateForgottenPassword">
+          Send me an email with temporary password
+        </button>
+      </div>
+    </transition>
     <div class="sign-in__left">
       <img src="@/assets/images/warrior.png" alt="An armored warrior standing with a shield and spear, looking at the login form to the right">
     </div>
@@ -38,7 +55,7 @@
             for="username"
             class="event-input-label"
           >
-            Username
+            {{ modeSignIn ? 'Username or e-mail' : 'Username' }}
             <span v-if="$v.username.$error">
               - min. 3 characters
             </span>
@@ -89,6 +106,9 @@
             </span>
           </label>
         </div>
+        <button v-if="modeSignIn" class="sign-in__forgot-btn" @click="toggleRestorePassword">
+          Forgot your password?
+        </button>
         <div
           v-if="modeSignUp"
           class="sign-in__input"
@@ -158,7 +178,9 @@ export default {
       password: null,
       passwordRepeated: null,
       email: null,
-      mode: 'signIn'
+      mode: 'signIn',
+      isRestorePasswordVisible: false,
+      restorePasswordIdentifier: null
     }
   },
   computed: {
@@ -174,6 +196,9 @@ export default {
     selectMode (mode) {
       this.mode = mode
       this.$v.$reset()
+    },
+    toggleRestorePassword () {
+      this.isRestorePasswordVisible = !this.isRestorePasswordVisible
     },
     async handleLoginAction () {
       if (!this.validationFailed()) {
@@ -199,8 +224,9 @@ export default {
           if (parsedResponse.error) throw new Error(parsedResponse.error)
           this.$emit('closeSignIn')
           this.showPopup({ info: 'signedIn' })
-        } catch (err) {
-          alert(err)
+        } catch (error) {
+          console.log(error)
+          this.showPopup({ info: error.message || 'errorGeneric', isError: true })
         } finally {
           this.$emit('checkIfLoggedIn')
           this.toggleLoader()
@@ -221,6 +247,21 @@ export default {
         return this.$v.username.$error || this.$v.password.$error
       } else {
         return this.$v.$invalid
+      }
+    },
+    async initiateForgottenPassword () {
+      try {
+        this.toggleLoader()
+        const response = await apiClient.call('forgotPassword', { restorePasswordIdentifier: this.restorePasswordIdentifier })
+        const parsedResponse = await response.json()
+        if (parsedResponse.error) throw new Error(parsedResponse.error)
+        this.showPopup({ info: 'passwordRestore' })
+      } catch (err) {
+        console.log(err)
+        this.showPopup({ info: err.message || 'errorGeneric', isError: true })
+      } finally {
+        this.toggleRestorePassword()
+        this.toggleLoader()
       }
     },
     listenForEnter (e) {
@@ -402,6 +443,77 @@ export default {
         animation: shake .4s;
         border-bottom: 1px solid rgb(202, 6, 6);
       }
+    }
+  }
+
+  &__forgot-btn {
+    @include btn-reset;
+    @include transition-basic;
+    margin-top: 0rem !important;
+    width: fit-content;
+
+    &:hover {
+      color: $c-blue;
+    }
+  }
+
+  &__restore {
+    background-color: $c-light;
+    box-shadow: 1px 1px 6px rgba($c-dark, .5);
+    border-radius: $br;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: $c-brown;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 2rem 4rem;
+    text-align: center;
+  }
+
+  &__restore-close {
+    position: absolute;
+    @include btn-reset;
+    width: 1.5rem;
+    height: 1.5rem;
+    right: 1rem;
+    top: 1rem;
+
+    & img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__restore-title {
+    font-size: $font-size-lg;
+  }
+
+  &__restore-input {
+    margin: 1rem 0;
+    background-color: $c-brown;
+    color: $c-light;
+    font-size: $font-size;
+    padding: .5rem;
+
+    &::placeholder {
+      color: $c-light;
+    }
+  }
+
+  &__restore-btn {
+    @include btn-reset;
+    @include transition-basic;
+    border: 1px solid $c-brown;
+    padding: .5rem;
+    font-size: $font-size;
+
+    &:hover {
+      background-color: $c-brown;
+      color: $c-light;
     }
   }
 }
