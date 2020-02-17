@@ -14,7 +14,7 @@ exports.signup = async (req, res, next) => {
   const usernameTaken = uniqueCheck.some(user => user.username === username)
   const emailTaken = uniqueCheck.some(user => user.email === email)
   if (usernameTaken || emailTaken) {
-    const message = usernameTaken ? 'username taken' : 'email taken'
+    const message = usernameTaken ? 'errorUsernameTaken' : 'errorEmailTaken'
     const error = new Error(message)
     error.statusCode = 409
     return next(error)
@@ -28,11 +28,18 @@ exports.signup = async (req, res, next) => {
         email,
         hashedPassword
       )
-      const data = await user.createUser()
-      res.status(201).json({
-        msg: 'user created with async await',
-        userId: data.insertedId
-      })
+      const createdUser = await user.createUser()
+      const userId = createdUser.insertedId
+      const userData = await User.fetchUserById(userId)
+      const token = jwt.sign({
+        user: userData.username,
+        userId: userData._id.toString()
+      }, 'SECRETsecret')
+      res
+        .status(200)
+        .cookie('tau', token, { httpOnly: true, maxAge: 2592000000 }) // 1000 * 60 * 60 * 24 * 30
+        .cookie('ccua', true, { maxAge: 2592000000 })
+        .json({ msg: 'logged in' })
     } catch (err) {
       console.log(err)
       res.status(500).json({ err })
@@ -46,13 +53,13 @@ exports.login = async (req, res, next) => {
   const user = await User.findUser(userIdentifier)
   try {
     if (!user) {
-      const error = new Error('user not found')
-      error.statusCode = 404
+      const error = new Error('errorNoMatch')
+      error.statusCode = 401
       throw error
     }
     const passwordCorrect = await bcryptjs.compare(password, user.password)
     if (!passwordCorrect) {
-      const error = new Error('user and password do not match')
+      const error = new Error('errorNoMatch')
       error.statusCode = 401
       throw error
     }
@@ -80,9 +87,6 @@ exports.forgotPassword = async (req, res, next) => {
         email: userData.email,
         password: temporaryPassword
       })
-      console.log(temporaryPassword)
-      // send email with it
-      createNewPasswordEmail
       const message = createNewPasswordEmail(userData.email, temporaryPassword)
       transporter.sendMail(message)
     }

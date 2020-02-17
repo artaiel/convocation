@@ -30,6 +30,9 @@
     "passwordRestore": "Check your email for more information",
     "urlCopied": "URL copied to clipboard!",
     "errorGeneric": "Something went wrong - please try again later.",
-    "errorNoEventUpdate": "No change in your event detected."
+    "errorNoEventUpdate": "No change in your event detected.",
+    "errorNoMatch": "Wrong login | password combination",
+    "errorUsernameTaken": "Username already taken, please choose another",
+    "errorEmailTaken": "Account with this email already exists"
   }
 }
