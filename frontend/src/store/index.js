@@ -38,6 +38,7 @@ export default new Vuex.Store({
         const responseData = await response.json()
         commit('saveUserData', responseData)
       } catch (err) {
+        commit('showPopup', { info: 'errorGeneric', isError: true })
         console.error(err)
       } finally {
         commit('toggleLoader')

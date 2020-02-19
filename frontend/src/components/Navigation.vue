@@ -115,6 +115,7 @@ export default {
         await apiClient.call('logout')
         this.showPopup({ info: 'signedOut' })
       } catch (err) {
+        this.showPopup({ info: 'errorGeneric', isError: true })
         console.error(err)
       } finally {
         this.clearUserData()
