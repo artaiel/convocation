@@ -9,11 +9,11 @@
           >
         </button>
         <div class="sign-in__restore-title">
-          Don't worry, it happens to all of us.
+          {{ $t('signIn.passwordRestoreTitle') }}
         </div>
         <input v-model="restorePasswordIdentifier" type="text" class="sign-in__restore-input" placeholder="Your username or email" spellcheck="false"/>
         <button class="sign-in__restore-btn" @click="initiateForgottenPassword">
-          Send me an email with temporary password
+          {{ $t('signIn.passwordRestoreAction') }}
         </button>
       </div>
     </transition>
@@ -29,13 +29,13 @@
       >
       <div class="sign-in__modes">
         <button class="sign-in__mode" :class="{ 'sign-in__mode--selected': modeSignIn }" @click="selectMode('signIn')">
-          Sign in
+          {{ $t('action.signIn') }}
         </button>
         <span class="sign-in__mode-separator">
-          or
+          {{ $t('signIn.or') }}
         </span>
         <button class="sign-in__mode" :class="{ 'sign-in__mode--selected': modeSignUp }" @click="selectMode('signUp')">
-          Sign up
+          {{ $t('action.signUp') }}
         </button>
       </div>
       <div class="sign-in__form">
@@ -55,9 +55,9 @@
             for="username"
             class="event-input-label"
           >
-            {{ modeSignIn ? 'Username or e-mail' : 'Username' }}
+            {{ modeSignIn ? $t('signIn.labelUsernameOrEmail') : $t('signIn.labelUsername') }}
             <span v-if="$v.username.$error">
-              - min. 3 characters
+              {{ $t('validations.usernameMin') }}
             </span>
           </label>
         </div>
@@ -78,9 +78,9 @@
             for="email"
             class="event-input-label"
           >
-            E-mail
+            {{ $t('signIn.labelEmail') }}
             <span v-if="$v.email.$error">
-              - invalid email
+              {{ $t('validations.emailInvalid') }}
             </span>
           </label>
         </div>
@@ -100,14 +100,14 @@
             for="password"
             class="event-input-label"
           >
-            Password
+            {{ $t('signIn.labelPassword') }}
             <span v-if="$v.password.$error">
-              - min. 5 characters
+              {{ $t('validations.passwordMin') }}
             </span>
           </label>
         </div>
         <button v-if="modeSignIn" class="sign-in__forgot-btn" @click="toggleRestorePassword">
-          Forgot your password?
+          {{ $t('signIn.forgotPassword') }}
         </button>
         <div
           v-if="modeSignUp"
@@ -126,19 +126,16 @@
             for="passwordRepeated"
             class="event-input-label"
           >
-            Confirm password
+            {{ $t('signIn.labelConfirmPassword') }}
             <span v-if="$v.passwordRepeated.$error">
-              - passwords do not match
+              {{ $t('validations.passwordMismatch') }}
             </span>
           </label>
         </div>
       </div>
       <button class="main-btn" @click="handleLoginAction">
-        <span v-if="modeSignIn">
-          Sign in
-        </span>
-        <span v-else>
-          Sign up
+        <span>
+          {{ modeSignIn ? $t('action.signIn') : $t('action.signUp') }}
         </span>
       </button>
     </div>

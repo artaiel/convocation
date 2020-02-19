@@ -27,9 +27,7 @@ export default {
   },
   methods: {
     getFullEventUrl (eventId) {
-      const base = process.env.NODE_ENV === 'development'
-        ? 'https://circle-convocation'
-        : `${window.location.protocol}//${window.location.host}`
+      const base = `${window.location.protocol}//${window.location.host}`
       return `${base}/event/${eventId}`
     }
   }
@@ -58,6 +56,7 @@ export default {
 
   &__link {
     color: rgba($c-blue, .75);
+    word-break: break-all;
     @include transition-basic;
 
     &:hover {

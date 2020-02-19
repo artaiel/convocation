@@ -2,51 +2,51 @@
   <div class="settings">
     <div class="settings__element">
       <label class="settings__label" :class="{'settings__label--error': $v.username.$error }">
-        Username
-        <span v-if="$v.username.$error" class="settings__error-msg">- at least 3 characters</span>
+        {{ $t('signIn.labelUsername') }}
+        <span v-if="$v.username.$error" class="settings__error-msg">{{ $t('validations.usernameMin') }}</span>
       </label >
       <input class="settings__input" v-model="username" spellcheck="false"/>
     </div>
     <div class="settings__element">
       <label class="settings__label" :class="{'settings__label--error': $v.email.$error }">
-        Email
-        <span v-if="$v.email.$error" class="settings__error-msg">- has to be a valid email address</span>
+        {{ $t('signIn.labelEmail') }}
+        <span v-if="$v.email.$error" class="settings__error-msg">{{ $t('validations.emailInvalid') }}</span>
       </label >
       <input class="settings__input" v-model="email" spellcheck="false"/>
     </div>
     <div class="settings__element">
       <label class="settings__label" :class="{'settings__label--error': $v.password.$error }">
-        New password
-        <span v-if="$v.password.$error" class="settings__error-msg">- min. 5 chars, including capital and lowercase letters and a number</span>
+        {{ $t('signIn.labelPasswordNew') }}
+        <span v-if="$v.password.$error" class="settings__error-msg">{{ $t('validations.passwordMin') }}</span>
       </label >
       <input class="settings__input" v-model="password" spellcheck="false" type="password"/>
     </div>
     <div class="settings__element">
       <label class="settings__label" :class="{'settings__label--error': $v.passwordRepeated.$error }">
-        Repeat password
-        <span v-if="$v.passwordRepeated.$error" class="settings__error-msg">- passwords do not match</span>
+        {{ $t('signIn.labelConfirmPassword') }}
+        <span v-if="$v.passwordRepeated.$error" class="settings__error-msg">{{ $t('validations.passwordMismatch') }}</span>
       </label >
       <input class="settings__input" v-model="passwordRepeated" spellcheck="false" type="password"/>
     </div>
     <div class="settings__controls">
       <button class="settings__button" @click="updateData">
-        <span>Update</span>
+        <span>{{ $t('action.update') }}</span>
       </button>
       <button class="settings__button" @click="showConfirmation">
-        <span>Delete account</span>
+        <span>{{ $t('action.deleteAccount') }}</span>
       </button>
     </div>
     <transition name="fade">
       <div v-if="confirmationVisible" class="confirmation">
         <div class="confirmation__text">
-          Are you certain? This will also delete any existing owned events.
+          {{ $t('userMenu.confirmAccountDeletion') }}
         </div>
         <div class="confirmation__controls">
           <button class="confirmation__btn" @click="deleteUser">
-            Confirm
+            {{ $t('action.confirm') }}
           </button>
           <button class="confirmation__btn" @click="hideConfirmation">
-            Cancel
+            {{ $t('action.cancel') }}
           </button>
         </div>
       </div>

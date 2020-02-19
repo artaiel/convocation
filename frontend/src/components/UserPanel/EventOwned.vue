@@ -2,20 +2,20 @@
   <div class="owned">
     <div class="owned__element">
       <label class="owned__label" :class="{'owned__label--error': $v.title.$error }">
-        Title
+        {{ $t('userMenu.labelTitle') }}
         <span v-if="$v.title.$error" class="owned__error-msg">- at least 3 characters</span>
       </label >
       <input class="owned__input" v-model="title" spellcheck="false"/>
     </div>
     <div class="owned__element">
       <label class="owned__label">
-        Description
+        {{ $t('userMenu.labelDescription') }}
       </label >
       <textarea class="owned__input owned__input--description" v-model="description" spellcheck="false"/>
     </div>
     <div class="owned__element">
       <label class="owned__label">
-        URL
+        {{ $t('userMenu.labelUrl') }}
       </label >
       <router-link class="owned__event-url" :to="{ path: routerUrl }">
         {{ eventUrl }}
@@ -23,12 +23,12 @@
     </div>
     <div class="owned__element">
       <label class="owned__label" :class="{'owned__label--error': $v.webhook.$error }">
-        Webhook
+        {{ $t('userMenu.labelWebhook') }}
         <img
           src="@/assets/images/questionmark.png"
           class="owned__qm"
           v-tooltip.bottom="{
-            content: webhookTooltip,
+            content: $t('userMenu.webhookTooltip'),
             html: true,
             delay: 250,
             trigger: 'manual',
@@ -38,13 +38,13 @@
           @mouseout="showTooltip = false"
           @click="showTooltip = !showTooltip"
         >
-        <span v-if="$v.webhook.$error" class="owned__error-msg">- must be a valid URL</span>
+        <span v-if="$v.webhook.$error" class="owned__error-msg">{{ $t('validations.urlInvalid') }}</span>
       </label >
       <input class="owned__input" v-model="webhook" spellcheck="false" @focus="$event.target.select()"/>
     </div>
     <div class="owned__element">
       <label class="owned__label">
-        Email notification on user updates
+        {{ $t('userMenu.labelNotificationSelection') }}
       </label >
       <label :for="`emailNotificationCheckbox-${eventIndex}`" class="owned__checkbox-icon">
         <img v-if="emailNotifications" src="@/assets/images/exit.png" alt="Icon marking email notification on attendee updates as active" class="owned__checkbox-icon-img">
@@ -53,7 +53,7 @@
     </div>
     <div class="owned__element">
       <label class="owned__label">
-        Notifications language
+        {{ $t('userMenu.labelNotificationLanguage') }}
       </label >
       <div class="owned__notification-language">
         <button
@@ -61,27 +61,27 @@
           :class="{'owned__notification-language--active': notificationLanguageEn }"
           @click="changeNotificationLanguage('en')"
         >
-          English
+          {{ $t('languageName', LANG_EN) }}
         </button>
         <button
           class="owned__notification-language"
           :class="{'owned__notification-language--active': notificationLanguageDe }"
           @click="changeNotificationLanguage('de')"
         >
-          Deutsch
+          {{ $t('languageName', LANG_DE) }}
         </button>
         <button
           class="owned__notification-language"
           :class="{'owned__notification-language--active': notificationLanguagePl }"
           @click="changeNotificationLanguage('pl')"
         >
-          Polski
+          {{ $t('languageName', LANG_PL) }}
         </button>
       </div>
     </div>
     <div class="owned__element">
       <label class="owned__label">
-        Attending
+        {{ $t('userMenu.labelAttending') }}
       </label >
       <p class="owned__attending">
         {{ attendees }}
@@ -89,23 +89,23 @@
     </div>
     <div class="owned__controls">
       <button class="owned__button" @click="updateEvent">
-        <span>Update</span>
+        <span>{{ $t('action.update') }}</span>
       </button>
       <button class="owned__button" @click="showConfirmation">
-        <span>Delete event</span>
+        <span>{{ $t('action.deleteEvent') }}</span>
       </button>
     </div>
     <transition name="fade">
       <div v-if="confirmationVisible" class="confirmation">
         <div class="confirmation__text">
-          Are you sure you want to delete this event?
+          {{ $t('userMenu.confirmEventDeletion') }}
         </div>
         <div class="confirmation__controls">
           <button class="confirmation__btn" @click="deleteEvent">
-            Confirm
+            {{ $t('action.confirm') }}
           </button>
           <button class="confirmation__btn" @click="hideConfirmation">
-            Cancel
+            {{ $t('action.cancel') }}
           </button>
         </div>
       </div>
@@ -116,6 +116,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex'
 import { validationMixin } from 'vuelidate'
+import { LANG_EN, LANG_DE, LANG_PL } from '@/lib/constants'
 import { minLength, url, required } from 'vuelidate/lib/validators'
 import apiClient from '@/lib/APIClient'
 
@@ -139,7 +140,10 @@ export default {
   data () {
     return {
       confirmationVisible: false,
-      showTooltip: false
+      showTooltip: false,
+      LANG_EN,
+      LANG_DE,
+      LANG_PL
     }
   },
   computed: {
@@ -215,9 +219,6 @@ export default {
       set (val) {
         this.updateEventWebhook({ eventIndex: this.eventIndex, webhook: val })
       }
-    },
-    webhookTooltip () {
-      return `You can provide a URL where updates about your event will be sent to as a short message - for example to a discord server or a slack channel, or any service that accepts webhooks.`
     }
   },
   methods: {
@@ -384,7 +385,7 @@ export default {
   &__controls {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   &__button {

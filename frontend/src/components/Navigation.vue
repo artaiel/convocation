@@ -13,22 +13,19 @@
         <img class="sidebar__icon" :src="require('@/assets/images/pen.png')"  @click="toggleSidebar" alt="Button toggling navigation menu">
         <ul class="sidebar__list">
           <li @click="toggleSidebar" class="sidebar__item">
-            <router-link to="/">Create event</router-link>
+            <router-link to="/">{{ userLoggedIn ? $t('nav.createEvent') : $t('nav.home') }}</router-link>
           </li>
           <li @click="toggleSidebar" v-if="userLoggedIn" class="sidebar__item">
-            <router-link to="/my-events">Your events</router-link>
+            <router-link to="/my-events">{{ $t('nav.yourEvents') }}</router-link>
           </li>
-          <li @click="toggleSidebar" class="sidebar__item">
+          <!-- <li @click="toggleSidebar" class="sidebar__item">
             <router-link to="/donate">Donate</router-link>
+          </li> -->
+          <li @click="toggleSidebar" class="sidebar__item">
+            <button v-if="!userLoggedIn" class="sidebar__button" @click="$emit('clickSignIn')">{{ $t('action.signIn') }}</button>
           </li>
           <li @click="toggleSidebar" class="sidebar__item">
-            <router-link to="/event/5e32069e1c9d440000cb867a">ex event</router-link>
-          </li>
-          <li @click="toggleSidebar" class="sidebar__item">
-            <button v-if="!userLoggedIn" class="sidebar__button" @click="$emit('clickSignIn')">Sign in</button>
-          </li>
-          <li @click="toggleSidebar" class="sidebar__item">
-            <button v-if="userLoggedIn" class="sidebar__button" @click="logOut">Log out</button>
+            <button v-if="userLoggedIn" class="sidebar__button" @click="logOut">{{ $t('action.signOut') }}</button>
           </li>
         </ul>
         <ul class="sidebar__list sidebar__languages">
@@ -40,8 +37,8 @@
     </transition>
     <div class="nav__desktop">
       <div class="nav__links">
-        <router-link to="/" class="nav__links-item">{{ homeLink }}</router-link>
-        <router-link v-if="userLoggedIn" to="/my-events" class="nav__links-item">Your events</router-link>
+        <router-link to="/" class="nav__links-item">{{ userLoggedIn ? $t('nav.createEvent') : $t('nav.home') }}</router-link>
+        <router-link v-if="userLoggedIn" to="/my-events" class="nav__links-item">{{ $t('nav.yourEvents') }}</router-link>
         <div
           class="nav__languages"
           @mouseleave="languageHovered = false"
@@ -67,14 +64,14 @@
           </transition>
         </div>
         <!-- <router-link to="/donate" class="nav__links-item">Donate</router-link> -->
-        <button v-if="!userLoggedIn" class="nav__links-item" @click="$emit('clickSignIn')">Sign in</button>
-        <button v-if="userLoggedIn" class="nav__links-item" @click="logOut">Log out</button>
+        <button v-if="!userLoggedIn" class="nav__links-item" @click="$emit('clickSignIn')">{{ $t('action.signIn') }}</button>
+        <button v-if="userLoggedIn" class="nav__links-item" @click="logOut">{{ $t('action.signOut') }}</button>
       </div>
     </div>
     <div class="nav__mobile" @click="toggleSidebar">
       <img
         class="nav__mobile-icon"
-        :src="require('@/assets/images/pen.png')" alt="">
+        :src="require('@/assets/images/pen.png')" alt="A pen symbolizing an image which you can click to save your selections">
     </div>
   </div>
 </template>
@@ -96,11 +93,6 @@ export default {
     ...mapState(['userLoggedIn']),
     languageSelection () {
       return this.languages.filter(lang => lang !== this.$i18n.locale)
-    },
-    homeLink () {
-      return this.userLoggedIn
-        ? 'Create event'
-        : 'Home'
     }
   },
   methods: {

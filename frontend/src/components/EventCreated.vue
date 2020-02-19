@@ -12,7 +12,7 @@
     </div>
     <div class="home__link">
       <div class="home__url">
-        <input type="text" :value="eventURL" spellcheck="false">
+        <p>{{ eventURL }}</p>
       </div>
       <button
         class="home__copy"
@@ -23,20 +23,6 @@
         {{ $t('copy') }}
       </button>
     </div>
-    <!-- <transition name="slide-down">
-      <div v-if="popupSuccessVisible" class="home__popup">
-        <p class="bold">
-          {{ $t('linkCopied') }}
-        </p>
-      </div>
-    </transition>
-    <transition name="slide-down">
-      <div v-if="popupFailureVisible" class="home__popup">
-        <p class="bold">
-          {{ $t('linkCopyingFailed') }}
-        </p>
-      </div>
-    </transition> -->
   </div>
 </template>
 
@@ -72,27 +58,22 @@ export default {
   &__link {
     margin: 0 auto;
     display: flex;
+    flex-flow: column;
+    align-items: center;
     justify-content: space-between;
   }
 
   &__url {
-    width: 100%;
-    & > input {
-      border: 1px solid $c-brown;
-      padding: $spacer * .5 $spacer * 1.5;
-      display: flex;
-      align-items: center;
-      width: 100%;
-      font-size: $font-size-lg;
-      color: inherit;
-    }
+    margin-bottom: 2rem;
+    font-size: $font-size-lg;
+    word-break: break-all;
+    text-align: center;
   }
 
   &__copy {
     @include btn-reset;
     border: 1px solid $c-brown;
     padding: $spacer * .5 $spacer * 2;
-    margin-left: $spacer * 4;
     @include transition-basic;
     letter-spacing: 1px;
     font-size: $font-size-lg;
@@ -100,18 +81,6 @@ export default {
     &:hover {
       background-color: $c-brown;
       color: white;
-    }
-  }
-
-  &__popup {
-    margin: 0 auto;
-    margin-top: $spacer * 2;
-    text-align: center;
-
-    & > p {
-      margin: 0 auto;
-      display: inline-block;
-      font-size: $font-size-lg;
     }
   }
 }

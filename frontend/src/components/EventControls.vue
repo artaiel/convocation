@@ -20,13 +20,13 @@
     >
       <img src="~@/assets/images/rose.png" alt="">
       <span>
-        Select as meeting day
+        {{ $t('action.select') }}
       </span>
     </button>
     <div class="event-controls__attendees">
       <div v-if="viewedDate" class="event-controls__table-info">
         <div class="event-controls__table-title">
-          Attendees
+          {{ $t('attendees') }}
         </div>
         <div class="event-controls__table-date">
           {{ date }}
@@ -69,7 +69,7 @@
           <img src="@/assets/images/feather.png" alt="">
         </div>
         <div class="event-controls__label">
-          Zapisz
+          {{ $t('action.save') }}
         </div>
       </button>
     </div>
@@ -90,7 +90,7 @@ export default {
     ...mapState(['eventData', 'usernameInEvent', 'userLoggedIn']),
     ...mapGetters(['isEventOwner']),
     eventOwnerName () {
-      return 'Owner: ' + this.eventData.ownerName
+      return `${this.$t('owner')}: ${this.eventData.ownerName}`
     },
     username: {
       get () {

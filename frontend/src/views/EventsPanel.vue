@@ -2,13 +2,13 @@
   <div class="user-panel">
     <div class="user-panel__controls">
       <button class="user-panel__menu-view" :class="{'user-panel__menu-view--active': ownedSelected }" @click="selectView('owned')">
-        Owned
+        {{ $t('userMenu.owned') }}
       </button>
       <button class="user-panel__menu-view" :class="{'user-panel__menu-view--active': attendingSelected }" @click="selectView('attending')">
-        Attending
+        {{ $t('userMenu.attending') }}
       </button>
       <button class="user-panel__menu-view" :class="{'user-panel__menu-view--active': settingsSelected }" @click="selectView('settings')">
-        Settings
+        {{ $t('userMenu.settings') }}
       </button>
     </div>
     <transition :name="transitionType" mode="out-in">
@@ -65,17 +65,7 @@ export default {
       this.currentView = view
     }
   },
-  async mounted () {
-    // this.toggleLoader()
-    // try {
-    //   const response = await apiClient.call('getUserData')
-    //   const responseData = await response.json()
-    //   this.saveUserData(responseData)
-    // } catch (err) {
-    //   console.log(err)
-    // } finally {
-    //   this.toggleLoader()
-    // }
+  mounted () {
     this.getUserData()
   }
 }

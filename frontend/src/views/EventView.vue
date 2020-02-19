@@ -3,7 +3,7 @@
     <template v-if="fetchFailed">
       <div class="event__not-found">
         <p>
-          This event doesn't exist.
+          {{ $t('noEvent') }}
         </p>
         <img src="@/assets/images/rat.png" alt="">
       </div>

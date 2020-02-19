@@ -35,9 +35,9 @@
           for="eventName"
           class="event-input-label"
         >
-          Event title
+          {{ $t('userMenu.labelTitle') }}
           <span v-if="$v.eventName.$error">
-            - at least 3 characters required
+            {{ $t('validations.usernameMin') }}
           </span>
         </label>
       </div>
@@ -57,7 +57,7 @@
             for="eventDescription"
             class="event-textarea-label"
           >
-            Event description (optional)
+            {{ $t('labelEventDescription') }}
           </label>
       </div>
       <div
@@ -77,20 +77,20 @@
           for="eventOwner"
           class="event-input-label"
         >
-          Your name
+          {{ $t('labelYourName') }}
           <span v-if="$v.eventOwner.$error">
-            - at least 2 characters required
+            {{ $t('validations.usernameMin') }}
           </span>
         </label>
       </div>
       <button class="main-btn" @click="handleEventCreation">
         <span>
-          Create event
+          {{ $t('action.createEvent') }}
         </span>
       </button>
     </div>
     <div v-else class="home__cta">
-      Sign up to create and participate in events!
+      {{ $t('homeCTA') }}
     </div>
   </div>
 </template>
@@ -109,7 +109,7 @@ export default {
     },
     eventOwner: {
       required,
-      minLength: minLength(2)
+      minLength: minLength(3)
     }
   },
   data () {
