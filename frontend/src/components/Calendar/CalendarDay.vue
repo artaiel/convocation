@@ -93,7 +93,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['selectDayAsAvailable']),
+    ...mapMutations(['selectDayAsAvailable', 'showPopup']),
     selectDay () {
       if (!this.dayPassed && this.userLoggedIn) {
         this.selectDayAsAvailable({
@@ -101,6 +101,8 @@ export default {
           month: this.month,
           day: this.day
         })
+      } else if (!this.userLoggedIn) {
+        this.showPopup({ info: 'errorNotSignedIn', isError: true })
       }
     },
     viewDay () {

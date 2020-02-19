@@ -19,7 +19,7 @@
     </div>
     <div class="calendar__weekdays">
       <div
-        v-for="day in days"
+        v-for="day in $t('days')"
         :key="`${day}-key`"
         class="calendar__day-name"
       >
@@ -50,8 +50,6 @@
   </div>
 </template>
 <script>
-const months = require('@/lib/months')
-const days = require('@/lib/days')
 import CalendarDay from '@/components/Calendar/CalendarDay'
 
 export default {
@@ -72,8 +70,7 @@ export default {
     return {
       selectedMonth: '',
       selectedYear: '',
-      selectedMonthLength: '',
-      days
+      selectedMonthLength: ''
     }
   },
   computed: {
@@ -81,7 +78,7 @@ export default {
       return new Date(new Date().setHours(0,0,0,0))
     },
     monthName () {
-      return months[this.selectedMonth]
+      return this.$t('months')[this.selectedMonth]
     },
     daysFromPreviousMonth () {
       const firstDayWeekdayNumber = new Date(this.selectedYear, this.selectedMonth, 1).getDay()

@@ -1,19 +1,120 @@
 {
   "languageName": "Polski",
   "homeHeader": [
-    "Convocation to",
+    "Convocation is a",
     "free meeting scheduling tool",
     "for groups."
   ],
+  "action": {
+    "select": "Select as meeting day",
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "createEvent": "Create event",
+    "cancel": "Cancel",
+    "save": "Save",
+    "update": "Update",
+    "deleteEvent": "Delete event",
+    "deleteAccount": "Delete account",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
+  "userMenu": {
+    "owned": "Owned",
+    "attending": "Attending",
+    "settings": "Setting",
+    "labelAttending": "Attending",
+    "labelTitle": "Event title",
+    "labelDescription": "Description",
+    "labelUrl": "URL",
+    "labelWebhook": "Webhook",
+    "labelNotificationSelection": "Email notification on user updates",
+    "labelNotificationLanguage": "Notifications language",
+    "confirmEventDeletion": "Are you sure you want to delete this event?",
+    "confirmAccountDeletion": "Are you certain? This will also delete any existing owned events.",
+    "webhookTooltip": "You can provide a URL where updates about your event will be sent to as a short message - for example to a discord server or a slack channel."
+  },
+  "signIn": {
+    "passwordRestoreTitle": "Don't worry, it happens to all of us.",
+    "passwordRestoreAction": "Send me an email with temporary password",
+    "or": "or",
+    "forgotPassword": "Forgot your password?",
+    "labelEmail": "E-mail",
+    "labelConfirmPassword": "Confirm password",
+    "labelPassword": "Password",
+    "labelPasswordNew": "New password",
+    "labelUsername": "Username",
+    "labelUsernameOrEmail": "Username or e-mail"
+  },
+  "validations": {
+    "usernameMin": "- min. 3 characters",
+    "passwordMin": "- min. 5 characters, including an uppercase letter and a number",
+    "passwordMismatch": "- passwords do not match",
+    "emailInvalid": "- invalid email",
+    "urlInvalid": "- must be a valid URL"
+  },
+  "nav": {
+    "createEvent": "Create event",
+    "home": "Home",
+    "yourEvents": "Your events"
+  },
   "homeInfo": [
-    "With as few steps as setting up basic information for your event you’ll be able to share a link with your friends to choose available days and see which one suits you all the most.",
-    "Your friends may take part in the survey without registering, but you can create an account to easily keep track of multiple polls and choose whether to receive email or webhook notifications when your poll is updated."
+    "All you need is an account to create an event. You can start with a title and your name, with optional description, and you're good to go.",
+    "With your event created, you will be able to share a link with your friends to choose days and see which one suits you all the most, describe the time you have available, and easily keep track of when others could join you. As an owner you can also choose whether to receive email or webhook notifications when attendees update their data, and select the final date when your group will meet."
   ],
-  "homeSuccess": "Survey created!",
-  "homeLinkInfo": "This is a link to your event. Send it to your group members in order to allow them to select days that fit them best. You can find this link later in the your events section of your account.",
-  "copy": "Kopiuj",
-  "linkCopied": "URL copied to clipboard",
+  "homeCTA": "Sign up to create and participate in events!",
+  "homeSuccess": "Event created!",
+  "homeNull": "You need to create an event first",
+  "homeLinkInfo": "This is a link to your event. Send it to your group members to determine the best date for a meeting. That's where you can specify your own potential attendance, and where you can choose final event date(s).",
+  "attendees": "Attendees",
   "linkCopyingFailed": "Please copy the link manually!",
-  "defaultAvailability": "Dowolne godziny",
-  "name": "Twoje imię"
+  "defaultAvailability": "Anytime",
+  "owner": "Owner",
+  "name": "Your name",
+  "noEvent": "This event doesn't exist.",
+  "labelEventDescription": "Description (optional)",
+  "labelYourName": "Your name",
+  "error": {
+    "1": "Something went wrong. Please try again later."
+  },
+  "popupInfo": {
+    "accountDeleted": "Account deleted",
+    "accountUpdated": "Account info updated",
+    "eventCreated": "Event created successfully!",
+    "eventUpdated": "Event updated successfully!",
+    "eventDeleted": "Event deleted",
+    "passwordRestore": "Check your email for more information",
+    "signedIn": "Signed in!",
+    "signedOut": "Signed out",
+    "urlCopied": "URL copied to clipboard!",
+    "errorGeneric": "Something went wrong - please try again later.",
+    "errorNoEventUpdate": "No change in your event detected.",
+    "errorNoMatch": "Wrong login | password combination",
+    "errorUsernameTaken": "Username already taken, please choose another",
+    "errorEmailTaken": "Account with this email already exists",
+    "errorNotSignedIn": "You need to be signed in to participate"
+  },
+  "days": {
+    "0": "Pon",
+    "1": "Wt",
+    "2": "Śr",
+    "3": "Czw",
+    "4": "Pt",
+    "5": "Sb",
+    "6": "Nd"
+  },
+  "months": {
+    "0": "Styczeń",
+    "1": "Luty",
+    "2": "Marzec",
+    "3": "Kwiecień",
+    "4": "Maj",
+    "5": "Czerwiec",
+    "6": "Lipiec",
+    "7": "Sierpień",
+    "8": "Wrzesień",
+    "9": "Październik",
+    "10": "Listopad",
+    "11": "Grudzień"
+  }
 }

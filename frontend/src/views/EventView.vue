@@ -5,7 +5,7 @@
         <p>
           {{ $t('noEvent') }}
         </p>
-        <img src="@/assets/images/rat.png" alt="">
+        <img src="@/assets/images/rat.png" alt="A drawing of a rat illustrating no found content">
       </div>
     </template>
     <template v-else-if="eventData._id">

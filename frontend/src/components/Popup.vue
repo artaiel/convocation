@@ -67,7 +67,7 @@ export default {
   align-items: center;
   justify-content: center;
   position: fixed;
-  background-color: rgba(white, .8);
+  background-color: rgba(white, .9);
   top: 4rem;
   left: 50%;
   transform: translate3d(-50%, 0, 0);

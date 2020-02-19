@@ -1,25 +1,15 @@
 <template>
-  <div>
-    <CreateEvent v-if="!eventCreatedSuccessfully" @dataSubmitted="handleSubmittedData" />
-    <EventCreated v-if="eventCreatedSuccessfully" :eventId="createdEventId"/>
-  </div>
+  <router-view @dataSubmitted="handleSubmittedData" :eventId="createdEventId"/>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
-import CreateEvent from '@/components/CreateEvent'
-import EventCreated from '@/components/EventCreated'
 import apiClient from '@/lib/APIClient'
 
 export default {
-  components: {
-    CreateEvent,
-    EventCreated
-  },
   data () {
     return {
-      createdEventId: null,
-      eventCreatedSuccessfully: false
+      createdEventId: null
     }
   },
   methods: {
@@ -34,7 +24,7 @@ export default {
         const parsedResponse = await response.json()
         this.createdEventId = parsedResponse.eventId
         this.showPopup({ info: 'eventCreated' })
-        this.eventCreatedSuccessfully = true
+        this.$router.push({ path: '/created' })
       } catch (err) {
         this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {

@@ -99,6 +99,7 @@ export default {
     ...mapMutations(['toggleLoader', 'clearUserData', 'showPopup']),
     changeLocale (locale) {
       this.$i18n.locale = locale
+      window.localStorage.setItem('lang_ui', locale)
       this.languageHovered = false
     },
     toggleSidebar () {
