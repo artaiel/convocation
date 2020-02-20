@@ -23,6 +23,9 @@
     <transition name="popup-transition">
       <Popup v-if="popup.visible"/>
     </transition>
+    <transition name="fade">
+      <CookieBanner v-if="showCookieBanner" @closeBanner="showCookieBanner = false"/>
+    </transition>
   </div>
 </template>
 
@@ -30,17 +33,20 @@
 import Navigation from '@/components/Navigation'
 import SignIn from '@/components/SignIn'
 import Popup from '@/components/Popup'
+import CookieBanner from '@/components/CookieBanner'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
   components: {
+    CookieBanner,
     Navigation,
     SignIn,
     Popup
   },
   data () {
     return {
-      signInModalVisible: false
+      signInModalVisible: false,
+      showCookieBanner: false
     }
   },
   computed: {
@@ -50,9 +56,14 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateUserLoggedInState']),
+    ...mapMutations(['updateUserLoggedInState', 'showPopup']),
     toggleSignIn () {
-      this.signInModalVisible = !this.signInModalVisible
+      if (window.localStorage.getItem('cookieConsent')) {
+        this.signInModalVisible = !this.signInModalVisible
+      } else {
+        this.showCookieBanner = true
+        this.showPopup({ info: 'errorNoCookieConsent', isError: true })
+      }
     },
     closeSignIn () {
       this.signInModalVisible = false
@@ -63,6 +74,9 @@ export default {
   },
   mounted () {
     this.updateUserLoggedInState()
+    if (!window.localStorage.getItem('cookieConsent')) {
+      this.showCookieBanner = true
+    }
   }
 }
 </script>

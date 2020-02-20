@@ -74,9 +74,8 @@
   "noEvent": "This event doesn't exist.",
   "labelEventDescription": "Description (optional)",
   "labelYourName": "Your name",
-  "error": {
-    "1": "Something went wrong. Please try again later."
-  },
+  "cookieTitle": "Our cookies aren't scary.",
+  "cookieInfo": "But you'll nevertheless need to confirm that you accept them for this to work out. They will only ever be used to keep you logged in.",
   "popupInfo": {
     "accountDeleted": "Account deleted",
     "accountUpdated": "Account info updated",
@@ -92,7 +91,8 @@
     "errorNoMatch": "Wrong login | password combination",
     "errorUsernameTaken": "Username already taken, please choose another",
     "errorEmailTaken": "Account with this email already exists",
-    "errorNotSignedIn": "You need to be signed in to participate"
+    "errorNotSignedIn": "You need to be signed in to participate",
+    "errorNoCookieConsent": "You need to accept cookie use first"
   },
   "days": {
     "0": "Mon",

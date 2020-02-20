@@ -1,62 +1,62 @@
 {
   "languageName": "Polski",
   "homeHeader": [
-    "Convocation is a",
-    "free meeting scheduling tool",
-    "for groups."
+    "Convocation to",
+    "darmowe narzędzie do organizacji spotkań",
+    "dla grup."
   ],
   "action": {
-    "select": "Select as meeting day",
-    "confirm": "Confirm",
-    "copy": "Copy",
-    "createEvent": "Create event",
-    "cancel": "Cancel",
-    "save": "Save",
-    "update": "Update",
-    "deleteEvent": "Delete event",
-    "deleteAccount": "Delete account",
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
+    "select": "Wybierz jako dzień spotkania",
+    "confirm": "Potwierdź",
+    "copy": "Kopiuj",
+    "createEvent": "Stwórz spotkanie",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "update": "Zaktualizuj",
+    "deleteEvent": "Usuń wydarzenie",
+    "deleteAccount": "Usuń konto",
+    "signIn": "Zaloguj się",
+    "signUp": "Stwórz konto",
+    "signOut": "Wyloguj"
   },
   "userMenu": {
-    "owned": "Owned",
-    "attending": "Attending",
-    "settings": "Setting",
-    "labelAttending": "Attending",
-    "labelTitle": "Event title",
-    "labelDescription": "Description",
+    "owned": "Twoje",
+    "attending": "Inne",
+    "settings": "Ustawienia",
+    "labelAttending": "Uczestnicy",
+    "labelTitle": "Nazwa wydarzenia",
+    "labelDescription": "Opis",
     "labelUrl": "URL",
     "labelWebhook": "Webhook",
-    "labelNotificationSelection": "Email notification on user updates",
-    "labelNotificationLanguage": "Notifications language",
-    "confirmEventDeletion": "Are you sure you want to delete this event?",
-    "confirmAccountDeletion": "Are you certain? This will also delete any existing owned events.",
-    "webhookTooltip": "You can provide a URL where updates about your event will be sent to as a short message - for example to a discord server or a slack channel."
+    "labelNotificationSelection": "Powiadomienia mailowe o aktualizacji udziału",
+    "labelNotificationLanguage": "Język powiadomień",
+    "confirmEventDeletion": "Czy na pewno usunąć wydarzenie?",
+    "confirmAccountDeletion": "Na pewno? Usunięcie konta usunie Twoje wydarzenia.",
+    "webhookTooltip": "Możesz dodać URL na któy będą wysyłane powiadomienia o zmianach w Twoim wydarzeniu - na przykład na serwer Discorda czy kanał na slacku."
   },
   "signIn": {
-    "passwordRestoreTitle": "Don't worry, it happens to all of us.",
-    "passwordRestoreAction": "Send me an email with temporary password",
-    "or": "or",
-    "forgotPassword": "Forgot your password?",
+    "passwordRestoreTitle": "Nie martw się, wszystkim nam się to zdarza.",
+    "passwordRestoreAction": "Wyślij mi email z tymczasowym hasłem",
+    "or": "lub",
+    "forgotPassword": "Zapomniałem hasła",
     "labelEmail": "E-mail",
-    "labelConfirmPassword": "Confirm password",
-    "labelPassword": "Password",
-    "labelPasswordNew": "New password",
-    "labelUsername": "Username",
-    "labelUsernameOrEmail": "Username or e-mail"
+    "labelConfirmPassword": "Potwierdź hasło",
+    "labelPassword": "Hasło",
+    "labelPasswordNew": "Nowe hasło",
+    "labelUsername": "Login",
+    "labelUsernameOrEmail": "Login lub e-mail"
   },
   "validations": {
-    "usernameMin": "- min. 3 characters",
-    "passwordMin": "- min. 5 characters, including an uppercase letter and a number",
-    "passwordMismatch": "- passwords do not match",
-    "emailInvalid": "- invalid email",
-    "urlInvalid": "- must be a valid URL"
+    "usernameMin": "- min. 3 znaki",
+    "passwordMin": "- min. 5 znaki, w tym duża litera i liczba",
+    "passwordMismatch": "- hasła nie są identyczne",
+    "emailInvalid": "- niepoprawny e-mail",
+    "urlInvalid": "- musi być poprawnym URL"
   },
   "nav": {
-    "createEvent": "Create event",
-    "home": "Home",
-    "yourEvents": "Your events"
+    "createEvent": "Stwórz wydarzenie",
+    "home": "Strona główna",
+    "yourEvents": "Twoje wydarzenia"
   },
   "homeInfo": [
     "All you need is an account to create an event. You can start with a title and your name, with optional description, and you're good to go.",
@@ -74,9 +74,8 @@
   "noEvent": "This event doesn't exist.",
   "labelEventDescription": "Description (optional)",
   "labelYourName": "Your name",
-  "error": {
-    "1": "Something went wrong. Please try again later."
-  },
+  "cookieTitle": "Our cookies aren't scary.",
+  "cookieInfo": "But you'll nevertheless need to confirm that you accept them for this to work out. They will only ever be used to keep you logged in.",
   "popupInfo": {
     "accountDeleted": "Account deleted",
     "accountUpdated": "Account info updated",
@@ -92,7 +91,8 @@
     "errorNoMatch": "Wrong login | password combination",
     "errorUsernameTaken": "Username already taken, please choose another",
     "errorEmailTaken": "Account with this email already exists",
-    "errorNotSignedIn": "You need to be signed in to participate"
+    "errorNotSignedIn": "You need to be signed in to participate",
+    "errorNoCookieConsent": "You need to accept cookie use first"
   },
   "days": {
     "0": "Pon",
