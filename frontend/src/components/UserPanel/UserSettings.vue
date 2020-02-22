@@ -140,14 +140,15 @@ export default {
       this.toggleLoader()
       try {
         await apiClient.call('deleteUser')
-        this.hideConfirmation()
-        this.toggleLoader()
         this.clearUserData()
         this.updateUserLoggedInState()
         this.$router.push({ path: '/' })
       } catch (err) {
         // console.log(err)
+        this.showPopup({ info: 'errorGeneric', isError: true })
+      } finally {
         this.toggleLoader()
+        this.hideConfirmation()
       }
     },
     validationFailed () {

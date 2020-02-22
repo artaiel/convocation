@@ -154,11 +154,16 @@ input, textarea {
   background: linear-gradient(180deg, #554834 0%, rgba(164, 105, 1, 0) 493.48%, #503F23 493.48%, rgba(255, 255, 255, 0) 493.48%);
   border: 2px solid $c-brown;
   margin: 0 auto;
-  padding: $spacer $spacer * 4;
+  padding: $spacer *.5 $spacer * 2;
+  font-size: $font-size-lg;
   color: #FFEDCA;
-  font-size: $font-size-xxl;
   @include transition-basic;
   position: relative;
+
+  @media screen and (min-width: $size-sm) {
+    padding: $spacer $spacer * 4;
+    font-size: $font-size-xxl;
+  }
 
   &:hover {
     color: white;
@@ -253,7 +258,6 @@ input, textarea {
   justify-content: space-evenly;
   padding: 2rem;
   border-radius: $br;
-  // font-size: $font-size;
 
   &__text {
     text-align: center;

@@ -267,7 +267,7 @@ export default {
         if (responseData.error) throw new Error (responseData.error)
         this.showPopup({ info: 'eventUpdated' })
       } catch (err) {
-        this.showPopup({ info: err.message || 'errorGeneric', isError: true })
+        this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
       }

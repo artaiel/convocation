@@ -57,7 +57,6 @@ exports.deleteUser = async (req, res, next) => {
     next(error)
   } else {
     // console.log('------------------ start deleting user ----------------------')
-
     // list user events attended
     // list user events owned
     // remove events owned
