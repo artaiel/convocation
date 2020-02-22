@@ -131,8 +131,8 @@ export default {
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 3px;
+    left: 3px;
 
     & > img {
       height: 10px;
@@ -140,6 +140,8 @@ export default {
     }
 
     @media screen and (min-width: $size-sm) {
+      top: 5px;
+      left: 5px;
       & > img {
         height: 15px;
       }

@@ -8,7 +8,7 @@ exports.getUserData = async (req, res, next) => {
     next(error)
   } else {
     const userData = await User.fetchUserById(req.userId)
-    console.log(userData)
+    // console.log(userData)
     const eventsOwned = await Event.fetchMultipleEventsById(userData.eventsOwned)
     const eventsAttending = await Event.fetchMultipleEventsById(userData.eventsAttending)
     res.json({
@@ -56,7 +56,7 @@ exports.deleteUser = async (req, res, next) => {
     error.status = 403
     next(error)
   } else {
-    console.log('------------------ start deleting user ----------------------')
+    // console.log('------------------ start deleting user ----------------------')
 
     // list user events attended
     // list user events owned

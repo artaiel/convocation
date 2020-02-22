@@ -41,7 +41,7 @@ exports.signup = async (req, res, next) => {
         .cookie('ccua', true, { maxAge: 2592000000 })
         .json({ msg: 'logged in' })
     } catch (err) {
-      console.log(err)
+      // console.log(err)
       res.status(500).json({ err })
     }
   }

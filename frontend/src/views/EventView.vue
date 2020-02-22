@@ -59,7 +59,7 @@ export default {
         }
         this.saveEventData(data)
       } catch (err) {
-        console.log(err)
+        // console.log(err)
         this.fetchFailed = true
       } finally {
         this.toggleLoader()

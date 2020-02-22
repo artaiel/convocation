@@ -32,7 +32,7 @@
     "labelNotificationLanguage": "Język powiadomień",
     "confirmEventDeletion": "Czy na pewno usunąć wydarzenie?",
     "confirmAccountDeletion": "Na pewno? Usunięcie konta usunie Twoje wydarzenia.",
-    "webhookTooltip": "Możesz dodać URL na któy będą wysyłane powiadomienia o zmianach w Twoim wydarzeniu - na przykład na serwer Discorda czy kanał na slacku."
+    "webhookTooltip": "Możesz dodać URL na który będą wysyłane powiadomienia o zmianach w Twoim wydarzeniu - na przykład na serwer Discorda czy kanał na slacku."
   },
   "signIn": {
     "passwordRestoreTitle": "Nie martw się, wszystkim nam się to zdarza.",

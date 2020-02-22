@@ -158,7 +158,16 @@ export default {
     },
     password: {
       required,
-      minLength: minLength(5)
+      strong: p => {
+        if (p) {
+          return p.length >= 5 &&
+            /[0-9]/.test(p) &&
+            /[A-Z]/.test(p) &&
+            /[a-z]/.test(p)
+        }
+
+        return true
+      }
     },
     passwordRepeated: {
       required,
@@ -222,7 +231,7 @@ export default {
           this.$emit('closeSignIn')
           this.showPopup({ info: 'signedIn' })
         } catch (error) {
-          console.log(error)
+          // console.log(error)
           this.showPopup({ info: error.message || 'errorGeneric', isError: true })
         } finally {
           this.$emit('checkIfLoggedIn')
@@ -254,7 +263,7 @@ export default {
         if (parsedResponse.error) throw new Error(parsedResponse.error)
         this.showPopup({ info: 'passwordRestore' })
       } catch (err) {
-        console.log(err)
+        // console.log(err)
         this.showPopup({ info: err.message || 'errorGeneric', isError: true })
       } finally {
         this.toggleRestorePassword()
@@ -410,10 +419,16 @@ export default {
       transform: translateY(-50%);
       @include transition-basic;
       cursor: text;
+      display: flex;
+      align-items: center;
+
+      & > span {
+        font-size: $font-size-sm;
+      }
     }
 
     & > .event-input-label {
-      top: 60%;
+      top: 70%;
     }
 
     & > input, textarea {
@@ -428,7 +443,7 @@ export default {
 
       &:focus + label,
       &:valid + label {
-        font-size: $font-size;
+        font-size: $font-size-sm;
         transform: translateY(110%);
         left: 0;
       }

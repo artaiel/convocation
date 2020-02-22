@@ -23,18 +23,18 @@ exports.emailEventUpdateText = (type, lang, eventUrl, username, count) => {
   }
 }
 
-exports.createWebhookEventSelectedMessage = (dataBefore, dataNow, language) => {
+exports.createWebhookEventSelectedMessage = (dataBefore, dataNow, language, isSlackWebhook) => {
   const newSelectedDates = dataNow.selectedDates.map(selected => dataBefore.selectedDates.includes(selected) ? null : selected).filter(date => !!date)
   const removedSelectedDates = dataBefore.selectedDates.map(selected => dataNow.selectedDates.includes(selected) ? null : selected).filter(date => !!date)
   const newDatesCount = newSelectedDates.length
   const removedDatesCount = removedSelectedDates.length
   let dateAnnouncement
-  console.log('newDatesCount', newDatesCount)
-  console.log('removedDatesCount', removedDatesCount)
+  // console.log('newDatesCount', newDatesCount)
+  // console.log('removedDatesCount', removedDatesCount)
 
   if (language === 'en' || language === 'de') {
     if (newDatesCount && removedDatesCount) {
-      dateAnnouncement = `:mage: Prepare @here! `
+      dateAnnouncement = `:mage: Prepare ${isSlackWebhook ? '<!here>!' : '@here!'} `
       if (newDatesCount === 1) {
         dateAnnouncement += `A new date has been set for a meeting on ${formatDate(newSelectedDates[0])}, and `
       } else {
@@ -48,20 +48,20 @@ exports.createWebhookEventSelectedMessage = (dataBefore, dataNow, language) => {
 
     } else if (newDatesCount) {
       if (newDatesCount === 1) {
-        dateAnnouncement = `:mage: Prepare @here! A new date has been set for a meeting on ${formatDate(newSelectedDates[0])}`
+        dateAnnouncement = `:mage: Prepare ${isSlackWebhook ? '<!here>!' : '@here!'} A new date has been set for a meeting on ${formatDate(newSelectedDates[0])}`
       } else {
-        dateAnnouncement = `:mage: Prepare @here! New dates have been set for meetings on ${newSelectedDates.map(date => formatDate(date)).join(', ')}`
+        dateAnnouncement = `:mage: Prepare ${isSlackWebhook ? '<!here>!' : '@here!'} New dates have been set for meetings on ${newSelectedDates.map(date => formatDate(date)).join(', ')}`
       }
     } else if (removedDatesCount) {
       if (removedDatesCount === 1) {
-        dateAnnouncement = `:skull: Watch out @here! Session has been cancelled on ${formatDate(removedSelectedDates[0])}`
+        dateAnnouncement = `:skull: Watch out ${isSlackWebhook ? '<!here>!' : '@here!'} Session has been cancelled on ${formatDate(removedSelectedDates[0])}`
       } else {
-        dateAnnouncement = `:skull: Watch out @here! Sessions have been cancelled on ${removedSelectedDates.map(date => formatDate(date)).join(', ')}`
+        dateAnnouncement = `:skull: Watch out ${isSlackWebhook ? '<!here>!' : '@here!'} Sessions have been cancelled on ${removedSelectedDates.map(date => formatDate(date)).join(', ')}`
       }
     }
   } else if (language === 'pl') {
     if (newDatesCount && removedDatesCount) {
-      dateAnnouncement = `:mage: Uwaga @here! `
+      dateAnnouncement = `:mage: Uwaga ${isSlackWebhook ? '<!here>!' : '@here!'} `
       if (newDatesCount === 1) {
         dateAnnouncement += `${formatDate(newSelectedDates[0])} został wybrany jako nowa data, a `
       } else {
@@ -74,15 +74,15 @@ exports.createWebhookEventSelectedMessage = (dataBefore, dataNow, language) => {
       }
     } else if (newDatesCount) {
       if (newDatesCount === 1) {
-        dateAnnouncement = `:mage: Uwaga @here! ${formatDate(newSelectedDates[0])} został wybrany jako dzień spotkania`
+        dateAnnouncement = `:mage: Uwaga ${isSlackWebhook ? '<!here>!' : '@here!'} ${formatDate(newSelectedDates[0])} został wybrany jako dzień spotkania`
       } else {
-        dateAnnouncement = `:mage: Uwaga @here! ${newSelectedDates.map(date => formatDate(date)).join(', ')} zostały wybrane jako dni spotkań`
+        dateAnnouncement = `:mage: Uwaga ${isSlackWebhook ? '<!here>!' : '@here!'} ${newSelectedDates.map(date => formatDate(date)).join(', ')} zostały wybrane jako dni spotkań`
       }
     } else if (removedDatesCount) {
       if (removedDatesCount === 1) {
-        dateAnnouncement = `:skull: Uwaga @here! Spotkanie ${formatDate(removedSelectedDates[0])} zostało odwołane`
+        dateAnnouncement = `:skull: Uwaga ${isSlackWebhook ? '<!here>!' : '@here!'} Spotkanie ${formatDate(removedSelectedDates[0])} zostało odwołane`
       } else {
-        dateAnnouncement = `:skull: Uwaga @here! Spotkania ${removedSelectedDates.map(date => formatDate(date)).join(', ')} zostały odwołane`
+        dateAnnouncement = `:skull: Uwaga ${isSlackWebhook ? '<!here>!' : '@here!'} Spotkania ${removedSelectedDates.map(date => formatDate(date)).join(', ')} zostały odwołane`
       }
     }
   }

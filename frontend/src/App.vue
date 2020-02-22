@@ -1,5 +1,5 @@
 <template>
-  <div class="app" :class="{ 'app--darken-background': signInModalVisible }">
+  <div class="app">
     <Navigation
       @clickSignIn="toggleSignIn"
       @checkIfLoggedIn="updateUserLoggedInState"
@@ -7,13 +7,15 @@
     <router-view/>
     <img class="hero" :src="heroImage"/>
     <transition name="fade">
-      <SignIn
-        v-if="signInModalVisible"
-        @close="closeSignIn"
-        @toggleLoading="toggleLoading"
-        @closeSignIn="closeSignIn"
-        @checkIfLoggedIn="updateUserLoggedInState"
-      />
+      <div v-if="signInModalVisible">
+        <div class="sign-in-background" @click="closeSignIn" />
+        <SignIn
+          @close="closeSignIn"
+          @toggleLoading="toggleLoading"
+          @closeSignIn="closeSignIn"
+          @checkIfLoggedIn="updateUserLoggedInState"
+        />
+      </div>
     </transition>
     <transition name="fade">
       <div v-if="isLoaderVisible" class="loader-background">
@@ -97,16 +99,15 @@ export default {
   @media screen and (min-width: $size-sm) {
     padding: $spacer * 3 0;
   }
+}
 
-  &--darken-background::after {
-    content: "";
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba($c-brown, 0.95);
-    top: 0;
-    left: 0;
-  }
+.sign-in-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba($c-brown, 0.95);
+  top: 0;
+  left: 0;
 }
 
 .hero {

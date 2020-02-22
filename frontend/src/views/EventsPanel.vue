@@ -31,7 +31,7 @@ export default {
   },
   data () {
     return {
-      currentView: 'attending',
+      currentView: '',
       transitionType: ''
     }
   },
@@ -65,8 +65,16 @@ export default {
       this.currentView = view
     }
   },
-  mounted () {
-    this.getUserData()
+  async mounted () {
+    await this.getUserData()
+    // console.log(this.userInfo)
+    if (this.userInfo.eventsOwned.length) {
+      this.currentView = 'owned'
+    } else if (this.userInfo.eventsAttending.length) {
+      this.currentView = 'attending'
+    } else {
+      this.currentView = 'settings'
+    }
   }
 }
 </script>

@@ -13,7 +13,7 @@ const mongoConnect = async callback => {
     db = client.db()
     callback()
   } catch (err) {
-    console.log(err)
+    // console.log(err)
   }
 }
 

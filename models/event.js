@@ -10,7 +10,7 @@ class Event {
     this.ownerName = ownerName
     this.dates = dates
     this.attendees = attendees
-    this.emailNotifications = true
+    this.emailNotifications = false
     this.webhookUrl = '',
     this.notificationLanguage = 'en'
   }
@@ -24,12 +24,12 @@ class Event {
         return result
       })
       .catch(err => {
-        console.log(err)
+        // console.log(err)
       })
   }
 
   static fetchById (eventId) {
-    console.log('trying to fetch in model')
+    // console.log('trying to fetch in model')
     const db = getDB()
     return db.collection('events')
       .find({ _id: ObjectId(eventId) })
@@ -38,8 +38,8 @@ class Event {
         return event
       })
       .catch(err => {
-        console.log('error at static fetchById')
-        console.log(err)
+        // console.log('error at static fetchById')
+        // console.log(err)
       })
   }
 
@@ -52,14 +52,14 @@ class Event {
         return event
       })
       .catch(err => {
-        console.log('error fetching multiple events')
+        // console.log('error fetching multiple events')
         return err
       })
   }
 
   static updateEventAttendance (eventData) {
-    console.log('eventData to update in db')
-    console.log(eventData)
+    // console.log('eventData to update in db')
+    // console.log(eventData)
     const db = getDB()
     return db.collection('events')
       .findOneAndUpdate(

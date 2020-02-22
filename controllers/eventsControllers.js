@@ -15,7 +15,7 @@ const { createWebhookEventSelectedMessage, createWebhookEventUpdateMessage } = r
 
 exports.getEventData = async (req, res, next) => {
   const eventId = req.params.eventId
-  console.log('fetching event data for user ', req.userId)
+  // console.log('fetching event data for user ', req.userId)
 
   if (!req.userId) {
     try {
@@ -43,9 +43,9 @@ exports.getEventData = async (req, res, next) => {
       }
       userNotEnrolled = !eventData.attendees.map(att => att.userId.toString()).includes(req.userId.toString())
       const userData = await User.fetchUserById(req.userId)
-      console.log('get username from here I guess', userData)
+      // console.log('get username from here I guess', userData)
       if (userNotEnrolled) {
-        console.log('user not enrolled; fetching everything')
+        // console.log('user not enrolled; fetching everything')
         res.status(200).json(
           {
             userDates: {},
@@ -149,19 +149,25 @@ exports.updateEventAttendance = async (req, res, next) => {
 
       // send webhook
       if (updatedEventData.webhookUrl) {
+        const isSlackWebhook = !!updatedEventData.webhookUrl.match(/slack\.com/)
+        const objectKeyName = isSlackWebhook ? 'text' : 'content'
         // const dataBefore = countDaysAvailable(user)
         // const dataNow = countDaysAvailable(updatedUserAvailability)
 
-        const dateAnnouncement = createWebhookEventSelectedMessage(dataBefore, dataNow, updatedEventData.notificationLanguage)
+        const dateAnnouncement = createWebhookEventSelectedMessage(dataBefore, dataNow, updatedEventData.notificationLanguage, isSlackWebhook)
         if (dateAnnouncement) {
-          axios({
-            method: 'POST',
-            url: updatedEventData.webhookUrl,
-            headers: { 'content-type': 'application/json' },
-            data: {
-              content: dateAnnouncement
-            }
-          })
+          try {
+            axios({
+              method: 'POST',
+              url: updatedEventData.webhookUrl,
+              headers: { 'content-type': 'application/json' },
+              data: {
+                [objectKeyName]: dateAnnouncement
+              }
+            })
+          } catch (err) {
+            next(err)
+          }
         } else {
           const message = createWebhookEventUpdateMessage(dataBefore, dataNow, updatedUsername, updatedEventData.notificationLanguage)
           axios({
@@ -169,7 +175,7 @@ exports.updateEventAttendance = async (req, res, next) => {
             url: updatedEventData.webhookUrl,
             headers: { 'content-type': 'application/json' },
             data: {
-              content: message
+              [objectKeyName]: message
             }
           })
         }
@@ -207,8 +213,8 @@ exports.updateEventData = async (req, res, next) => {
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
-      console.log('eventData from db')
-      console.log(eventData)
+      // console.log('eventData from db')
+      // console.log(eventData)
       const update = {}
       if (eventName !== eventData.eventName) update.eventName = eventName
       if (description !== eventData.description) update.description = description
@@ -233,7 +239,7 @@ exports.updateEventData = async (req, res, next) => {
 }
 
 exports.deleteEvent = async (req, res, next) => {
-  console.log(req.params.eventId)
+  // console.log(req.params.eventId)
   try {
     await Promise.all([
       Event.removeEvent(req.params.eventId),

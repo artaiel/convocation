@@ -29,7 +29,7 @@
     "labelUrl": "URL",
     "labelWebhook": "Webhook",
     "labelNotificationSelection": "Email notification on user updates",
-    "labelNotificationLanguage": "Notifications language",
+    "labelNotificationLanguage": "Notification language",
     "confirmEventDeletion": "Are you sure you want to delete this event?",
     "confirmAccountDeletion": "Are you certain? This will also delete any existing owned events.",
     "webhookTooltip": "You can provide a URL where updates about your event will be sent to as a short message - for example to a discord server or a slack channel."
@@ -48,7 +48,7 @@
   },
   "validations": {
     "usernameMin": "- min. 3 characters",
-    "passwordMin": "- min. 5 characters, including an uppercase letter and a number",
+    "passwordMin": "- min. 5 characters, an uppercase letter and a number",
     "passwordMismatch": "- passwords do not match",
     "emailInvalid": "- invalid email",
     "urlInvalid": "- must be a valid URL"
@@ -78,7 +78,7 @@
   "cookieInfo": "But you'll nevertheless need to confirm that you accept them for this to work out. They will only ever be used to keep you logged in.",
   "popupInfo": {
     "accountDeleted": "Account deleted",
-    "accountUpdated": "Account info updated",
+    "accountUpdated": "Account updated",
     "eventCreated": "Event created successfully!",
     "eventUpdated": "Event updated successfully!",
     "eventDeleted": "Event deleted",

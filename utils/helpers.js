@@ -2,7 +2,7 @@ const setValue = require('set-value')
 
 exports.extractUserDates = (eventData, userId) => {
   const isOwner = eventData.ownerId.toString() === userId.toString()
-  console.log(isOwner)
+  // console.log(isOwner)
   let user = {}
   let others = {}
 
