@@ -1,7 +1,7 @@
 {
   "name": "convocation-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Convocation meeting scheduling app by Andrzej Walczak (artaiel)",
   "main": "index.js",
   "engines": {
     "node": "13.5.0"
