@@ -39,7 +39,6 @@ export default new Vuex.Store({
         commit('saveUserData', responseData)
       } catch (err) {
         commit('showPopup', { info: 'errorGeneric', isError: true })
-        console.error(err)
       } finally {
         commit('toggleLoader')
       }
