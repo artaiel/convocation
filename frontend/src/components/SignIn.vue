@@ -17,9 +17,9 @@
         </button>
       </div>
     </transition>
-    <!-- <div class="sign-in__left">
+    <div class="sign-in__left">
       <img src="@/assets/images/warrior.png" alt="An armored warrior standing with a shield and spear, looking at the login form to the right">
-    </div> -->
+    </div>
     <div class="sign-in__right">
       <img
         src="@/assets/images/exit.png"
