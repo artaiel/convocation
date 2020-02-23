@@ -87,6 +87,12 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Alegreya:400,700&display=swap');
 @import '~@/assets/styles/main.scss';
 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .app {
+    display: none;
+  }
+}
+
 .app {
   font-family: 'Alegreya', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -95,6 +101,8 @@ export default {
   background-image: url('~@/assets/images/background.jpg');
   background-position: top left;
   padding: $spacer 0;
+
+
 
   @media screen and (min-width: $size-sm) {
     padding: $spacer * 3 0;
