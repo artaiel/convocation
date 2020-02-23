@@ -1,33 +1,43 @@
 <template>
-  <div class="app">
-    <Navigation
-      @clickSignIn="toggleSignIn"
-      @checkIfLoggedIn="updateUserLoggedInState"
-    />
-    <router-view/>
-    <img class="hero" :src="heroImage"/>
-    <transition name="fade">
-      <div v-if="signInModalVisible">
-        <div class="sign-in-background" @click="closeSignIn" />
-        <SignIn
-          @close="closeSignIn"
-          @toggleLoading="toggleLoading"
-          @closeSignIn="closeSignIn"
-          @checkIfLoggedIn="updateUserLoggedInState"
-        />
+  <div>
+    <div class="app">
+      <Navigation
+        @clickSignIn="toggleSignIn"
+        @checkIfLoggedIn="updateUserLoggedInState"
+      />
+      <router-view/>
+      <img class="hero" :src="heroImage"/>
+      <transition name="fade">
+        <div v-if="signInModalVisible">
+          <div class="sign-in-background" @click="closeSignIn" />
+          <SignIn
+            @close="closeSignIn"
+            @toggleLoading="toggleLoading"
+            @closeSignIn="closeSignIn"
+            @checkIfLoggedIn="updateUserLoggedInState"
+          />
+        </div>
+      </transition>
+      <transition name="fade">
+        <div v-if="isLoaderVisible" class="loader-background">
+          <div class="loader"></div>
+        </div>
+      </transition>
+      <transition name="popup-transition">
+        <Popup v-if="popup.visible"/>
+      </transition>
+      <transition name="fade">
+        <CookieBanner v-if="showCookieBanner" @closeBanner="showCookieBanner = false"/>
+      </transition>
+    </div>
+    <div class="easter-egg">
+      <div class="easter-egg__title">
+        Dear QA:
       </div>
-    </transition>
-    <transition name="fade">
-      <div v-if="isLoaderVisible" class="loader-background">
-        <div class="loader"></div>
+      <div class="easter-egg__text">
+        <i>Why</i> would you be here.
       </div>
-    </transition>
-    <transition name="popup-transition">
-      <Popup v-if="popup.visible"/>
-    </transition>
-    <transition name="fade">
-      <CookieBanner v-if="showCookieBanner" @closeBanner="showCookieBanner = false"/>
-    </transition>
+    </div>
   </div>
 </template>
 
@@ -87,9 +97,31 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Alegreya:400,700&display=swap');
 @import '~@/assets/styles/main.scss';
 
+.easter-egg {
+  display: none;
+}
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .app {
     display: none;
+  }
+
+  .easter-egg {
+    display: flex;
+    flex-flow: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    &__title {
+      font-size: $font-size-lg;
+      margin-bottom: 1rem;
+    }
+
+    &__text {
+      font-size: $font-size-lg;
+    }
   }
 }
 
