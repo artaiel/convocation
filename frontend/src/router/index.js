@@ -6,7 +6,6 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -14,23 +13,23 @@ const routes = [
     children: [
       {
         path: '',
-        component: () => import('@/components/CreateEvent')
+        component: () => import('@/views/CreateEvent')
       },
       {
         path: '/created',
-        component: () => import('@/components/EventCreated')
+        component: () => import('@/views/EventCreated')
       }
     ]
   },
   {
     path: '/my-events',
     name: 'myEvents',
-    component: () => import('../views/EventsPanel.vue')
+    component: () => import('@/views/EventsPanel.vue')
   },
   {
     path: '/event/:id',
     name: 'eventView',
-    component: () => import('../views/EventView.vue')
+    component: () => import('@/views/EventView.vue')
   }
 ]
 

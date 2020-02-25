@@ -1,5 +1,3 @@
-// import Vue from 'vue'
-// import Vuex from 'vuex'
 import apiClient from '@/lib/APIClient'
 
 export default {
