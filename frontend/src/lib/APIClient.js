@@ -103,5 +103,3 @@ class ApiClient {
 
 const apiClient = new ApiClient()
 export default apiClient
-
-// export const apiClient = new APIClient()

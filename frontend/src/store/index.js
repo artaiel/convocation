@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import apiClient from '@/lib/APIClient'
+import actions from '@/store/actions'
 import mutations from '@/store/mutations'
 
 Vue.use(Vuex)
@@ -30,20 +30,5 @@ export default new Vuex.Store({
       return state.eventData.ownerId === state.eventData.userId
     }
   },
-  actions: {
-    async getUserData ({ commit }) {
-      commit('toggleLoader')
-      try {
-        const response = await apiClient.call('getUserData')
-        const responseData = await response.json()
-        commit('saveUserData', responseData)
-      } catch (err) {
-        commit('showPopup', { info: 'errorGeneric', isError: true })
-      } finally {
-        commit('toggleLoader')
-      }
-    }
-  },
-  modules: {
-  }
+  actions,
 })
