@@ -1,10 +1,9 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
-// const history = require('connect-history-api-fallback')
-
 const compression = require('compression')
 const cookieParser = require('cookie-parser')
+const helmet = require('helmet')
 
 const authRoutes = require('./routes/auth')
 const eventsRoutes = require('./routes/events')
@@ -17,6 +16,7 @@ app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser())
+app.use(helmet())
 
 // allow fetching data on local default vue dev server
 app.use((req, res, next) => {
@@ -44,8 +44,6 @@ app.use((error, req, res, next) => {
 const staticServing = express.static(path.join(__dirname, 'frontend', 'dist'))
 app.use(staticServing)
 app.use('*', staticServing)
-
-
 
 mongoConnect(() => {
   app.listen(process.env.PORT || 5000)

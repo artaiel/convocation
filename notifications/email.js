@@ -50,7 +50,6 @@ exports.createEventUpdateEmail = (payload) => {
   }
 }
 
-
 exports.transporter = nodemailer.createTransport({
   host: 'smtp-relay.sendinblue.com',
   port: 587,
