@@ -283,7 +283,6 @@ export default {
         this.getUserData()
         this.showPopup({ info: 'eventDeleted' })
       } catch (err) {
-        // console.log(err)
         this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()

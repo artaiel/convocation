@@ -34,7 +34,6 @@ export default {
     }
   },
   saveUserData (state, payload) {
-    // console.log('saving user data')
     Vue.set(state, 'userInfo', payload)
   },
   selectDayAsAvailable (state, date) {

@@ -130,7 +130,6 @@ export default {
         if (parsedResponse.error) throw new Error(parsedResponse.error)
         this.showPopup({ info: 'accountUpdated' })
       } catch (err) {
-        // console.log(err)
         this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()
@@ -144,7 +143,6 @@ export default {
         this.updateUserLoggedInState()
         this.$router.push({ path: '/' })
       } catch (err) {
-        // console.log(err)
         this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()

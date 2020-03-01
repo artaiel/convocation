@@ -67,7 +67,6 @@ export default {
   },
   async mounted () {
     await this.getUserData()
-    // console.log(this.userInfo)
     if (this.userInfo.eventsOwned.length) {
       this.currentView = 'owned'
     } else if (this.userInfo.eventsAttending.length) {

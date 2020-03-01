@@ -47,8 +47,8 @@
     "labelUsernameOrEmail": "Username or e-mail"
   },
   "validations": {
-    "usernameMin": "- min. 3 characters",
-    "passwordMin": "- min. 5 characters, an uppercase letter and a number",
+    "usernameMin": "- 3+ characters",
+    "passwordMin": "- 5+ characters, uppercase letter, number",
     "passwordMismatch": "- passwords do not match",
     "emailInvalid": "- invalid email",
     "urlInvalid": "- must be a valid URL"

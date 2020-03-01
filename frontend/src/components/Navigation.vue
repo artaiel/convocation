@@ -18,9 +18,6 @@
           <li @click="toggleSidebar" v-if="userLoggedIn" class="sidebar__item">
             <router-link to="/my-events">{{ $t('nav.yourEvents') }}</router-link>
           </li>
-          <!-- <li @click="toggleSidebar" class="sidebar__item">
-            <router-link to="/donate">Donate</router-link>
-          </li> -->
           <li @click="toggleSidebar" class="sidebar__item">
             <button v-if="!userLoggedIn" class="sidebar__button" @click="$emit('clickSignIn')">{{ $t('action.signIn') }}</button>
           </li>
@@ -63,7 +60,6 @@
             </div>
           </transition>
         </div>
-        <!-- <router-link to="/donate" class="nav__links-item">Donate</router-link> -->
         <button v-if="!userLoggedIn" class="nav__links-item" @click="$emit('clickSignIn')">{{ $t('action.signIn') }}</button>
         <button v-if="userLoggedIn" class="nav__links-item" @click="logOut">{{ $t('action.signOut') }}</button>
       </div>

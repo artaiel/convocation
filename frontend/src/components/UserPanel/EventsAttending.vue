@@ -63,15 +63,5 @@ export default {
       color: $c-blue;
     }
   }
-  // margin: 0 auto;
-  // padding-bottom: 2rem;
-
-  // @media screen and (min-width: $size-lg) {
-  //   max-width: $body-width-lg;
-  // }
-
-  // @media screen and (min-width: $size-xxl) {
-  //   max-width: $body-width-xl;
-  // }
 }
 </style>

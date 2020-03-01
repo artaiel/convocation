@@ -4,12 +4,14 @@ const bodyParser = require('body-parser')
 const compression = require('compression')
 const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
+const dotenv = require('dotenv')
 
 const authRoutes = require('./routes/auth')
 const eventsRoutes = require('./routes/events')
 const userRoutes = require('./routes/user')
 const { mongoConnect } = require('./db/db')
 
+dotenv.config()
 const app = express()
 
 app.use(compression())

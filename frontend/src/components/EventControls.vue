@@ -192,7 +192,6 @@ export default {
         this.saveEventData(data)
         this.showPopup({ info: 'eventUpdated' })
       } catch (err) {
-        // console.log(err)
         this.showPopup({ info: 'errorGeneric', isError: true })
       } finally {
         this.toggleLoader()

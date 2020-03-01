@@ -47,8 +47,8 @@
     "labelUsernameOrEmail": "Login lub e-mail"
   },
   "validations": {
-    "usernameMin": "- min. 3 znaki",
-    "passwordMin": "- min. 5 znaków, w tym duża litera i liczba",
+    "usernameMin": "- 3+ znaki",
+    "passwordMin": "- 5+ znaków, w tym duża litera i liczba",
     "passwordMismatch": "- hasła nie są identyczne",
     "emailInvalid": "- niepoprawny e-mail",
     "urlInvalid": "- niepoprawny URL"

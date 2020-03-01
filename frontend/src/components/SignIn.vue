@@ -231,7 +231,6 @@ export default {
           this.$emit('closeSignIn')
           this.showPopup({ info: 'signedIn' })
         } catch (error) {
-          // console.log(error)
           this.showPopup({ info: error.message || 'errorGeneric', isError: true })
         } finally {
           this.$emit('checkIfLoggedIn')
@@ -263,7 +262,6 @@ export default {
         if (parsedResponse.error) throw new Error(parsedResponse.error)
         this.showPopup({ info: 'passwordRestore' })
       } catch (err) {
-        // console.log(err)
         this.showPopup({ info: err.message || 'errorGeneric', isError: true })
       } finally {
         this.toggleRestorePassword()
@@ -295,8 +293,8 @@ export default {
   transform: translate(-50%, -50%);
   z-index: 2;
   display: flex;
-  width: 80vw;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
 
   &__left {
     display: none;
@@ -461,7 +459,7 @@ export default {
   &__forgot-btn {
     @include btn-reset;
     @include transition-basic;
-    margin-top: 0rem !important;
+    margin-top: .5rem !important;
     width: fit-content;
 
     &:hover {
