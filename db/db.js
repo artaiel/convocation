@@ -6,14 +6,14 @@ let db
 const mongoConnect = async callback => {
   try {
     const client = await MongoClient.connect(
-      'mongodb+srv://Anders:T1CA2ZTSfNRm7CX1@peregrin-bcrjy.azure.mongodb.net/convocation?retryWrites=true&w=majority',
+      `mongodb+srv://Anders:${process.env.MONGO_PASS}@peregrin-bcrjy.azure.mongodb.net/convocation?retryWrites=true&w=majority`,
       { useUnifiedTopology: true }
     )
     console.log('connected to DB')
     db = client.db()
     callback()
   } catch (err) {
-    // console.log(err)
+    console.log(err)
   }
 }
 
