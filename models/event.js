@@ -20,16 +20,14 @@ class Event {
     let dbUpdated = db.collection('events').insertOne(this)
     return dbUpdated
       .then(result => {
-        // console.log(result)
         return result
       })
       .catch(err => {
-        // console.log(err)
+        console.log(err)
       })
   }
 
   static fetchById (eventId) {
-    // console.log('trying to fetch in model')
     const db = getDB()
     return db.collection('events')
       .find({ _id: ObjectId(eventId) })
@@ -38,8 +36,7 @@ class Event {
         return event
       })
       .catch(err => {
-        // console.log('error at static fetchById')
-        // console.log(err)
+        console.log(err)
       })
   }
 
@@ -52,14 +49,11 @@ class Event {
         return event
       })
       .catch(err => {
-        // console.log('error fetching multiple events')
         return err
       })
   }
 
   static updateEventAttendance (eventData) {
-    // console.log('eventData to update in db')
-    // console.log(eventData)
     const db = getDB()
     return db.collection('events')
       .findOneAndUpdate(

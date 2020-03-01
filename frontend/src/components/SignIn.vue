@@ -231,7 +231,7 @@ export default {
           this.$emit('closeSignIn')
           this.showPopup({ info: 'signedIn' })
         } catch (error) {
-          this.showPopup({ info: error.message || 'errorGeneric', isError: true })
+          this.showPopup({ info: error.message !== 'Failed to fetch' ? error.message : 'errorGeneric', isError: true })
         } finally {
           this.$emit('checkIfLoggedIn')
           this.toggleLoader()

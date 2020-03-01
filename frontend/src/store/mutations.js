@@ -46,12 +46,9 @@ export default {
       }
       // cleanup empty month
       const numberOfMonthsEntries = Object.entries(state.eventData.userDates[date.year][date.month]).length
-      // console.log(state.eventData.userDates)
-      // console.log('numberOfMonthsEntries', numberOfMonthsEntries)
       if (numberOfMonthsEntries === 0) Vue.delete(state.eventData.userDates[date.year], date.month)
       // cleanup empty year
       const numberOfYearsEntries = Object.entries(state.eventData.userDates[date.year]).length
-      // console.log('numberOfYearsEntries', numberOfYearsEntries)
       if (numberOfYearsEntries === 0) Vue.delete(state.eventData.userDates, date.year)
     } else {
       setValue(

@@ -56,16 +56,9 @@ exports.deleteUser = async (req, res, next) => {
     error.status = 403
     next(error)
   } else {
-    // console.log('------------------ start deleting user ----------------------')
-    // list user events attended
-    // list user events owned
-    // remove events owned
-    // remove mentions in events attending?
-    // remove user
     try {
       const user = await User.fetchUserById(req.userId)
       const eventsOwned = user.eventsOwned.length > 0 ? [...user.eventsOwned] : null
-      // const eventsAttending = user.eventsAttending.length > 0 ? [...user.eventsAttending] : null
 
       // remove owned event data
       if (eventsOwned) {

@@ -1,5 +1,3 @@
-const fs = require('fs')
-const path = require('path')
 const axios = require('axios')
 
 const Event = require('../models/event')
@@ -15,7 +13,6 @@ const { createWebhookEventSelectedMessage, createWebhookEventUpdateMessage } = r
 
 exports.getEventData = async (req, res, next) => {
   const eventId = req.params.eventId
-  // console.log('fetching event data for user ', req.userId)
 
   if (!req.userId) {
     try {
@@ -32,9 +29,7 @@ exports.getEventData = async (req, res, next) => {
     }
   } else {
     try {
-      // console.log('eventId in get', eventId)
       const eventData = await Event.fetchById(eventId)
-      // console.log('eventData in get', eventData)
       if (!eventData) {
         const error = new Error('no such event')
         error.statusCode = 404
@@ -43,9 +38,7 @@ exports.getEventData = async (req, res, next) => {
       }
       userNotEnrolled = !eventData.attendees.map(att => att.userId.toString()).includes(req.userId.toString())
       const userData = await User.fetchUserById(req.userId)
-      // console.log('get username from here I guess', userData)
       if (userNotEnrolled) {
-        // console.log('user not enrolled; fetching everything')
         res.status(200).json(
           {
             userDates: {},
@@ -71,7 +64,6 @@ exports.getEventData = async (req, res, next) => {
     }
   }
 }
-
 
 exports.createEvent = async (req, res, next) => {
   try {
@@ -151,8 +143,6 @@ exports.updateEventAttendance = async (req, res, next) => {
       if (updatedEventData.webhookUrl) {
         const isSlackWebhook = !!updatedEventData.webhookUrl.match(/slack\.com/)
         const objectKeyName = isSlackWebhook ? 'text' : 'content'
-        // const dataBefore = countDaysAvailable(user)
-        // const dataNow = countDaysAvailable(updatedUserAvailability)
 
         const dateAnnouncement = createWebhookEventSelectedMessage(dataBefore, dataNow, updatedEventData.notificationLanguage, isSlackWebhook)
         if (dateAnnouncement) {
@@ -186,8 +176,6 @@ exports.updateEventAttendance = async (req, res, next) => {
       const coreEventData = { ...updatedEventData }
       coreEventData.dates = { ...updatedOthersDates }
       const userData = await User.fetchUserById(req.userId)
-      // console.log('updating user')
-      // console.log(userData)
       res.status(201).json({
         userDates: updatedUserDates,
         userName: userData.username,
@@ -213,8 +201,6 @@ exports.updateEventData = async (req, res, next) => {
   } else {
     try {
       const eventData = await Event.fetchById(eventId)
-      // console.log('eventData from db')
-      // console.log(eventData)
       const update = {}
       if (eventName !== eventData.eventName) update.eventName = eventName
       if (description !== eventData.description) update.description = description
@@ -239,7 +225,6 @@ exports.updateEventData = async (req, res, next) => {
 }
 
 exports.deleteEvent = async (req, res, next) => {
-  // console.log(req.params.eventId)
   try {
     await Promise.all([
       Event.removeEvent(req.params.eventId),

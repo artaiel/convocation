@@ -2,7 +2,6 @@ const setValue = require('set-value')
 
 exports.extractUserDates = (eventData, userId) => {
   const isOwner = eventData.ownerId.toString() === userId.toString()
-  // console.log(isOwner)
   let user = {}
   let others = {}
 
@@ -14,7 +13,6 @@ exports.extractUserDates = (eventData, userId) => {
           day[1].attendees.forEach(attendee => {
             if (attendee.userId.toString() === userId.toString()) {
               setValue(user, `${year[0]}.${month[0]}.${day[0]}`, { attendees: [ attendee ] })
-              // if (isOwner) user[year[0]][month[0]][day[0]].selected = !!day[1].selected
             } else {
               otherAttendees.push(attendee)
             }
@@ -37,8 +35,6 @@ exports.extractUserDates = (eventData, userId) => {
 
 exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOwner) => {
   const eventDates = otherUsers
-  // console.log('-----------------------------------------------------------------------------------------------')
-  // console.log('in merge user dates, isOwner: ', isEventOwner)
 
   Object.entries(updatedUserAvailability).forEach(year => {
     Object.entries(year[1]).forEach(month => {
@@ -63,16 +59,6 @@ exports.mergeUserDates = (otherUsers, updatedUserAvailability, userId, isEventOw
         if (isEventOwner && day[1].selected) {
           setValue(eventDates, `${year[0]}.${month[0]}.${day[0]}.selected`, true)
         }
-        // dayRecordExists && userAvailabilityThisDay
-        //   ? eventDates[year[0]][month[0]][day[0]].attendees.push(userAvailabilityThisDay)
-        //   : setValue(eventDates, `${year[0]}.${month[0]}.${day[0]}.attendees`, [userAvailabilityThisDay])
-        // if (isEventOwner && day[1].selected) {
-        //   eventDates[year[0]][month[0]][day[0]].selected = true
-        // }
-        // console.log(`date: ${day[0]} ${month[0]} ${year[0]}`)
-        // console.log(day[1])
-        // console.log('saved as')
-        // console.log(eventDates[year[0]][month[0]][day[0]])
       })
     })
   })
