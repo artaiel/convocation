@@ -372,7 +372,7 @@ export default {
     }
 
     & > img {
-      width: 24px;
+      width: 20px;
       position: absolute;
       top: 28%;
       left: 40%;
@@ -384,6 +384,10 @@ export default {
     @media screen and (min-width: $size-md) {
       width: 100px;
       height: 150px;
+
+      & > img {
+        width: 24px;
+      }
     }
   }
 
