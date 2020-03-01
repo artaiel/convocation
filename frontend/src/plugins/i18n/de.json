@@ -1,19 +1,120 @@
 {
   "languageName": "Deutsch",
   "homeHeader": [
-    "Convocation ist ein",
-    "free meeting scheduling tool",
-    "for groups."
+    "Convocation ist eine",
+    "kostenlose Anwendung",
+    "zum Organisieren von Veranstaltungen."
   ],
+  "action":{
+		"select":"Als Veranstaltungstag wählen",
+		"confirm":"Bestätigen",
+		"copy":"Kopieren",
+		"createEvent":"Veranstaltung erstellen",
+		"cancel":"Abbrechen",
+		"save":"Speichern",
+		"update":"Updaten",
+		"deleteEvent":"Veranstaltung löschen",
+		"deleteAccount":"Account löschen",
+		"signIn":"Einloggen",
+		"signUp":"Account erstellen",
+		"signOut":"Ausloggen"
+	},
+  "userMenu":{
+		"owned":"Von mir erstellt",
+		"attending":"Meine Veranstaltungen",
+		"settings":"Einstellungen",
+		"labelAttending":"Status",
+		"labelTitle":"Veranstaltungstitel",
+		"labelDescription":"Beschreibung",
+		"labelUrl":"URL",
+		"labelWebhook":"Webhook",
+		"labelNotificationSelection":"E-Mail-Benachrichtigungen über Änderungen durch andere Nutzer",
+		"labelNotificationLanguage":"Benachrichtigungssprache",
+		"confirmEventDeletion": "Bist du sicher, dass du diese Veranstaltung löschen möchtest?",
+		"confirmAccountDeletion":"Bist du sicher? Es werden dein Profil und alle von dir erstellten Veranstaltungen gelöscht.",
+		"webhookTooltip":"Du kannst eine URL angeben, an die Updates in Form kurzer Nachrichten über deine Veranstaltung gesendet werden sollen - zum Beispiel einen Discord Server oder einen Slack Channel."
+	},
+  "signIn": {
+		"passwordRestoreTitle":"Das passiert jedem Mal",
+		"passwordRestoreAction":"Schicke mir ein temporäres neues Passwort per E-Mail",
+		"or":"oder",
+		"forgotPassword":"Du hast dein Passwort vergessen?",
+		"labelEmail":"E-mail",
+		"labelConfirmPassword":"Passwort bestätigen",
+		"labelPassword":"Passwort",
+		"labelPasswordNew":"Neues Passwort",
+		"labelUsername":"Benutzername",
+		"labelUsernameOrEmail":"Benutzername oder E-mail-Adresse"
+	},
+  "validations": {
+    "usernameMin": "- 3+ Zeichen",
+    "passwordMin": "- 5+ Zeichen, Großbuchstaben, Zahl",
+    "passwordMismatch": "- Passwörter stimmen nicht überein",
+    "emailInvalid": "- ungültige E-Mail-Adresse",
+    "urlInvalid": "- ungültige URL"
+  },
+  "nav": {
+    "createEvent": "Veranstaltung erstellen",
+    "home": "Home",
+    "yourEvents": "Meine Veranstaltungen"
+  },
   "homeInfo": [
-    "With as few steps as setting up basic information for your event you’ll be able to share a link with your friends to choose available days and see which one suits you all the most.",
-    "Your friends may take part in the survey without registering, but you can create an account to easily keep track of multiple polls and choose whether to receive email or webhook notifications when your poll is updated."
+    "Alles was du brauchst, um eine Veranstaltung zu erstellen, ist ein Account. Gib dann einfach einen Titel und deinen Namen ein, wenn du möchtest eine Beschreibung der Veranstaltung und schon kannst du sie mit anderen Leuten teilen.",
+    "Nachdem du deine Veranstaltung erstellt hast, kannst du einen Link mit deinen Freunden teilen, um gemeinsam einen Tag zu wählen, zu sehen, welche Zeiten euch allen am besten passen würden und auf dem Laufenden darüber zu bleiben, wann andere teilnehmen könnten. Als Ersteller der Veranstaltung kannst du wählen, ob du Benachrichtigungen darüber über E-Mail oder Webhook Notifications erhalten möchtest und schließlich auch den finalen Termin für das Treffen für alle sichtbar festlegen."
   ],
-  "homeSuccess": "Survey created!",
-  "homeLinkInfo": "This is a link to your event. Send it to your group members in order to allow them to select days that fit them best. You can find this link later in the your events section of your account.",
-  "copy": "Copy",
-  "linkCopied": "URL copied to clipboard",
-  "linkCopyingFailed": "Please copy the link manually!",
-  "defaultAvailability": "Anytime",
-  "name": "Name"
+  "homeCTA": "Melden Sie sich an, um Events zu erstellen und daran teilzunehmen!",
+  "homeSuccess":"Veranstaltung wurde erstellt!",
+  "homeNull":"Du musst zuerst eine Veranstaltung erstellen",
+  "homeLinkInfo": "Das ist der Link zu deiner Veranstaltung. Schicke ihn deinen Freunden, um gemeinsam den besten Termin zu finden und lege fest, wann du selbst Zeit hast. Außerdem kannst du hier am Ende auch bekanntgeben, auf welchen Termin ihr euch nun festlegt.",
+  "attendees": "Attendees",
+  "linkCopyingFailed": "Bitte kopiere den Link manuell",
+  "defaultAvailability": "Jederzeit",
+  "owner": "Admin",
+  "name": "Dein name",
+  "noEvent": "Dieses Veranstaltung existiert nicht.",
+  "labelEventDescription": "Beschreibung (optional)",
+  "labelYourName": "Dein Name",
+  "cookieTitle": "Unsere Cookies wollen nichts böses.",
+  "cookieInfo": "Aber du musst trotzdem bestätigen, dass du sie zulässt, damit die Sache funktioniert. Durch unsere Cookies bleibst du eingeloggt solange du es möchtest, sonst haben sie keine Funktion.",
+  "popupInfo": {
+    "accountDeleted": "Account wurde gelöscht",
+    "accountUpdated": "Account wurde geupdated",
+    "eventCreated": "Veranstaltung wurde erfolgreich erstellt",
+    "eventUpdated": "Veranstaltung wurde erfolgreich geupdated",
+    "eventDeleted": "Veranstaltung wurde gelöscht",
+    "passwordRestore": "Überprüfe deinen E-Mail-Posteingang für weitere Informationen",
+    "signedIn": "Du bist nun eingeloggt!",
+    "signedOut": "Du bist nun ausgeloggt!",
+    "urlCopied": "URL wurde kopiert",
+    "errorGeneric": "Da ist wohl etwas schief gelaufen. Versuche es bitte später noch einmal.",
+    "errorNoEventUpdate": "Du musst zuerst etwas an deiner Veranstaltung ändern.",
+    "errorNoMatch": "Falsche Log In-Daten",
+    "errorUsernameTaken": "Dieser Benutzername ist bereits vergeben, bitte wähle einen anderen.",
+    "errorEmailTaken": "Es existiert bereits ein Account mit dieser E-Mail-Adress",
+    "errorNotSignedIn": "Du musst eingeloggt sein, um an einer Veranstaltung teilzunehmen.",
+    "errorNoCookieConsent": "Du musst zuerst unsere Cookies akzeptieren, sonst funktioniert die Website leider nicht."
+  },
+  "days": {
+    "0": "Mon",
+    "1": "Die",
+    "2": "Mit",
+    "3": "Don",
+    "4": "Fr",
+    "5": "Sam",
+    "6": "Son"
+  },
+  "months": {
+    "0": "Januar",
+    "1": "Februar",
+    "2": "März",
+    "3": "April",
+    "4": "Mai",
+    "5": "Juni",
+    "6": "Juli",
+    "7": "August",
+    "8": "September",
+    "9": "Oktober",
+    "10": "November",
+    "11": "Dezember"
+  }
 }

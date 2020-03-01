@@ -20,10 +20,10 @@
           class="day__person"
         />
       </div>
-      <div v-else-if="attendeesSum > 0" class="day__person-count" :class="{ 'day__attendees--selected': isDayCurrentlyViewed }" @click="viewDay">
-        <img src="@/assets/images/helmet.png" alt="" class="day__person-one">
+      <div v-else class="day__person-count" :class="{ 'day__attendees--selected': isDayCurrentlyViewed }" @click="viewDay">
+        <img v-if="attendeesSum > 0" src="@/assets/images/helmet.png" alt="" class="day__person-one">
         <div class="day__person-text">
-          {{ attendeesSum }}
+          {{ attendeesSum > 0 ? attendeesSum : '' }}
         </div>
       </div>
     </template>

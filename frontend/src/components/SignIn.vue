@@ -367,15 +367,15 @@ export default {
     width: $spacer * 3;
     height: $spacer * 3;
     position: absolute;
-    top: $spacer * 2.5;
+    top: $spacer * 3.5;
     right: $spacer * 2.5;
     cursor: pointer;
 
     @media screen and (min-width: $size-md) {
-      width: $spacer * 4;
-      height: $spacer * 4;
-      top: $spacer * 7.5;
-      right: $spacer * 7.5;
+      width: $spacer * 3.5;
+      height: $spacer * 3.5;
+      top: $spacer * 6.5;
+      right: $spacer * 6.5;
     }
   }
 
