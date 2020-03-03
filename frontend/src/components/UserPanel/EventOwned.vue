@@ -318,9 +318,14 @@ export default {
   }
 
   &__qm {
+    display: none;
     width: 1rem;
     margin: 0 .5rem;
     cursor: help;
+
+    @media screen and (min-width: $size-sm) {
+      display: block;
+    }
   }
 
   &__element {
