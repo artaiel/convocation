@@ -112,15 +112,7 @@ exports.createWebhookEventUpdateMessage = (dataBefore, dataNow, updatedUsername,
 
     return `:dragon: ${updatedUsername} has updated their attendance ${difference}`
   } else if (language === 'de') {
-    let difference = ''
-    if (moreDates) {
-      difference = `hat gerade seiner Teilnahme an deiner Veranstaltung ${count} weitere/n mögliche Termin/e  hinzugefügt.`
-    }
-    if (fewerDates) {
-      difference = `hat gerade ${count} mögliche/n Termin/e deiner Veranstaltung aus seinen priorisierten ausgeschlossen.`
-    }
-
-    return `:dragon: ${updatedUsername} ${difference || 'hat gerade seine Teilnahme geupdated'}`
+    return `:dragon: ${updatedUsername} hat gerade seine Teilnahme geupdated`
   } else if (language === 'pl') {
     let difference = ''
     if (moreDates) {
