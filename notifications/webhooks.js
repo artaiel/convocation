@@ -1,38 +1,13 @@
 const { formatDate } = require('../utils/helpers')
 
-exports.emailEventUpdateText = (type, lang, eventUrl, username, count) => {
-  // return `type: ${type}, lang: ${lang}, eventUrl: ${eventUrl}, count: ${count}`
-  if (lang === 'en') {
-    let difference = ''
-    if (type === 'more') {
-      difference = ` with ${count} more potential date${count === 1 ? '' : 's'} than before`
-    } else if (type === 'fewer') {
-      difference = ` with ${count} fewer potential date${count === 1 ? '' : 's'} than before`
-    }
-    return `Hello there,<br><br>attendee <strong>${username}</strong> has updated their attendance${difference} in your <a href="${eventUrl}">event.</a>`
-  } else if (lang === 'de') {
-    return 'update in deutsch pending'
-  } else if (lang === 'pl') {
-    let difference = ''
-    if (type === 'more') {
-      difference = `zaznaczając ${count} ${count === 1 ? 'dzień' : 'dni'} więcej niż poprzednio.`
-    } else if (type === 'fewer') {
-      difference = `zaznaczając ${count} ${count === 1 ? 'dzień' : 'dni'} mniej niż poprzednio.`
-    }
-    return `Cześć,<br><br>uczestnik <strong>${username}</strong> zaktualizował swoją potencjalną obecność w Twoim <a href="${eventUrl}">wydarzeniu</a> ${difference}`
-  }
-}
-
 exports.createWebhookEventSelectedMessage = (dataBefore, dataNow, language, isSlackWebhook) => {
   const newSelectedDates = dataNow.selectedDates.map(selected => dataBefore.selectedDates.includes(selected) ? null : selected).filter(date => !!date)
   const removedSelectedDates = dataBefore.selectedDates.map(selected => dataNow.selectedDates.includes(selected) ? null : selected).filter(date => !!date)
   const newDatesCount = newSelectedDates.length
   const removedDatesCount = removedSelectedDates.length
   let dateAnnouncement
-  // console.log('newDatesCount', newDatesCount)
-  // console.log('removedDatesCount', removedDatesCount)
 
-  if (language === 'en' || language === 'de') {
+  if (language === 'en') {
     if (newDatesCount && removedDatesCount) {
       dateAnnouncement = `:mage: Prepare ${isSlackWebhook ? '<!here>!' : '@here!'} `
       if (newDatesCount === 1) {
@@ -57,6 +32,32 @@ exports.createWebhookEventSelectedMessage = (dataBefore, dataNow, language, isSl
         dateAnnouncement = `:skull: Watch out ${isSlackWebhook ? '<!here>!' : '@here!'} Session has been cancelled on ${formatDate(removedSelectedDates[0])}`
       } else {
         dateAnnouncement = `:skull: Watch out ${isSlackWebhook ? '<!here>!' : '@here!'} Sessions have been cancelled on ${removedSelectedDates.map(date => formatDate(date)).join(', ')}`
+      }
+    }
+  } else if (language === 'de') {
+    if (newDatesCount && removedDatesCount) {
+      dateAnnouncement = `:mage: Wichtig ${isSlackWebhook ? '<!here>!' : '@here!'} `
+      if (newDatesCount === 1) {
+        dateAnnouncement += `Es wurde ein neuer Termin festgelegt für ein Treffen am ${formatDate(newSelectedDates[0])} und `
+      } else {
+        dateAnnouncement += `Neue Termine wurden festgelegt für ein Treffen am ${newSelectedDates.map(date => formatDate(date)).join(', ')} und `
+      }
+      if (removedDatesCount === 1) {
+        dateAnnouncement += `${formatDate(removedSelectedDates[0])} wurde am abgesagt`
+      } else {
+        dateAnnouncement += `${removedSelectedDates.map(date => formatDate(date)).join(', ')} wurde am abgesagt`
+      }
+    } else if (newDatesCount) {
+      if (newDatesCount === 1) {
+        dateAnnouncement = `:mage: Wichtig ${isSlackWebhook ? '<!here>!' : '@here!'} Neue Termine wurden festgelegt für ein Treffen am ${formatDate(newSelectedDates[0])}`
+      } else {
+        dateAnnouncement = `:mage: Wichtig ${isSlackWebhook ? '<!here>!' : '@here!'} Neue Termine wurden festgelegt für ein Treffen am ${newSelectedDates.map(date => formatDate(date)).join(', ')}`
+      }
+    } else if (removedDatesCount) {
+      if (removedDatesCount === 1) {
+        dateAnnouncement = `:skull: Wichtig ${isSlackWebhook ? '<!here>!' : '@here!'} Das Treffen am ${formatDate(removedSelectedDates[0])} wurde abgesagt`
+      } else {
+        dateAnnouncement = `:skull: Wichtig ${isSlackWebhook ? '<!here>!' : '@here!'} Das Treffen am ${removedSelectedDates.map(date => formatDate(date)).join(', ')} wurde abgesagt`
       }
     }
   } else if (language === 'pl') {
@@ -101,7 +102,7 @@ exports.createWebhookEventUpdateMessage = (dataBefore, dataNow, updatedUsername,
     count = dataBefore.count - dataNow.count
   }
 
-  if (language === 'en' || language === 'de') {
+  if (language === 'en') {
     if (moreDates) {
       difference = `with ${count} more potential date${count === 1 ? '' : 's'} than before`
     }
@@ -110,16 +111,16 @@ exports.createWebhookEventUpdateMessage = (dataBefore, dataNow, updatedUsername,
     }
 
     return `:dragon: ${updatedUsername} has updated their attendance ${difference}`
-  // } else if (language === 'de') {
-    // let difference = ''
-    // if (moreDates) {
-    //   difference = `zaznaczając ${count} ${count === 1 ? 'dzień' : 'dni'} więcej niż poprzednio`
-    // }
-    // if (fewerDates) {
-    //   difference = `zaznaczając ${count} ${count === 1 ? 'dzień' : 'dni'} mniej niż poprzednio`
-    // }
+  } else if (language === 'de') {
+    let difference = ''
+    if (moreDates) {
+      difference = `hat gerade seiner Teilnahme an deiner Veranstaltung ${count} weitere/n mögliche Termin/e  hinzugefügt.`
+    }
+    if (fewerDates) {
+      difference = `hat gerade ${count} mögliche/n Termin/e deiner Veranstaltung aus seinen priorisierten ausgeschlossen.`
+    }
 
-    // return `:flag-de:`
+    return `:dragon: ${updatedUsername} ${difference || 'hat gerade seine Teilnahme geupdated'}`
   } else if (language === 'pl') {
     let difference = ''
     if (moreDates) {

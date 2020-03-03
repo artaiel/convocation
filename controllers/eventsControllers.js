@@ -8,7 +8,7 @@ const {
   countDaysAvailable,
 } = require('../utils/helpers')
 const { createEventUpdateEmail, transporter } = require('../notifications/email')
-const { createWebhookEventSelectedMessage, createWebhookEventUpdateMessage } = require('../notifications/translations')
+const { createWebhookEventSelectedMessage, createWebhookEventUpdateMessage } = require('../notifications/webhooks')
 
 
 exports.getEventData = async (req, res, next) => {

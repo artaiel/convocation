@@ -1,5 +1,26 @@
 const nodemailer = require('nodemailer')
-const { emailEventUpdateText } = require('./translations')
+
+const emailEventUpdateText = (type, lang, eventUrl, username, count) => {
+  if (lang === 'en') {
+    let difference = ''
+    if (type === 'more') {
+      difference = ` with ${count} more potential date${count === 1 ? '' : 's'} than before`
+    } else if (type === 'fewer') {
+      difference = ` with ${count} fewer potential date${count === 1 ? '' : 's'} than before`
+    }
+    return `Hello there,<br><br>attendee <strong>${username}</strong> has updated their attendance${difference} in your <a href="${eventUrl}">event.</a>`
+  } else if (lang === 'de') {
+    return `Hi!<br><br>Teilnehmer <strong>${username}</strong> hat gerade seiner Teilnahme an deiner <a href="${eventUrl}">Veranstaltung.</a>`
+  } else if (lang === 'pl') {
+    let difference = ''
+    if (type === 'more') {
+      difference = `zaznaczając ${count} ${count === 1 ? 'dzień' : 'dni'} więcej niż poprzednio.`
+    } else if (type === 'fewer') {
+      difference = `zaznaczając ${count} ${count === 1 ? 'dzień' : 'dni'} mniej niż poprzednio.`
+    }
+    return `Cześć,<br><br>uczestnik <strong>${username}</strong> zaktualizował swoją potencjalną obecność w Twoim <a href="${eventUrl}">wydarzeniu</a> ${difference}`
+  }
+}
 
 const updateEventText = (payload) => {
   const eventUrl = `https://circle-convocation.herokuapp.com/event/${payload.eventId}`
